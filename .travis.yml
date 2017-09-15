@@ -6,8 +6,6 @@ node_js:
   - "8"
 
 env:
-  - MONGODB_VERSION="2.6.12"
-  - MONGODB_VERSION="3.0.15"
   - MONGODB_VERSION="3.2.16"
   - MONGODB_VERSION="3.4.7"
 
