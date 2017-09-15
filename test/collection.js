@@ -106,7 +106,7 @@ describe('collection', function() {
       update: { $set: { name: 'Squirtle Brawl' } }
     });
 
-    expect(result.value.name).to.equal('Squirtle Brawl');
+    expect(result.name).to.equal('Squirtle Brawl');
   });
 
   it('should findAndModify a document and return old value', async() => {
@@ -115,7 +115,7 @@ describe('collection', function() {
       update: { $set: { name: 'Squirtle Brawl' } }
     });
 
-    expect(result.value.name).to.equal('Squirtle');
+    expect(result.name).to.equal('Squirtle');
   });
 
   it('should count queried documents', async() => {
