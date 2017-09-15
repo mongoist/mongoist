@@ -43,8 +43,6 @@ describe('database', function() {
 
     const collections = await db.listCollections();
 
-    console.log(collections);
-
     expect(collections).to.have.length(3);
   });
 
@@ -53,8 +51,6 @@ describe('database', function() {
     await db.createCollection('test2');
 
     const collectionNames = await db.getCollectionNames();
-
-    console.log(collectionNames);
 
     expect(collectionNames).to.have.length(3);
     expect(collectionNames).to.include('test1');
