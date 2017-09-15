@@ -43,14 +43,18 @@ describe('database', function() {
 
     const collections = await db.listCollections();
 
+    console.log(collections);
+
     expect(collections).to.have.length(3);
   });
 
-  it('should list collections', async() => {
+  it('should get collection names', async() => {
     await db.createCollection('test1');
     await db.createCollection('test2');
 
     const collectionNames = await db.getCollectionNames();
+
+    console.log(collectionNames);
 
     expect(collectionNames).to.have.length(3);
     expect(collectionNames).to.include('test1');
