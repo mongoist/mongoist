@@ -46,7 +46,7 @@ describe('database', function() {
     expect(collections).to.have.length(3);
   });
 
-  it('should list collections', async() => {
+  it('should get collection names', async() => {
     await db.createCollection('test1');
     await db.createCollection('test2');
 
