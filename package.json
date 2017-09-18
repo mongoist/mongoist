@@ -40,6 +40,7 @@
     "drop-mongodb-collections": "^1.1.0",
     "eslint": "^4.6.1",
     "mocha": "^3.5.3",
+    "mongojs": "^2.4.1",
     "nyc": "^11.2.1"
   }
 }

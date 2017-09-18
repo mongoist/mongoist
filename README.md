@@ -48,15 +48,27 @@ module.exports = mongoist(connectionString);
 
 ### Connecting
 
-```js
+```javascript
 const mongoist = require('mongoist');
 const db = mongoist(connectionString, connectionOptions)
 ```
 
-The `connectionString` and `connectionOptions` are passed to the underlying official mongodb driver. 
+The `connectionString` and `connectionOptions` are passed to the underlying official mongodb driver.
 [Find out more about connection strings and options](http://mongodb.github.io/node-mongodb-native/2.2/reference/connecting/).
 
-### Connection Management
+#### Migrating from mongojs
+
+While mongojs uses callbacks only, mongoist uses promises only. To allow migrating to mongoist without migrating the whole application
+mongoist supports wrapping the mongojs driver.
+
+```javascript
+const mongojsDb = mongojs(connectionString);
+const db = mongoist(mongojsDb);
+
+const docs = await db.a.find({});
+```
+
+#### Connection Management
 
 Mongoist uses the connection pool provided by the official mongodb driver, so there is no need to manage connections on your own.
 For most use cases it's best to create a `db.js` node module that exports a mongoist database connection

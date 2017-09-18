@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const dropMongoDbCollections = require('drop-mongodb-collections');
 const mongoist = require('../');
+const mongojs = require('mongojs');
 
 const connectionString = 'mongodb://localhost/test';
 
@@ -169,5 +170,15 @@ describe('database', function() {
   it('should run a named command', async () => {
     const stats = await db.runCommand('dbStats');
     expect(stats.ok).to.equal(1);
+  });
+
+  
+  it('should allow passing in a mongojs connection', async() => {
+    const mongojsDb = mongojs(connectionString);
+    const db = mongoist(mongojsDb);
+
+    const docs = await db.a.find({});
+
+    expect(docs).to.have.length(4);
   });
 });
