@@ -1,20 +1,20 @@
-# Contributing to Microq
+# Contributing to Mongoist
 
   :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to microq.
+The following is a set of guidelines for contributing to mongoist.
 These are just guidelines, not rules, use your best judgment and feel free to
 propose changes to this document in a pull request.
 
-  This project adheres to the code of conduct https://github.com/saintedlama/microq/blob/master/CODE_OF_CONDUCT.md. 
+  This project adheres to the code of conduct https://github.com/saintedlama/mongoist/blob/master/CODE_OF_CONDUCT.md. 
   By participating, you are expected to uphold this code.
 
 ## Submitting Issues
 
-* You can create an issue [here](https://github.com/saintedlama/microq/issues/new), but
+* You can create an issue [here](https://github.com/saintedlama/mongoist/issues/new), but
 before doing that please read the notes below on debugging and submitting issues,
   and include as many details as possible with your report.
-* Include the version of microq you are using.
+* Include the version of mongoist you are using.
 * Include some source code snippet to demo the issue
 * Include a stack trace and error message if applicable
 
