@@ -141,7 +141,6 @@ or `db.collection.runCommand()`
 ```js
 const result = await db.things.runCommand('count');
 console.log(result);
-})
 ```
 
 ### Bulk updates
