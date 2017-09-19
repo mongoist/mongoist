@@ -5,6 +5,8 @@ const mongoist = require('../');
 const connectionString = 'mongodb://localhost/test';
 
 describe('cursor', function() {
+  this.timeout(5000);
+
   let db;
 
   beforeEach(dropMongoDbCollections(connectionString));

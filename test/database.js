@@ -6,6 +6,8 @@ const mongojs = require('mongojs');
 const connectionString = 'mongodb://localhost/test';
 
 describe('database', function() {
+  this.timeout(5000);
+
   let db;
 
   beforeEach(dropMongoDbCollections(connectionString));
