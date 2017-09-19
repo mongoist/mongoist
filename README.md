@@ -123,6 +123,23 @@ The mongodb operations `find` and `aggregate` return a cusors, that is resolved 
 provides the operations `findAsCursor` and `aggregateAsCursor` to return a cursor and shorthand functions `find` and
 `aggregate` that return an array.
 
+## Bulk updates
+
+```javascript
+var bulk = db.a.initializeOrderedBulkOp()
+bulk.find({type: 'water'}).update({$set: {level: 1}})
+bulk.find({type: 'water'}).update({$inc: {level: 2}})
+bulk.insert({name: 'Spearow', type: 'flying'})
+bulk.insert({name: 'Pidgeotto', type: 'flying'})
+bulk.insert({name: 'Charmeleon', type: 'fire'})
+bulk.find({type: 'flying'}).removeOne()
+bulk.find({type: 'fire'}).remove()
+bulk.find({type: 'water'}).updateOne({$set: {hp: 100}})
+
+await bulk.execute();
+// done...
+```
+
 ### Events
 
 ```js
@@ -291,6 +308,14 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.stats/
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.update/
 
+#### `db.collection.initializeOrderedBulkOp([options])`
+
+Creates a new ordered bulk. This operation is sync so no `await` is needed. See **Bulk** for more details.
+
+#### `db.collection.initializeUnorderedBulkOp([options])`
+
+Creates a new unordered bulk. This operation is sync so no `await` is needed. See **Bulk** for more details.
+
 #### `db.collection.toString()`
 
 Get the name of the collection.
@@ -389,9 +414,9 @@ See https://docs.mongodb.com/manual/reference/method/db.dropDatabase/
 
 ### Bulk
 
-**Bulk is not yet implemented**
-
 #### `bulk.execute()`
+
+Executes a bulk.
 
 #### `bulk.find(query)`
 
