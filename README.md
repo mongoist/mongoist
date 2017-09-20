@@ -172,10 +172,6 @@ const result = await db.things.runCommand('count');
 console.log(result);
 ```
 
-### Bulk updates
-
-**Not implemented yet!**
-
 ### Replication Sets
 
 Mongoist can connect to a mongo replication set by providing a connection string with multiple hosts
