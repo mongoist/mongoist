@@ -1,6 +1,6 @@
 {
   "name": "mongoist",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Mongodb driver inspired by mongojs built with async/await in mind",
   "main": "index.js",
   "engines": {
