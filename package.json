@@ -7,7 +7,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --recursive --throw-deprecation --compilers js:babel-register",
+    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --recursive --throw-deprecation --require babel-polyfill --compilers js:babel-register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -34,6 +34,8 @@
     "mongodb": "^2.2.31"
   },
   "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "coveralls": "^2.13.1",
