@@ -1,3 +1,14 @@
+1.3.0 / 2017-09-20
+==================
+
+  * 1.3.0
+  * Merge branch 'master' of github.com:saintedlama/mongoist
+  * fix: relaxe engine requirement [#3](https://github.com/saintedlama/mongoist/issues/3)
+  * feat: remove async/await from non test files
+  * doc: bulk updates are implemented
+  * Increase timeout
+  * chore: add changelog
+
 1.2.1 / 2017-09-19
 ==================
 
