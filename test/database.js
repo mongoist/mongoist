@@ -26,6 +26,20 @@ describe('database', function() {
     expect(db.xyz).to.exist;
   });
 
+  it('should accept connection strings without mongodb:// protocol specified', async() => {
+    const dbShort = mongoist('localhost/test');
+    const docs = await dbShort.a.find();
+
+    expect(docs).to.have.length(4);
+  });
+
+  it('should accept connection strings without host and mongodb:// protocol specified', async() => {
+    const dbShort = mongoist('test');
+    const docs = await dbShort.a.find();
+
+    expect(docs).to.have.length(4);
+  });
+
   it('should create a collection', async() => {
     const collection = await db.createCollection('test123');
 
