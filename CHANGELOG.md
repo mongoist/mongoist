@@ -1,3 +1,15 @@
+1.4.0 / 2017-09-22
+==================
+
+  * 1.4.0
+  * feat: Implement missing cursor methods including readable stream interface
+  * chore: improve test coverage for database
+  * chore: ignore non test files from babel
+  * chore: install babel-polyfill and babel-preset-env
+  * fix: add .babelrc and babel-preset-env
+  * chore: use babel-register to transpile tests for node version 6 and 7
+  * Update changelog
+
 1.3.0 / 2017-09-20
 ==================
 
