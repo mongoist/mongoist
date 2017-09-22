@@ -318,6 +318,16 @@ Get the name of the collection.
 
 ### Cursor
 
+Cursor implements readable stream. So you can for example pipe a cursor to a writeable stream.
+
+```javascript
+db.someCollection.findAsCursor()
+  .pipe(writeableStream)
+  .on('finish', () => {
+    console.log('all documents piped to writeableStream');
+  });
+```
+
 #### `cursor.batchSize(size)`
 
 See https://docs.mongodb.com/manual/reference/method/cursor.batchSize/
@@ -338,6 +348,22 @@ See https://docs.mongodb.com/manual/reference/method/cursor.limit/
 
 See https://docs.mongodb.com/manual/reference/method/cursor.next/
 
+#### `cursor.hasNext()`
+
+See https://docs.mongodb.com/manual/reference/method/cursor.hasNext/
+
+#### `cursor.forEach(fn)`
+
+See https://docs.mongodb.com/manual/reference/method/cursor.foreach/
+
+#### `cursor.map(fn)`
+
+See https://docs.mongodb.com/manual/reference/method/cursor.map/
+
+#### `cursor.rewind()`
+
+Rewinds a cursor.
+
 #### `cursor.skip(n)`
 
 See https://docs.mongodb.com/manual/reference/method/cursor.skip/
@@ -350,7 +376,7 @@ See https://docs.mongodb.com/manual/reference/method/cursor.sort/
 
 See https://docs.mongodb.com/manual/reference/method/cursor.toArray/
 
-#### `cursor.close()`
+#### `cursor.close()` (alias `cursor.destroy()`)
 
 https://docs.mongodb.com/manual/reference/method/cursor.close/
 

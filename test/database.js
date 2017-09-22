@@ -197,4 +197,19 @@ describe('database', function() {
 
     expect(docs).to.have.length(4);
   });
+
+  it('should drop a database passing in a mongojs connection', async() => {
+    const dbConnectionString = 'mongodb://localhost/test2';
+    const db = mongoist(dbConnectionString);
+    
+    await db.b.insert({ name: 'Squirtle',type: 'water', level: 10, });
+    const docs = await db.b.find({});
+    expect(docs).to.have.length(1);
+
+    await db.dropDatabase();
+
+    const db2 = mongoist(dbConnectionString);
+    const docs2 = await db2.b.find({});
+    expect(docs2).to.have.length(0);
+  });
 });
