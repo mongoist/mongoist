@@ -9,7 +9,7 @@ Mongoist driver is heavily inspired by mongojs.
 
 ## Motivation
 
-The the official MongoDB driver for Node.js (https://github.com/mongodb/node-mongodb-native) leaves connection management to the user, this means to connect
+The official MongoDB driver for Node.js (https://github.com/mongodb/node-mongodb-native) leaves connection management to the user - this means to connect
 to a mongodb database this boilerplate code is needed
 
 ```javascript
@@ -46,6 +46,8 @@ module.exports = mongoist(connectionString);
 
 ## Usage
 
+_Please note: Any line in the examples that uses the await keyword should be called inside an async function. If you haven't used async/await yet, you'll want to do some research to help you understand how it works._
+
 ### Connecting
 
 ```javascript
@@ -58,7 +60,7 @@ The `connectionString` and `connectionOptions` are passed to the underlying offi
 
 #### Migrating from mongojs
 
-While mongojs uses callbacks only, mongoist uses promises only. To allow migrating to mongoist without migrating the whole application
+While mongojs uses callbacks only, mongoist uses promises only. To allow migrating to mongoist without migrating the whole application,
 mongoist supports wrapping the mongojs driver.
 
 ```javascript
@@ -71,7 +73,7 @@ const docs = await db.a.find({});
 #### Connection Management
 
 Mongoist uses the connection pool provided by the official mongodb driver, so there is no need to manage connections on your own.
-For most use cases it's best to create a `db.js` node module that exports a mongoist database connection
+For most use cases it's best to create a `db.js` node module that exports a mongoist database connection.
 
 ```javascript
 module.exports = mongoist(connectionString);
@@ -119,9 +121,9 @@ const doc = await db.mycollection.save({created: 'just now'});
 
 ### Cursor Operations
 
-The mongodb operations `find` and `aggregate` return a cusors, that is resolved in the mongodb shell to an array. Mongoist
-provides the operations `findAsCursor` and `aggregateAsCursor` to return a cursor and shorthand functions `find` and
-`aggregate` that return an array.
+The mongodb operations `find` and `aggregate` return a cursor, that is resolved in the mongodb shell to an array. Mongoist
+provides the operations `findAsCursor` and `aggregateAsCursor` to return a cursor, and shorthand functions `find` and
+`aggregate` to return an array.
 
 ## Bulk updates
 
@@ -280,7 +282,7 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.reIndex/
 
 #### `db.collection.remove(query, [justOne])`
 
-Equivalent to `db.collection.remove(query, { justOne: true/fale })`
+Equivalent to `db.collection.remove(query, { justOne: true/false })`
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.remove/
 
@@ -306,11 +308,11 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.update/
 
 #### `db.collection.initializeOrderedBulkOp([options])`
 
-Creates a new ordered bulk. This operation is sync so no `await` is needed. See **Bulk** for more details.
+Creates a new ordered bulk. This operation is sync so no `await` is needed. See the **Bulk** section for more details.
 
 #### `db.collection.initializeUnorderedBulkOp([options])`
 
-Creates a new unordered bulk. This operation is sync so no `await` is needed. See **Bulk** for more details.
+Creates a new unordered bulk. This operation is sync so no `await` is needed. See the **Bulk** section for more details.
 
 #### `db.collection.toString()`
 
@@ -318,7 +320,7 @@ Get the name of the collection.
 
 ### Cursor
 
-Cursor implements readable stream. So you can for example pipe a cursor to a writeable stream.
+Cursor implements a readable stream. For example, you can pipe a cursor to a writeable stream.
 
 ```javascript
 db.someCollection.findAsCursor()
@@ -406,7 +408,7 @@ See https://docs.mongodb.com/manual/reference/method/db.getCollectionNames/
 
 See https://docs.mongodb.com/manual/reference/method/db.getCollectionNames/
 
-### `db.getCollectionInfos()` (alias `db.listCollections()`)
+#### `db.getCollectionInfos()` (alias `db.listCollections()`)
 
 See https://docs.mongodb.com/manual/reference/method/db.getCollectionInfos/
 
@@ -440,22 +442,44 @@ See https://docs.mongodb.com/manual/reference/method/db.dropDatabase/
 
 Executes a bulk.
 
+See https://docs.mongodb.com/manual/reference/method/Bulk.execute/
+
 #### `bulk.find(query)`
+
+See https://docs.mongodb.com/manual/reference/method/Bulk.find/
 
 #### `bulk.find.remove()`
 
+See https://docs.mongodb.com/manual/reference/method/Bulk.find.remove/
+
 #### `bulk.find.removeOne()`
+
+See https://docs.mongodb.com/manual/reference/method/Bulk.find.removeOne/
 
 #### `bulk.find.replaceOne(document)`
 
+See https://docs.mongodb.com/manual/reference/method/Bulk.find.replaceOne/
+
 #### `bulk.find.update(updaterParam)`
+
+See https://docs.mongodb.com/manual/reference/method/Bulk.find.update/
 
 #### `bulk.find.updateOne(updaterParam)`
 
+See https://docs.mongodb.com/manual/reference/method/Bulk.find.updateOne/
+
 #### `bulk.find.upsert(upsertParam)`
+
+See https://docs.mongodb.com/manual/reference/method/Bulk.find.upsert/
 
 #### `bulk.insert(document)`
 
+See https://docs.mongodb.com/manual/reference/method/Bulk.insert/
+
 #### `bulk.toString()`
 
+See https://docs.mongodb.com/manual/reference/method/Bulk.toString/
+
 #### `bulk.tojson()`
+
+See https://docs.mongodb.com/manual/reference/method/Bulk.tojson/
