@@ -46,7 +46,7 @@ module.exports = mongoist(connectionString);
 
 ## Usage
 
-_Please note: Any line in the examples that uses the await keyword should be called inside an async function. If you haven't used async/await yet, you'll want to do some research to help you understand how it works._
+_Please note: Any line in the examples that uses the await keyword should be called inside an async function. If you haven't used async/await yet, you'll want to do some research to help you understand how it works. Or take a look at https://ponyfoo.com/articles/understanding-javascript-async-await for a great read about async/await_
 
 ### Connecting
 
@@ -67,7 +67,14 @@ mongoist supports wrapping the mongojs driver.
 const mongojsDb = mongojs(connectionString);
 const db = mongoist(mongojsDb);
 
-const docs = await db.a.find({});
+async function findDocuments() {
+  const docs = await db.a.find({});
+  // ...
+}
+
+// We need to call the async function this way since top level await keyword is not allowed in JavaScript
+findDocuments().then(() => console.log('Done querying mongodb')));
+
 ```
 
 #### Connection Management
