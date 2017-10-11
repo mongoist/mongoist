@@ -221,7 +221,7 @@ See https://docs.mongodb.org/manual/reference/method/db.collection.createIndex/
 
 See https://docs.mongodb.org/manual/reference/method/db.collection.distinct/
 
-#### `db.collection.drop([callback])`
+#### `db.collection.drop()`
 
 See https://docs.mongodb.org/manual/reference/method/db.collection.drop/
 
@@ -406,10 +406,6 @@ See https://docs.mongodb.com/manual/reference/method/db.dropAllUsers/
 #### `db.createCollection(name, options)`
 
 See https://docs.mongodb.com/manual/reference/method/db.createCollection/
-
-#### `db.getCollectionNames()`
-
-See https://docs.mongodb.com/manual/reference/method/db.getCollectionNames/
 
 #### `db.getCollectionNames()`
 
