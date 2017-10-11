@@ -8,8 +8,12 @@ module.exports = function(connectionString, options) {
     get: function(obj, prop) {
       const dbProp = obj[prop];
 
-      if (dbProp) {
+      if (dbProp !== undefined) {
         return dbProp;
+      }
+
+      if (typeof prop === 'symbol') {
+        return db[prop];
       }
 
       return db.collection(prop);
