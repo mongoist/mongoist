@@ -1,3 +1,14 @@
+1.4.1 / 2017-10-11
+==================
+
+  * 1.4.1
+  * fix: proxy should not use symbols as collection name and should check db properties for strict null
+  * docs: reference foo pony async/await tutorial
+  * chore: add editorconfig
+  * Fixed SyntaxError and minor grammatical changes.
+    Added an italic line at the beginning of the examples to let users know to call await lines in async functions. Also fixed some minor grammatical errors and added the mongodb links for the bulk section.
+  * chore: update changelog
+
 1.4.0 / 2017-09-22
 ==================
 
