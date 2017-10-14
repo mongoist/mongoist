@@ -1,3 +1,11 @@
+1.4.2 / 2017-10-11
+==================
+
+  * 1.4.2
+  * fix: always create a non undefined options field
+  * docs: remove callback argument and duplicate api methods
+  * chore: update changelog
+
 1.4.1 / 2017-10-11
 ==================
 
