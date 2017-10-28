@@ -35,7 +35,7 @@ describe('collection', function() {
     const docs = await db.b.insert([{ foo: 'bar' }, { foo: 'bar' }]);
 
     expect(docs).to.have.length(2);
-    
+
     expect(docs[0].foo).to.equal('bar');
     expect(docs[1].foo).to.equal('bar');
   });
@@ -44,11 +44,11 @@ describe('collection', function() {
     const docs = await db.b.insert([{ foo: 'bar' }, { foo: 'bar' }], { ordered: true });
 
     expect(docs).to.have.length(2);
-    
+
     expect(docs[0].foo).to.equal('bar');
     expect(docs[1].foo).to.equal('bar');
   });
-  
+
   it('should find documents', async() => {
     const docs = await db.a.find({});
 
@@ -69,7 +69,7 @@ describe('collection', function() {
 
   it('should find documents with a projection', async() => {
     const docs = await db.a.find({}, { name: 1});
-    
+
     expect(docs).to.have.length(4);
     expect(docs[0].name).to.equal('Squirtle');
     expect(docs[0].type).to.not.exist;
@@ -127,7 +127,7 @@ describe('collection', function() {
   });
 
   it('should query distinct documents', async() => {
-    const docs = await db.a.distinct('name', {type: 'water'}); 
+    const docs = await db.a.distinct('name', {type: 'water'});
 
     expect(docs.length).to.equal(3);
     expect(docs).to.deep.equal([ 'Squirtle', 'Starmie', 'Lapras' ]);
@@ -139,7 +139,7 @@ describe('collection', function() {
 
     const updatedDocsCount = await db.a.count({ type: 'aqua'});
     expect(updatedDocsCount).equal(1);
-    
+
     const idleDocsCount = await db.a.count({ type: 'water'});
     expect(idleDocsCount).equal(2);
   });
@@ -150,7 +150,7 @@ describe('collection', function() {
 
     const updatedDocsCount = await db.a.count({ type: 'aqua'});
     expect(updatedDocsCount).equal(3);
-    
+
     const idleDocsCount = await db.a.count({ type: 'water'});
     expect(idleDocsCount).equal(0);
   });
@@ -160,7 +160,7 @@ describe('collection', function() {
 
     expect(doc._id).to.exist;
     expect(doc.name).to.equal('Charizard');
-  
+
     doc.type = 'flying';
 
     const updatedDoc = await db.a.save(doc);
@@ -206,6 +206,12 @@ describe('collection', function() {
     expect(stats.count).to.equal(4);
   });
 
+  it('should return a string representation when calling toString', async () => {
+    const collectionToString = await db.a.toString();
+
+    expect(collectionToString).to.equal('a');
+  });
+
   it('should run map reduce', async() => {
     function map() {
       /* eslint-disable no-undef */
@@ -234,7 +240,7 @@ describe('collection', function() {
     expect(indexes).to.have.length(2);
 
     await db.a.dropIndexes();
-    
+
     const remainingIndexes = await db.a.getIndexes();
     expect(remainingIndexes).to.have.length(1);
 
@@ -256,7 +262,7 @@ describe('collection', function() {
 
   it('should isCapped for a collection', async() => {
     await db.createCollection('mycappedcol', {capped: true, size: 1024});
-    
+
     const isCapped = await db.mycappedcol.isCapped();
     expect(isCapped).to.be.true;
 
