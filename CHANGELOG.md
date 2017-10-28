@@ -1,3 +1,24 @@
+1.5.0 / 2017-10-28
+==================
+
+  * 1.5.0
+  * test: add test for toString method of collection
+  * test: test symbol handling
+  * :bug: Allow construction with a mongist connection
+    Currently, when calling `mongoist()` with an existing mongoist
+    connection, the database fails to initialize properly resulting in
+    undefined errors when calling database or collection methods.
+    I added an affordance for checking if the `connectionString` is an
+    instance of `Database` which means we can call the connect function
+    on that database to initialize this mongoist instance.
+
+1.4.3 / 2017-10-14
+==================
+
+  * chore: update changelog
+  * 1.4.3
+  * fix: emit error when underlying cursor throws an error
+
 1.4.2 / 2017-10-11
 ==================
 
