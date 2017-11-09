@@ -6,7 +6,7 @@ Mongoist driver is heavily inspired by mongojs.
 
 [![Build Status](https://travis-ci.org/saintedlama/mongoist.svg?branch=master)](https://travis-ci.org/saintedlama/mongoist)
 [![Coverage Status](https://coveralls.io/repos/github/saintedlama/mongoist/badge.svg?branch=master)](https://coveralls.io/github/saintedlama/mongoist?branch=master)
-[![mongoist analyzed by Codellama.io](https://app.codellama.io/api/badges/5a00b463c8ec311716a2dd38/ccd959da08cb38fbb854c2c12dbb048a)](https://app.codellama.io/repositories/5a00b463c8ec311716a2dd38)
+[![mongoist analyzed by Codellama.io](https://app.codellama.io/api/badges/5a0439591b4c363a0f9427e6/31ad4e758e5c06b9e1d9d7e0d74cb475)](https://app.codellama.io/repositories/5a0439591b4c363a0f9427e6)
 
 ## Motivation
 
