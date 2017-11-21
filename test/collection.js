@@ -303,4 +303,21 @@ describe('collection', function() {
     expect(types).to.deep.include({ foo: 'fire' });
     expect(types).to.deep.include({ foo: 'water' });
   });
+
+  it('should not mutate write options', async () => {
+    const mockDb = mongoist(connectionString);
+    mockDb.connection = {
+      collection: async () => {
+        return {
+          insert: async (docs, options) => {
+            expect(options).to.deep.equal({ writeConcern: { w: 1 }, ordered: true });
+            options.foo = 'bar';
+          }
+        };
+      }
+    }
+    await mockDb.b.insert({ foo: 'bar' });
+    await mockDb.b.insert({ foo: 'baz' });
+  });
+
 });
