@@ -74,7 +74,7 @@ async function findDocuments() {
 }
 
 // We need to call the async function this way since top level await keyword is not allowed in JavaScript
-findDocuments().then(() => console.log('Done querying mongodb')));
+findDocuments().then(() => console.log('Done querying mongodb'));
 
 ```
 
