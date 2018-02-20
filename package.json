@@ -7,7 +7,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --recursive --throw-deprecation --require babel-polyfill --compilers js:babel-register",
+    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha test/database.js --recursive --throw-deprecation --require babel-polyfill --require babel-core/register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
@@ -31,18 +31,18 @@
   },
   "homepage": "https://github.com/saintedlama/mongoist#readme",
   "dependencies": {
-    "mongodb": "^2.2.34"
+    "mongodb": "^3.0.2"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
-    "coveralls": "^2.13.3",
+    "coveralls": "^3.0.0",
     "cross-env": "^5.1.3",
     "drop-mongodb-collections": "^1.1.0",
     "eslint": "^4.17.0",
-    "mocha": "^3.5.3",
+    "mocha": "^5.0.0",
     "mongojs": "^2.5.0",
     "nyc": "^11.4.1"
   }

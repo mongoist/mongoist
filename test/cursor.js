@@ -106,15 +106,15 @@ describe('cursor', function() {
   it('should rewind a cursor', async() => {
     const cursor = db.a.findAsCursor().sort({name: 1});
 
-    const obj1 = await cursor.next(); 
+    const obj1 = await cursor.next();
     expect(obj1.name).to.equal('Charmander');
 
-    const obj2 = await cursor.next(); 
+    const obj2 = await cursor.next();
     expect(obj2.name).to.equal('Lapras');
-    
+
     await cursor.rewind();
 
-    const obj3 = await cursor.next(); 
+    const obj3 = await cursor.next();
     expect(obj3.name).to.equal('Charmander');
   });
 
@@ -127,7 +127,7 @@ describe('cursor', function() {
 
       i++;
     });
-    
+
     expect(i).to.equal(4);
   });
 
@@ -135,7 +135,7 @@ describe('cursor', function() {
     const names = await db.a.findAsCursor()
       .sort({ name: 1})
       .map((pkm) => pkm.name);
-    
+
     expect(names).to.deep.equal(['Charmander', 'Lapras', 'Squirtle', 'Starmie']);
   });
 
@@ -178,10 +178,10 @@ describe('cursor', function() {
   it('should stream a cursor', async () => {
     const cursor = db.a.findAsCursor();
     let runs = 0
-  
+
     const loop = () => {
       let doc;
-  
+
       while ((doc = cursor.read()) !== null) {
 
         expect(doc.name).to.be.oneOf(['Squirtle', 'Starmie', 'Charmander', 'Lapras']);
@@ -189,10 +189,10 @@ describe('cursor', function() {
 
         runs++
       }
-  
+
       cursor.once('readable', loop);
     }
-  
+
     loop();
 
     return new Promise((resolve) => {

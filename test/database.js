@@ -14,12 +14,16 @@ describe('database', function() {
   beforeEach(async() => {
     db = mongoist(connectionString);
 
-    await db.a.insert([{ 
+    await db.a.insert([{
       name: 'Squirtle',type: 'water', level: 10, }, {
       name: 'Starmie', type: 'water', level: 8, }, {
       name: 'Charmander', type: 'fire', level: 8,}, {
       name: 'Lapras', type: 'water', level: 12,}
     ]);
+  });
+
+  afterEach(async() => {
+    await db.close();
   });
 
   it('should return a collection if accessing a non defined property', async() => {
@@ -126,10 +130,10 @@ describe('database', function() {
         customData: { department: 'area51' },
         roles: ['readWrite']
       });
-  
+
       expect(user).to.exist;
     });
-  
+
     it('should not create duplicate users', async() => {
       const user = await db.createUser({
         user: 'mongoist',
@@ -137,7 +141,7 @@ describe('database', function() {
         customData: { department: 'area51' },
         roles: ['readWrite']
       });
-  
+
       expect(user).to.exist;
 
       try {
@@ -151,10 +155,10 @@ describe('database', function() {
         expect(e.code).to.equal(11000);
         return;
       }
-    
+
       throw new Error('Duplicate users should not be created');
     });
-  
+
     it('should drop a user', async() => {
       const user = await db.createUser({
         user: 'mongoist',
@@ -162,9 +166,9 @@ describe('database', function() {
         customData: { department: 'area51' },
         roles: ['readWrite']
       });
-  
+
       expect(user).to.exist;
-    
+
       const result = await db.dropUser('mongoist');
 
       expect(result.ok).to.exist;
@@ -188,7 +192,7 @@ describe('database', function() {
     expect(stats.ok).to.equal(1);
   });
 
-  
+
   it('should allow passing in a mongojs connection', async() => {
     const mongojsDb = mongojs(connectionString);
     const db = mongoist(mongojsDb);
