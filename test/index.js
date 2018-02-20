@@ -22,4 +22,10 @@ describe('database', function() {
     expect(noCollection).to.not.exist;
   });
 
+  it('should export prototypes', () => {
+    expect(mongoist.Database).to.exist;
+    expect(mongoist.Collection).to.exist;
+    expect(mongoist.Cursor).to.exist;
+    expect(mongoist.Bulk).to.exist;
+  });
 });

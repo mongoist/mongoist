@@ -196,6 +196,22 @@ For more detailed information about replica sets see [the mongo replication docs
 
 This API documentation is a work in progress.
 
+### Exposed Prototypes
+
+Mongoist exposes the prototypes of `Database`, `Collection`, `Cursor` and `Bulk`
+to provide basic support for mocking, stubbing data access in tests.
+
+```js
+const mongoist = require('mongoist');
+
+// Override collection find behavior to always return { foo: 'bar' }
+mongoist.Collection.find = function() {
+  return [
+    { foo: 'bar' }
+  ]
+}
+```
+
 ### Collection
 
 All operations return promises. If a return type is given, this is the type of the resolved promise.

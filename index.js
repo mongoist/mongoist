@@ -1,5 +1,8 @@
 const mongodb = require('mongodb');
 const Database = require('./lib/database');
+const Collection = require('./lib/collection');
+const Cursor = require('./lib/cursor');
+const Bulk = require('./lib/bulk');
 
 module.exports = function(connectionString, options) {
   const db = new Database(connectionString, options);
@@ -21,6 +24,11 @@ module.exports = function(connectionString, options) {
   });
 }
 
+// expose prototypes
+module.exports.Database = Database
+module.exports.Collection = Collection
+module.exports.Cursor = Cursor
+module.exports.Bulk = Bulk
 
 // expose bson stuff visible in the shell
 module.exports.Binary = mongodb.Binary
