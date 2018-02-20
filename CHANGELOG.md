@@ -1,3 +1,17 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/saintedlama/mongoist/compare/v1.5.1...v1.6.0) (2018-02-20)
+
+
+### Features
+
+* expose protoypes of mongoist ([794bbe7](https://github.com/saintedlama/mongoist/commit/794bbe7))
+
+
+
 1.5.0 / 2017-10-28
 ==================
 

@@ -1,6 +1,6 @@
 {
   "name": "mongoist",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "Mongodb driver inspired by mongojs built with async/await in mind",
   "main": "index.js",
   "engines": {
@@ -10,7 +10,8 @@
     "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --recursive --throw-deprecation --require babel-polyfill --compilers js:babel-register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "release": "standard-version"
   },
   "repository": {
     "type": "git",
@@ -44,6 +45,7 @@
     "eslint": "^4.17.0",
     "mocha": "^3.5.3",
     "mongojs": "^2.5.0",
-    "nyc": "^11.4.1"
+    "nyc": "^11.4.1",
+    "standard-version": "^4.3.0"
   }
 }
