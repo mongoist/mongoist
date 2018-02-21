@@ -205,11 +205,16 @@ to provide basic support for mocking, stubbing data access in tests.
 const mongoist = require('mongoist');
 
 // Override collection find behavior to always return { foo: 'bar' }
-mongoist.Collection.find = function() {
+mongoist.Collection.prototype.find = function() {
   return [
     { foo: 'bar' }
   ]
 }
+
+const db = mongoist('test');
+console.log(db.a.find({}));
+
+// Will print out [{ foo: 'bar' }]
 ```
 
 ### Collection
