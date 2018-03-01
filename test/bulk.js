@@ -3,12 +3,18 @@ const dropMongoDbCollections = require('drop-mongodb-collections');
 const mongoist = require('../');
 
 const connectionString = 'mongodb://localhost/test';
-const db = mongoist(connectionString);
 
 describe('bulk', function() {
   this.timeout(5000);
 
+  let db;
+
   beforeEach(dropMongoDbCollections(connectionString));
+  beforeEach(() => {
+    db = mongoist(connectionString);
+  });
+
+  afterEach(async() => await db.close());
 
   it('should break excessive bulk operations in junks', async () => {
       const bulk = db.a.initializeOrderedBulkOp();
@@ -17,7 +23,7 @@ describe('bulk', function() {
       for (let i = 0; i < numberOfOp; ++i) {
         bulk.insert({name: 'Spearow', type: 'flying'});
       }
-  
+
       const res = await bulk.execute();
 
       expect(res.ok).to.equal(1);
@@ -42,7 +48,7 @@ describe('bulk', function() {
 
     const docs = await db.a.find();
 
-    
+
     expect(docs[0].name).to.equal('Charmander');
     expect(docs[1].name).to.equal(undefined);
 
@@ -73,7 +79,7 @@ describe('bulk', function() {
 
     bulk.find({name: 'Squirtle'}).upsert().updateOne({$set: {name: 'Wartortle', type: 'water'}})
     bulk.find({name: 'Bulbasaur'}).upsert().updateOne({$setOnInsert: {name: 'Bulbasaur'}, $set: {type: 'grass', level: 1}})
-    
+
     const res = await bulk.execute();
     expect(res.ok).to.equal(1);
 
@@ -153,7 +159,7 @@ describe('bulk', function() {
 
     const result = bulk.toString();
     expect(result).to.be.a('string');
-    
+
     const json = JSON.parse(result);
 
     expect(json.nInsertOps).to.equal(2, 'Should result in nInsertOps field set to 2');

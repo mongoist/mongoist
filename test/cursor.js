@@ -26,6 +26,8 @@ describe('cursor', function() {
     }]);
   });
 
+  afterEach(async() => await db.close());
+
   it('should return cursor count', async() => {
     const count = await db.a.findAsCursor({})
       .sort({ name : 1})

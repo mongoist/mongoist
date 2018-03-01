@@ -22,9 +22,7 @@ describe('database', function() {
     ]);
   });
 
-  afterEach(async() => {
-    await db.close();
-  });
+  afterEach(async() => await db.close());
 
   it('should return a collection if accessing a non defined property', async() => {
     expect(db.xyz).to.exist;
@@ -35,6 +33,8 @@ describe('database', function() {
     const docs = await dbShort.a.find();
 
     expect(docs).to.have.length(4);
+
+    await dbShort.close();
   });
 
   it('should accept connection strings without host and mongodb:// protocol specified', async() => {
@@ -42,6 +42,8 @@ describe('database', function() {
     const docs = await dbShort.a.find();
 
     expect(docs).to.have.length(4);
+
+    await dbShort.close();
   });
 
   it('should create a collection', async() => {
@@ -100,6 +102,7 @@ describe('database', function() {
     } catch (e) {
       expect(errorEvent).to.exist;
 
+      cannotConnect.close();
       return;
     }
 
@@ -200,6 +203,9 @@ describe('database', function() {
     const docs = await db.a.find({});
 
     expect(docs).to.have.length(4);
+
+    await mongojsDb.close();
+    await db.close();
   });
 
   it('should allow passing in a mongoist connection', async() => {
@@ -209,9 +215,12 @@ describe('database', function() {
     const docs = await db.a.find({});
 
     expect(docs).to.have.length(4);
+
+    await mongoistDb.close();
+    await db.close();
   });
 
-  it('should drop a database passing in a mongojs connection', async() => {
+  it('should drop a database', async() => {
     const dbConnectionString = 'mongodb://localhost/test2';
     const db = mongoist(dbConnectionString);
 
@@ -224,5 +233,8 @@ describe('database', function() {
     const db2 = mongoist(dbConnectionString);
     const docs2 = await db2.b.find({});
     expect(docs2).to.have.length(0);
+
+    await db.close();
+    await db2.close();
   });
 });
