@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/saintedlama/mongoist/compare/v1.6.0...v1.7.0) (2018-03-01)
+
+
+### Bug Fixes
+
+* apply minor updates ([8f1efcc](https://github.com/saintedlama/mongoist/commit/8f1efcc))
+* catch promise rejections in close and emit error output using debug ([b79ffe8](https://github.com/saintedlama/mongoist/commit/b79ffe8))
+* close all database connections in tests ([89bc655](https://github.com/saintedlama/mongoist/commit/89bc655))
+* pass force parameter to client close ([1153fe9](https://github.com/saintedlama/mongoist/commit/1153fe9))
+
+
+### Features
+
+* update mongodb driver to version 3 ([f154952](https://github.com/saintedlama/mongoist/commit/f154952))
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/saintedlama/mongoist/compare/v1.5.1...v1.6.0) (2018-02-20)
 
