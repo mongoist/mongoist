@@ -89,7 +89,7 @@ describe('database', function() {
     expect(stats.indexes).to.exist;
   });
 
-  it('should emit an error event if a connection could not be established', async() => {
+  it.skip('should emit an error event if a connection could not be established', async() => {
     const cannotConnect = mongoist('mongodb://127.0.0.1:65535/testdb');
 
     let errorEvent = null;
