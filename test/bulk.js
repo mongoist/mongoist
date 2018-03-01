@@ -14,7 +14,7 @@ describe('bulk', function() {
     db = mongoist(connectionString);
   });
 
-  afterEach(async() => await db.close());
+  afterEach(() => db.close());
 
   it('should break excessive bulk operations in junks', async () => {
       const bulk = db.a.initializeOrderedBulkOp();

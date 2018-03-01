@@ -26,7 +26,7 @@ describe('cursor', function() {
     }]);
   });
 
-  afterEach(async() => await db.close());
+  afterEach(() => db.close());
 
   it('should return cursor count', async() => {
     const count = await db.a.findAsCursor({})

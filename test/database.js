@@ -22,7 +22,7 @@ describe('database', function() {
     ]);
   });
 
-  afterEach(async() => await db.close());
+  afterEach(() => db.close());
 
   it('should return a collection if accessing a non defined property', async() => {
     expect(db.xyz).to.exist;
