@@ -24,6 +24,8 @@ describe('collection', function() {
     }]);
   });
 
+  afterEach(async() => await db.close());
+
   it('should insert a single document', async() => {
     const doc = await db.b.insert({ foo: 'bar' });
 
