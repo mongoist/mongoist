@@ -141,6 +141,17 @@ describe('cursor', function() {
     expect(names).to.deep.equal(['Charmander', 'Lapras', 'Squirtle', 'Starmie']);
   });
 
+  it('should pass projections to findAsCursor', async () => {
+    const docs = await db.a.findAsCursor({}, { name: true, _id: false })
+      .toArray();
+
+    expect(docs).to.have.length(4);
+    expect(docs).to.deep.include({ name: 'Charmander' });
+    expect(docs).to.deep.include({ name: 'Lapras' });
+    expect(docs).to.deep.include({ name: 'Squirtle' });
+    expect(docs).to.deep.include({ name: 'Starmie' });
+  });
+
   it('should return null for next if the cursor was closed', async() => {
     const cursor = await db.a.findAsCursor({})
       .sort({ name : 1})

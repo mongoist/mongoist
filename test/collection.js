@@ -96,7 +96,7 @@ describe('collection', function() {
   });
 
   it('should find one document with projection', async() => {
-    const squirtle = await db.a.findOne({ name: 'Squirtle' }, { type: 1});
+    const squirtle = await db.a.findOne({ name: 'Squirtle' }, { type: 1 });
 
     expect(squirtle.name).to.not.exist;
     expect(squirtle.type).to.equal('water');
