@@ -5,7 +5,7 @@ const mongoist = require('../');
 const connectionString = 'mongodb://localhost/test';
 
 describe('collection', function() {
-  this.timeout(5000);
+  this.timeout(10000);
 
   let db;
 
