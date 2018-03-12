@@ -208,6 +208,23 @@ describe('database', function() {
     await db.close();
   });
 
+  it('should pass projections to mongojs connections using mongodb 2.x driver', async() => {
+    const mongojsDb = mongojs(connectionString);
+    const db = mongoist(mongojsDb);
+
+    const docs = await db.a.find({}, { name: true, _id: false });
+
+    expect(docs).to.have.length(4);
+
+    expect(docs).to.deep.contain({ name: 'Squirtle' });
+    expect(docs).to.deep.contain({ name: 'Starmie' });
+    expect(docs).to.deep.contain({ name: 'Charmander' });
+    expect(docs).to.deep.contain({ name: 'Lapras' });
+
+    await mongojsDb.close();
+    await db.close();
+  });
+
   it('should allow passing in a mongoist connection', async() => {
     const mongoistDb = mongoist(connectionString);
     const db = mongoist(mongoistDb);
@@ -215,6 +232,23 @@ describe('database', function() {
     const docs = await db.a.find({});
 
     expect(docs).to.have.length(4);
+
+    await mongoistDb.close();
+    await db.close();
+  });
+
+  it('should pass projections to mongoist connections passing in a mongoist connection', async() => {
+    const mongoistDb = mongoist(connectionString);
+    const db = mongoist(mongoistDb);
+
+    const docs = await db.a.find({}, { name: true, _id: false });
+
+    expect(docs).to.have.length(4);
+
+    expect(docs).to.deep.contain({ name: 'Squirtle' });
+    expect(docs).to.deep.contain({ name: 'Starmie' });
+    expect(docs).to.deep.contain({ name: 'Charmander' });
+    expect(docs).to.deep.contain({ name: 'Lapras' });
 
     await mongoistDb.close();
     await db.close();
