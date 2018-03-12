@@ -221,6 +221,12 @@ describe('database', function() {
     expect(docs).to.deep.contain({ name: 'Charmander' });
     expect(docs).to.deep.contain({ name: 'Lapras' });
 
+    const cursor = await db.a.findAsCursor({}, { name: true, _id: false });
+
+    const doc = await cursor.next();
+
+    expect(doc).to.have.keys('name');
+
     await mongojsDb.close();
     await db.close();
   });
@@ -249,6 +255,12 @@ describe('database', function() {
     expect(docs).to.deep.contain({ name: 'Starmie' });
     expect(docs).to.deep.contain({ name: 'Charmander' });
     expect(docs).to.deep.contain({ name: 'Lapras' });
+
+    const cursor = await db.a.findAsCursor({}, { name: true, _id: false });
+
+    const doc = await cursor.next();
+
+    expect(doc).to.have.keys('name');
 
     await mongoistDb.close();
     await db.close();
