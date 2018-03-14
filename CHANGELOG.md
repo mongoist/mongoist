@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.7.2"></a>
+## [1.7.2](https://github.com/saintedlama/mongoist/compare/v1.7.1...v1.7.2) (2018-03-14)
+
+
+### Bug Fixes
+
+* implement feature detection to prevent mongojs connections to break projection logic in mongoist ([ee5c9e1](https://github.com/saintedlama/mongoist/commit/ee5c9e1))
+
+
+
 <a name="1.7.1"></a>
 ## [1.7.1](https://github.com/saintedlama/mongoist/compare/v1.7.0...v1.7.1) (2018-03-05)
 
