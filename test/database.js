@@ -24,8 +24,13 @@ describe('database', function() {
 
   afterEach(() => db.close());
 
-  it('should return a collection if accessing a non defined property', async() => {
-    expect(db.xyz).to.exist;
+  it('should return a collection if accessing a property that is a valid collection name', async() => {
+    expect(await db.xyz.count()).to.equal(0);
+    expect(await db.features.count()).to.equal(0);
+    expect(await db.options.count()).to.equal(0);
+    expect(await db.client.count()).to.equal(0);
+    expect(await db.connection.count()).to.equal(0);
+    expect(await db.domain.count()).to.equal(0);
   });
 
   it('should accept connection strings without mongodb:// protocol specified', async() => {

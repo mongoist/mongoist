@@ -4,22 +4,30 @@ const Collection = require('./lib/collection');
 const Cursor = require('./lib/cursor');
 const Bulk = require('./lib/bulk');
 
+function isValidCollectionName(name) {
+  return typeof name === 'string' && name &&
+    !(name.includes('$') || name.includes('\0') || name.startsWith('system.'));
+}
+
 module.exports = function(connectionString, options) {
   const db = new Database(connectionString, options);
+  const dbMethods = Object.create(null);
 
   return new Proxy(db, {
     get: function(obj, prop) {
       const dbProp = obj[prop];
 
-      if (dbProp !== undefined) {
-        return dbProp;
+      if (typeof dbProp === 'function') {
+        //lazily cache function bound to underlying db
+        dbMethods[prop] = dbMethods[prop] || dbProp.bind(db);
+        return dbMethods[prop];
       }
 
-      if (typeof prop === 'symbol') {
-        return db[prop];
+      if (isValidCollectionName(prop)) {
+        return db.collection(prop);
       }
 
-      return db.collection(prop);
+      return dbProp;
     }
   });
 }
