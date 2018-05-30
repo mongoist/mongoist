@@ -229,7 +229,15 @@ describe('cursor', function() {
           resolve();
         });
     });
-  })
+  });
+
+  it('should emit a close event when closed', async () => {
+    const cursor = db.a.findAsCursor();
+    return new Promise((resolve) => {
+      cursor.once('close', resolve);
+      cursor.close();
+    });
+  });
 });
 
 
