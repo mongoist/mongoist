@@ -1,6 +1,6 @@
 {
   "name": "mongoist",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "Mongodb driver inspired by mongojs built with async/await in mind",
   "main": "index.js",
   "engines": {
@@ -33,7 +33,7 @@
   "homepage": "https://github.com/saintedlama/mongoist#readme",
   "dependencies": {
     "debug": "^3.1.0",
-    "mongodb": "^3.0.4"
+    "mongodb": "^3.0.10"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
@@ -45,8 +45,8 @@
     "drop-mongodb-collections": "^1.2.2",
     "eslint": "^4.19.0",
     "mocha": "^5.0.4",
-    "mongojs": "^2.5.0",
-    "nyc": "^11.6.0",
+    "mongojs": "^2.6.0",
+    "nyc": "^12.0.2",
     "standard-version": "^4.4.0"
   }
 }
