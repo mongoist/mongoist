@@ -42,6 +42,14 @@ describe('database', function() {
     await dbShort.close();
   });
 
+  it('should accept connection strings with mongodb+srv:// protocol specified', async() => {
+    const dbFromSrvProtocol = mongoist('mongodb+srv://server.example.com/');
+
+    // Work around access db through a collection
+    expect(dbFromSrvProtocol.x.db.connectionString).to.equal('mongodb+srv://server.example.com/');
+
+  });
+
   it('should accept connection strings without host and mongodb:// protocol specified', async() => {
     const dbShort = mongoist('test');
     const docs = await dbShort.a.find();
