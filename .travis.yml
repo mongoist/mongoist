@@ -7,6 +7,7 @@ node_js:
   - "7"
   - "8"
   - "9"
+  - "10"
 
 env:
   - MONGODB_VERSION="2.6.12"
@@ -14,6 +15,7 @@ env:
   - MONGODB_VERSION="3.2.16"
   - MONGODB_VERSION="3.4.7"
   - MONGODB_VERSION="3.6.2"
+  - MONGODB_VERSION="4.0.0"
 
 before_script:
   - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB_VERSION}.tgz -O /tmp/mongodb.tgz
