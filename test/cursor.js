@@ -4,7 +4,7 @@ const { Writable } = require('stream');
 const dropMongoDbCollections = require('drop-mongodb-collections');
 const mongoist = require('../');
 
-const connectionString = 'mongodb://localhost/test';
+const connectionString = 'mongodb://localhost:27017/test';
 
 describe('cursor', function() {
   this.timeout(10000);

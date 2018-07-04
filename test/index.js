@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const dropMongoDbCollections = require('drop-mongodb-collections');
 const mongoist = require('../');
 
-const connectionString = 'mongodb://localhost/test';
+const connectionString = 'mongodb://localhost:27017/test';
 
 describe('database', function() {
   this.timeout(10000);

@@ -3,7 +3,7 @@ const dropMongoDbCollections = require('drop-mongodb-collections');
 const mongoist = require('../');
 const mongojs = require('mongojs');
 
-const connectionString = 'mongodb://localhost/test';
+const connectionString = 'mongodb://localhost:27017/test';
 
 describe('database', function() {
   this.timeout(10000);
@@ -34,7 +34,7 @@ describe('database', function() {
   });
 
   it('should accept connection strings without mongodb:// protocol specified', async() => {
-    const dbShort = mongoist('localhost/test');
+    const dbShort = mongoist('localhost:27017/test');
     const docs = await dbShort.a.find();
 
     expect(docs).to.have.length(4);
@@ -280,7 +280,7 @@ describe('database', function() {
   });
 
   it('should drop a database', async() => {
-    const dbConnectionString = 'mongodb://localhost/test2';
+    const dbConnectionString = 'mongodb://localhost:27017/test2';
     const db = mongoist(dbConnectionString);
 
     await db.b.insert({ name: 'Squirtle',type: 'water', level: 10, });
