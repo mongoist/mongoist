@@ -7,7 +7,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --recursive --throw-deprecation --require babel-polyfill --require babel-core/register",
+    "test": "cross-env NODE_ENV=test nyc --reporter=text-summary mocha --recursive --require babel-polyfill --require babel-core/register",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
