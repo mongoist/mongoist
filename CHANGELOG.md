@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/saintedlama/mongoist/compare/v1.7.4...v2.0.0) (2018-12-06)
+
+
+### Bug Fixes
+
+* handling of mongodb+srv protocol ([e267db5](https://github.com/saintedlama/mongoist/commit/e267db5))
+* resolve deprecation warnings ([#21](https://github.com/saintedlama/mongoist/issues/21)) ([ca4f5d5](https://github.com/saintedlama/mongoist/commit/ca4f5d5))
+
+
+### Features
+
+* use mongodb 3.1 driver, fix +srv handling ([f159a38](https://github.com/saintedlama/mongoist/commit/f159a38))
+
+
+### BREAKING CHANGES
+
+* by using mongodb 3.1 driver specifying a port in the connection string is required
+
+
+
 <a name="1.7.4"></a>
 ## [1.7.4](https://github.com/saintedlama/mongoist/compare/v1.7.3...v1.7.4) (2018-06-04)
 
