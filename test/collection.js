@@ -146,6 +146,17 @@ describe('collection', function() {
     expect(idleDocsCount).equal(2);
   });
 
+  it('should replace a document', async() => {
+    const pikachu = { name: 'Pikachu' };
+    const charmander = await db.a.findOne({ name: 'Charmander' });
+
+    await db.a.replace({ _id: charmander._id }, pikachu);
+    const replacedDocument = await db.a.findOne({ _id: charmander._id });
+
+    expect(replacedDocument).to.deep.equal(Object.assign({ _id: charmander._id }, pikachu));
+    expect(replacedDocument).not.have.any.keys('type', 'level');
+  });
+
   it('should update multiple documents', async() => {
     const lastErrorObject = await db.a.update({type: 'water'}, {$set: {type: 'aqua'}}, { multi: true });
     expect(lastErrorObject.n).to.equal(3);

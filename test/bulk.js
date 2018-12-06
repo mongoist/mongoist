@@ -50,10 +50,11 @@ describe('bulk', function() {
 
 
     expect(docs[0].name).to.equal('Charmander');
-    expect(docs[1].name).to.equal(undefined);
-
     expect(docs[0].type).to.equal('fire');
+    expect(docs[0]).not.to.have.any.keys('level');
+
     expect(docs[1].type).to.equal('fire');
+    expect(docs[1]).not.to.have.any.keys('name', 'level');
   });
 
   it('should update documents in bulk', async() => {
