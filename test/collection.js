@@ -311,7 +311,7 @@ describe('collection', function() {
     mockDb.connection = {
       collection: async () => {
         return {
-          insert: async (docs, options) => {
+          insertOne: async (docs, options) => {
             expect(options).to.deep.equal({ writeConcern: { w: 1 }, ordered: true });
             options.foo = 'bar';
           }
