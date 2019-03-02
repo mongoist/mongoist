@@ -231,6 +231,21 @@ describe('cursor', function() {
     });
   });
 
+  it('should pass multiple arguments to operations', async () => {
+    const cursor = await db.a.findAsCursor()
+      .limit(1)
+      .addCursorFlag('noCursorTimeout', true);
+
+    const arr = await cursor.toArray();
+    expect(arr).to.exist;
+
+    const count = await cursor.count();
+    expect(count).to.equal(1);
+
+    expect(cursor.cursor.cmd.limit).to.equal(1);
+    expect(cursor.cursor.cmd.noCursorTimeout).to.equal(true);
+  });
+
   it('should emit a close event when closed', async () => {
     const cursor = db.a.findAsCursor();
     return new Promise((resolve) => {

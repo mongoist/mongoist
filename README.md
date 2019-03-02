@@ -358,6 +358,9 @@ db.someCollection.findAsCursor()
     console.log('all documents piped to writeableStream');
   });
 ```
+#### `cursor.addCursorFlag(flag, value)`
+
+See https://docs.mongodb.com/manual/reference/method/cursor.addOption/
 
 #### `cursor.batchSize(size)`
 
