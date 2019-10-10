@@ -360,7 +360,7 @@ db.someCollection.findAsCursor()
 ```
 #### `cursor.addCursorFlag(flag, value)`
 
-See https://docs.mongodb.com/manual/reference/method/cursor.addOption/
+See https://mongodb.github.io/node-mongodb-native/3.1/api/Cursor.html#addCursorFlag
 
 #### `cursor.batchSize(size)`
 
