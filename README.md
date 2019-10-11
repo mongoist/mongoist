@@ -358,6 +358,9 @@ db.someCollection.findAsCursor()
     console.log('all documents piped to writeableStream');
   });
 ```
+#### `cursor.addCursorFlag(flag, value)`
+
+See https://mongodb.github.io/node-mongodb-native/3.1/api/Cursor.html#addCursorFlag
 
 #### `cursor.batchSize(size)`
 
