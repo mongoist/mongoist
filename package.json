@@ -41,7 +41,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.7",
-    "drop-mongodb-collections": "^1.2.4",
+    "drop-mongodb-collections": "^1.2.5",
     "eslint": "^6.5.1",
     "mocha": "^6.2.1",
     "mongojs": "^2.6.0",
