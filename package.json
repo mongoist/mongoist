@@ -43,6 +43,7 @@
     "coveralls": "^3.0.7",
     "drop-mongodb-collections": "^1.2.5",
     "eslint": "^6.5.1",
+    "eslint-config-mixmax": "^3.4.0",
     "mocha": "^6.2.1",
     "mongojs": "^2.6.0",
     "nyc": "^14.1.1",

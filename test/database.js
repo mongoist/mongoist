@@ -11,7 +11,7 @@ describe('database', function() {
   let db;
 
   beforeEach(dropMongoDbCollections(connectionString));
-  beforeEach(async() => {
+  beforeEach(async () => {
     db = mongoist(connectionString);
 
     await db.a.insert([{
@@ -24,7 +24,7 @@ describe('database', function() {
 
   afterEach(() => db.close());
 
-  it('should return a collection if accessing a property that is a valid collection name', async() => {
+  it('should return a collection if accessing a property that is a valid collection name', async () => {
     expect(await db.xyz.count()).to.equal(0);
     expect(await db.features.count()).to.equal(0);
     expect(await db.options.count()).to.equal(0);
@@ -33,7 +33,7 @@ describe('database', function() {
     expect(await db.domain.count()).to.equal(0);
   });
 
-  it('should accept connection strings without mongodb:// protocol specified', async() => {
+  it('should accept connection strings without mongodb:// protocol specified', async () => {
     const dbShort = mongoist('localhost:27017/test');
     const docs = await dbShort.a.find();
 
@@ -42,7 +42,7 @@ describe('database', function() {
     await dbShort.close();
   });
 
-  it('should accept connection strings with mongodb+srv:// protocol specified', async() => {
+  it('should accept connection strings with mongodb+srv:// protocol specified', async () => {
     const dbFromSrvProtocol = mongoist('mongodb+srv://server.example.com/');
 
     // Work around access db through a collection
@@ -50,7 +50,7 @@ describe('database', function() {
 
   });
 
-  it('should accept connection strings without host and mongodb:// protocol specified', async() => {
+  it('should accept connection strings without host and mongodb:// protocol specified', async () => {
     const dbShort = mongoist('test');
     const docs = await dbShort.a.find();
 
@@ -59,7 +59,7 @@ describe('database', function() {
     await dbShort.close();
   });
 
-  it('should create a collection', async() => {
+  it('should create a collection', async () => {
     const collection = await db.createCollection('test123');
 
     expect(collection).to.exist;
@@ -73,7 +73,7 @@ describe('database', function() {
     throw new Error('Collection with duplicate collection name created a second time and an error was expected!');
   });
 
-  it('should list collections', async() => {
+  it('should list collections', async () => {
     await db.createCollection('test1');
     await db.createCollection('test2');
 
@@ -82,7 +82,7 @@ describe('database', function() {
     expect(collections).to.have.length(3);
   });
 
-  it('should get collection names', async() => {
+  it('should get collection names', async () => {
     await db.createCollection('test1');
     await db.createCollection('test2');
 
@@ -94,7 +94,7 @@ describe('database', function() {
     expect(collectionNames).to.include('a');
   });
 
-  it('should get db stats', async() => {
+  it('should get db stats', async () => {
     const stats = await db.stats();
 
     expect(stats.ok).to.equal(1);
@@ -102,7 +102,7 @@ describe('database', function() {
     expect(stats.indexes).to.exist;
   });
 
-  it.skip('should emit an error event if a connection could not be established', async() => {
+  it('should emit an error event if a connection could not be established', async () => {
     const cannotConnect = mongoist('mongodb://127.0.0.1:65535/testdb');
 
     let errorEvent = null;
@@ -122,7 +122,7 @@ describe('database', function() {
     throw new Error('Expected error to be thrown');
   });
 
-  it('should emit an event if database connection opened', async() => {
+  it('should emit an event if database connection opened', async () => {
     const db = mongoist(connectionString);
 
     const events = {};
@@ -137,9 +137,9 @@ describe('database', function() {
   });
 
   describe('users', function() {
-    beforeEach(async () => await db.dropAllUsers());
+    beforeEach(() => db.dropAllUsers());
 
-    it('should create a user', async() => {
+    it('should create a user', async () => {
       const user = await db.createUser({
         user: 'mongoist',
         pwd: 'topsecret',
@@ -150,7 +150,7 @@ describe('database', function() {
       expect(user).to.exist;
     });
 
-    it('should not create duplicate users', async() => {
+    it('should not create duplicate users', async () => {
       const user = await db.createUser({
         user: 'mongoist',
         pwd: 'topsecret',
@@ -167,7 +167,7 @@ describe('database', function() {
           customData: { department: 'area51' },
           roles: ['readWrite']
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.code).to.equal(11000);
         return;
       }
@@ -175,7 +175,7 @@ describe('database', function() {
       throw new Error('Duplicate users should not be created');
     });
 
-    it('should drop a user', async() => {
+    it('should drop a user', async () => {
       const user = await db.createUser({
         user: 'mongoist',
         pwd: 'topsecret',
@@ -209,7 +209,7 @@ describe('database', function() {
   });
 
 
-  it('should allow passing in a mongojs connection', async() => {
+  it('should allow passing in a mongojs connection', async () => {
     const mongojsDb = mongojs(connectionString);
     const db = mongoist(mongojsDb);
 
@@ -221,7 +221,7 @@ describe('database', function() {
     await db.close();
   });
 
-  it('should pass projections to mongojs connections using mongodb 2.x driver', async() => {
+  it('should pass projections to mongojs connections using mongodb 2.x driver', async () => {
     const mongojsDb = mongojs(connectionString);
     const db = mongoist(mongojsDb);
 
@@ -244,7 +244,7 @@ describe('database', function() {
     await db.close();
   });
 
-  it('should allow passing in a mongoist connection', async() => {
+  it('should allow passing in a mongoist connection', async () => {
     const mongoistDb = mongoist(connectionString);
     const db = mongoist(mongoistDb);
 
@@ -256,7 +256,7 @@ describe('database', function() {
     await db.close();
   });
 
-  it('should pass projections to mongoist connections passing in a mongoist connection', async() => {
+  it('should pass projections to mongoist connections passing in a mongoist connection', async () => {
     const mongoistDb = mongoist(connectionString);
     const db = mongoist(mongoistDb);
 
@@ -279,7 +279,7 @@ describe('database', function() {
     await db.close();
   });
 
-  it('should drop a database', async() => {
+  it('should drop a database', async () => {
     const dbConnectionString = 'mongodb://localhost:27017/test2';
     const db = mongoist(dbConnectionString);
 

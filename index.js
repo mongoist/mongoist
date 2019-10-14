@@ -14,7 +14,7 @@ module.exports = function(connectionString, options) {
   const dbMethods = Object.create(null);
 
   return new Proxy(db, {
-    get: function(obj, prop) {
+    get(obj, prop) {
       const dbProp = obj[prop];
 
       if (typeof dbProp === 'function') {
@@ -30,27 +30,27 @@ module.exports = function(connectionString, options) {
       return dbProp;
     }
   });
-}
+};
 
 // expose prototypes
-module.exports.Database = Database
-module.exports.Collection = Collection
-module.exports.Cursor = Cursor
-module.exports.Bulk = Bulk
+module.exports.Database = Database;
+module.exports.Collection = Collection;
+module.exports.Cursor = Cursor;
+module.exports.Bulk = Bulk;
 
 // expose bson stuff visible in the shell
-module.exports.Binary = mongodb.Binary
-module.exports.Code = mongodb.Code
-module.exports.DBRef = mongodb.DBRef
-module.exports.Double = mongodb.Double
-module.exports.Long = mongodb.Long
-module.exports.NumberLong = mongodb.Long // Alias for shell compatibility
-module.exports.MinKey = mongodb.MinKey
-module.exports.MaxKey = mongodb.MaxKey
-module.exports.ObjectID = mongodb.ObjectID
-module.exports.ObjectId = mongodb.ObjectId
-module.exports.Symbol = mongodb.Symbol
-module.exports.Timestamp = mongodb.Timestamp
+module.exports.Binary = mongodb.Binary;
+module.exports.Code = mongodb.Code;
+module.exports.DBRef = mongodb.DBRef;
+module.exports.Double = mongodb.Double;
+module.exports.Long = mongodb.Long;
+module.exports.NumberLong = mongodb.Long; // Alias for shell compatibility
+module.exports.MinKey = mongodb.MinKey;
+module.exports.MaxKey = mongodb.MaxKey;
+module.exports.ObjectID = mongodb.ObjectID;
+module.exports.ObjectId = mongodb.ObjectId;
+module.exports.Symbol = mongodb.Symbol;
+module.exports.Timestamp = mongodb.Timestamp;
 
 // Add support for default ES6 module imports
-module.exports.default = module.exports
+module.exports.default = module.exports;

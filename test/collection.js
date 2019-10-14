@@ -10,7 +10,7 @@ describe('collection', function() {
   let db;
 
   beforeEach(dropMongoDbCollections(connectionString));
-  beforeEach(async() => {
+  beforeEach(async () => {
     db = mongoist(connectionString);
 
     await db.a.insert([{
@@ -26,14 +26,14 @@ describe('collection', function() {
 
   afterEach(() => db.close());
 
-  it('should insert a single document', async() => {
+  it('should insert a single document', async () => {
     const doc = await db.b.insert({ foo: 'bar' });
 
     expect(doc.foo).to.equal('bar');
     expect(doc._id).to.exist;
   });
 
-  it('should insert document arrays', async() => {
+  it('should insert document arrays', async () => {
     const docs = await db.b.insert([{ foo: 'bar' }, { foo: 'bar' }]);
 
     expect(docs).to.have.length(2);
@@ -42,7 +42,7 @@ describe('collection', function() {
     expect(docs[1].foo).to.equal('bar');
   });
 
-  it('should insert document with options', async() => {
+  it('should insert document with options', async () => {
     const docs = await db.b.insert([{ foo: 'bar' }, { foo: 'bar' }], { ordered: true });
 
     expect(docs).to.have.length(2);
@@ -51,7 +51,7 @@ describe('collection', function() {
     expect(docs[1].foo).to.equal('bar');
   });
 
-  it('should find documents', async() => {
+  it('should find documents', async () => {
     const docs = await db.a.find({});
 
     expect(docs).to.have.length(4);
@@ -69,7 +69,7 @@ describe('collection', function() {
     expect(docs[3].type).to.equal('water');
   });
 
-  it('should find documents with a projection', async() => {
+  it('should find documents with a projection', async () => {
     const docs = await db.a.find({}, { name: 1});
 
     expect(docs).to.have.length(4);
@@ -77,7 +77,7 @@ describe('collection', function() {
     expect(docs[0].type).to.not.exist;
   });
 
-  it('should find using an awaitable cursor', async() => {
+  it('should find using an awaitable cursor', async () => {
     const docs = await db.a.findAsCursor({})
       .sort({ name : 1})
       .limit(1)
@@ -88,14 +88,14 @@ describe('collection', function() {
     expect(docs[0].type).to.equal('fire');
   });
 
-  it('should find one document', async() => {
+  it('should find one document', async () => {
     const squirtle = await db.a.findOne({ name: 'Squirtle' });
 
     expect(squirtle.name).to.equal('Squirtle');
     expect(squirtle.type).to.equal('water');
   });
 
-  it('should find one document with projection', async() => {
+  it('should find one document with projection', async () => {
     const squirtle = await db.a.findOne({ name: 'Squirtle' }, { type: 1 });
 
     expect(squirtle.name).to.not.exist;
@@ -103,7 +103,7 @@ describe('collection', function() {
     expect(squirtle._id).to.exist;
   });
 
-  it('should findAndModify a document and return the new document', async() => {
+  it('should findAndModify a document and return the new document', async () => {
     const result = await db.a.findAndModify({
       query: { name: 'Squirtle' },
       new: true,
@@ -113,7 +113,7 @@ describe('collection', function() {
     expect(result.name).to.equal('Squirtle Brawl');
   });
 
-  it('should findAndModify a document and return old value', async() => {
+  it('should findAndModify a document and return old value', async () => {
     const result = await db.a.findAndModify({
       query: { name: 'Squirtle' },
       update: { $set: { name: 'Squirtle Brawl' } }
@@ -122,20 +122,20 @@ describe('collection', function() {
     expect(result.name).to.equal('Squirtle');
   });
 
-  it('should count queried documents', async() => {
+  it('should count queried documents', async () => {
     const count = await db.a.count({ type: 'water' });
 
     expect(count).to.equal(3);
   });
 
-  it('should query distinct documents', async() => {
+  it('should query distinct documents', async () => {
     const docs = await db.a.distinct('name', {type: 'water'});
 
     expect(docs.length).to.equal(3);
     expect(docs).to.deep.equal([ 'Squirtle', 'Starmie', 'Lapras' ]);
   });
 
-  it('should update a document', async() => {
+  it('should update a document', async () => {
     const lastErrorObject = await db.a.update({type: 'water'}, {$set: {type: 'aqua'}});
     expect(lastErrorObject.n).to.equal(1);
 
@@ -146,7 +146,7 @@ describe('collection', function() {
     expect(idleDocsCount).equal(2);
   });
 
-  it('should update multiple documents', async() => {
+  it('should update multiple documents', async () => {
     const lastErrorObject = await db.a.update({type: 'water'}, {$set: {type: 'aqua'}}, { multi: true });
     expect(lastErrorObject.n).to.equal(3);
 
@@ -157,7 +157,7 @@ describe('collection', function() {
     expect(idleDocsCount).equal(0);
   });
 
-  it('should save a document', async() => {
+  it('should save a document', async () => {
     const doc = await db.a.save({name: 'Charizard', type: 'fire'});
 
     expect(doc._id).to.exist;
@@ -214,15 +214,15 @@ describe('collection', function() {
     expect(collectionToString).to.equal('a');
   });
 
-  it('should run map reduce', async() => {
+  it('should run map reduce', async () => {
     function map() {
       /* eslint-disable no-undef */
-      emit(this.type, this.level)
+      emit(this.type, this.level);
       /* eslint-enable no-undef */
     }
 
     function reduce(key, values) {
-      return Array.sum(values)
+      return Array.sum(values);
     }
 
     await db.a.mapReduce(map, reduce, {
@@ -235,7 +235,7 @@ describe('collection', function() {
     expect(levelSum.value).to.equal(30);
   });
 
-  it('should ensure, create list and drop indexes and reIndex for a collection', async() => {
+  it('should ensure, create list and drop indexes and reIndex for a collection', async () => {
     await db.a.ensureIndex({type: 1});
     const indexes = await db.a.getIndexes();
 
@@ -262,7 +262,7 @@ describe('collection', function() {
     expect(indexesAfterReindex).to.have.length(1);
   });
 
-  it('should isCapped for a collection', async() => {
+  it('should isCapped for a collection', async () => {
     await db.createCollection('mycappedcol', {capped: true, size: 1024});
 
     const isCapped = await db.mycappedcol.isCapped();
@@ -272,7 +272,7 @@ describe('collection', function() {
     expect(isACapped).to.be.false;
   });
 
-  it('should group documents', async() => {
+  it('should group documents', async () => {
     await db.b.insert([{
       t: 242424,
       online: 1
@@ -285,12 +285,12 @@ describe('collection', function() {
       key: {},
       cond: { t: { $gte: 86400 } },
       initial: { count: 0, online: 0 },
-      reduce: function(doc, out) {
+      reduce(doc, out) {
         out.count++;
         out.online += doc.online;
       },
-      finalize: function(out) {
-        out.avgOnline = out.online / out.count
+      finalize(out) {
+        out.avgOnline = out.online / out.count;
       }
     });
 
@@ -298,7 +298,7 @@ describe('collection', function() {
     expect(curOnline[0].online).to.equal(1);
   });
 
-  it('should aggregate documents', async() => {
+  it('should aggregate documents', async () => {
     const types = await db.a.aggregate([{ $group: { _id: '$type' } }, { $project: { _id: 0, foo: '$_id' } }]);
 
     expect(types.length).to.equal(2);
@@ -317,7 +317,7 @@ describe('collection', function() {
           }
         };
       }
-    }
+    };
     await mockDb.b.insert({ foo: 'bar' });
     await mockDb.b.insert({ foo: 'baz' });
   });
