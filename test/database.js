@@ -296,4 +296,9 @@ describe('database', function() {
     await db.close();
     await db2.close();
   });
+
+  it('should execute admin commands', async() => {
+    const dbStats = await db.adminCommand({ dbStats: 1 });
+    expect(dbStats.db).to.equal('admin');
+  })
 });
