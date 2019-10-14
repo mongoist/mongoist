@@ -40,13 +40,13 @@
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.2",
-    "cross-env": "^5.2.0",
+    "coveralls": "^3.0.7",
+    "cross-env": "^6.0.3",
     "drop-mongodb-collections": "^1.2.4",
-    "eslint": "^5.9.0",
-    "mocha": "^5.2.0",
+    "eslint": "^6.5.1",
+    "mocha": "^6.2.1",
     "mongojs": "^2.6.0",
-    "nyc": "^13.1.0",
-    "standard-version": "^4.4.0"
+    "nyc": "^14.1.1",
+    "standard-version": "^7.0.0"
   }
 }
