@@ -319,6 +319,10 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.remove/
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.remove/
 
+#### `db.collection.replaceOne(filter, replacement, [options])`
+
+See https://docs.mongodb.com/manual/reference/method/db.collection.replaceOne/
+
 #### `db.collection.runCommand(command)`
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.runCommand/
