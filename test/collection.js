@@ -156,7 +156,25 @@ describe('collection', function() {
     const idleDocsCount = await db.a.count({ type: 'water'});
     expect(idleDocsCount).equal(0);
   });
+  
+  it('should replace a document', async() => {
+    const bulbasaurLevel9 = {
+      name: 'Bulbasaur',
+      type: 'grass',
+      level: 9
+    };
+    const bulbasaurLevel10 = Object.assign({}, bulbasaurLevel9, { level: 10 });
+    const upsertedReplace = await db.a.replaceOne(bulbasaurLevel9, bulbasaurLevel10, { upsert: true });
+    expect(upsertedReplace.matchedCount).to.equal(0);
+    expect(upsertedReplace.modifiedCount).to.equal(0);
+    expect(upsertedReplace.upsertedId).to.exist;
 
+    const replaced = await db.a.replaceOne(bulbasaurLevel10, bulbasaurLevel10);
+    expect(replaced.matchedCount).equal(1);
+    expect(replaced.modifiedCount).equal(1);
+    expect(replaced.upsertedId).to.not.exist;
+  });
+  
   it('should save a document', async() => {
     const doc = await db.a.save({name: 'Charizard', type: 'fire'});
 
