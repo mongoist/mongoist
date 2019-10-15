@@ -181,6 +181,14 @@ const result = await db.things.runCommand('count');
 console.log(result);
 ```
 
+Similarly, you can use `db.adminCommand()` to run a command on the `admin` database of the
+MongoDB cluster or instance you're connected to:
+
+```js
+const result = await db.adminCommand({currentOp: 1});
+console.log(result);
+```
+
 ### Replication Sets
 
 Mongoist can connect to a mongo replication set by providing a connection string with multiple hosts
@@ -454,6 +462,11 @@ See https://docs.mongodb.com/manual/reference/method/db.getLastErrorObj/
 #### `db.runCommand(command)`
 
 See https://docs.mongodb.com/manual/reference/method/db.runCommand/
+
+
+#### `db.adminCommand(command)`
+
+See https://mongodb.github.io/node-mongodb-native/3.3/api/Db.html#executeDbAdminCommand
 
 #### `db.stats()`
 
