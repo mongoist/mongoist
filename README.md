@@ -462,7 +462,7 @@ See https://docs.mongodb.com/manual/reference/method/db.runCommand/
 
 #### `db.adminCommand(command)`
 
-See https://docs.mongodb.com/manual/reference/method/db.adminCommand/
+See https://mongodb.github.io/node-mongodb-native/3.3/api/Db.html#executeDbAdminCommand
 
 #### `db.stats()`
 
