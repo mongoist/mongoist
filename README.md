@@ -4,8 +4,8 @@ A [node.js](http://nodejs.org) module for mongodb built with async/await in mind
 
 Mongoist driver is heavily inspired by mongojs.
 
-[![Build Status](https://travis-ci.org/saintedlama/mongoist.svg?branch=master)](https://travis-ci.org/saintedlama/mongoist)
-[![Coverage Status](https://coveralls.io/repos/github/saintedlama/mongoist/badge.svg?branch=master)](https://coveralls.io/github/saintedlama/mongoist?branch=master)
+[![Build Status](https://travis-ci.org/mongoist/mongoist.svg?branch=master)](https://travis-ci.org/mongoist/mongoist)
+[![Coverage Status](https://coveralls.io/repos/github/mongoist/mongoist/badge.svg?branch=master)](https://coveralls.io/github/mongoist/mongoist?branch=master)
 
 ## Motivation
 
@@ -181,6 +181,14 @@ const result = await db.things.runCommand('count');
 console.log(result);
 ```
 
+Similarly, you can use `db.adminCommand()` to run a command on the `admin` database of the
+MongoDB cluster or instance you're connected to:
+
+```js
+const result = await db.adminCommand({currentOp: 1});
+console.log(result);
+```
+
 ### Replication Sets
 
 Mongoist can connect to a mongo replication set by providing a connection string with multiple hosts
@@ -318,6 +326,10 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.remove/
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.remove/
 
+#### `db.collection.replaceOne(filter, replacement, [options])`
+
+See https://docs.mongodb.com/manual/reference/method/db.collection.replaceOne/
+
 #### `db.collection.runCommand(command)`
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.runCommand/
@@ -450,6 +462,11 @@ See https://docs.mongodb.com/manual/reference/method/db.getLastErrorObj/
 #### `db.runCommand(command)`
 
 See https://docs.mongodb.com/manual/reference/method/db.runCommand/
+
+
+#### `db.adminCommand(command)`
+
+See https://mongodb.github.io/node-mongodb-native/3.3/api/Db.html#executeDbAdminCommand
 
 #### `db.stats()`
 
