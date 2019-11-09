@@ -1,6 +1,19 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [2.1.0](https://github.com/mongoist/mongoist/compare/v2.0.0...v2.1.0) (2019-11-09)
+
+
+### Features
+
+* add addCursorFlag method ([#26](https://github.com/mongoist/mongoist/issues/26)) ([318c975](https://github.com/mongoist/mongoist/commit/318c975a78b8271a341d4a5a93c48316b9e45bf7))
+* Add adminCommand database method ([#30](https://github.com/mongoist/mongoist/issues/30)) ([07705c5](https://github.com/mongoist/mongoist/commit/07705c555383d6c1c11c3904e85f0356f72db00b))
+
+
+### Bug Fixes
+
+* remove cross-env to not break builds in node 6 and 7 ([e677ec7](https://github.com/mongoist/mongoist/commit/e677ec7a27da6b30675ee6838622076a09726b23))
 
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/saintedlama/mongoist/compare/v1.7.4...v2.0.0) (2018-12-06)
