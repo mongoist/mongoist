@@ -253,6 +253,37 @@ describe('cursor', function() {
       cursor.close();
     });
   });
+
+  it('should support the async iterator protocol', async () => {
+    const cursor = db.a.findAsCursor({ name: 'Squirtle' });
+
+    const { next } = cursor[Symbol.asyncIterator]();
+    const result = await next();
+    expect(result)
+      .to.be.an('object')
+      .that.has.all.keys('value', 'done')
+      .and.has.own.property('done', false);
+    expect(result.value)
+      .to.be.an('object')
+      .that.has.own.property('type', 'water');
+    expect(await next()).to.deep.equal({ done: true, value: undefined });
+  });
+
+  it('should work in a for-await loop', async () => {
+    const cursor = db.a.findAsCursor();
+
+    const docs = [];
+    for await (const doc of cursor) {
+      docs.push(doc);
+    }
+    expect(docs).to.have.length(4);
+    expect(docs.map((doc) => doc.name)).to.have.members([
+      'Squirtle',
+      'Starmie',
+      'Charmander',
+      'Lapras',
+    ]);
+  });
 });
 
 
