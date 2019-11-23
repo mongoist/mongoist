@@ -1,7 +1,4 @@
 {
-  "presets": ["env"],
-  "ignore": [
-    "index.js",
-    "lib/*.js"
-  ]
+  "presets": [["@babel/preset-env", { "targets": { "node": true } }]],
+  "ignore": ["index.js", "lib/*.js"]
 }

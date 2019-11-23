@@ -1,16 +1,17 @@
 {
   "extends": "eslint:recommended",
-  "parserOptions": { 
-    "ecmaVersion": 2017, 
-    "sourceType": "module" 
+  "parserOptions": {
+    "ecmaVersion": 2017,
+    "sourceType": "module"
   },
-  "env": { 
-    "es6": true, 
-    "node": true, 
-    "mocha": true 
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true
   },
   "rules": {
-    "no-var":"error",
-    "prefer-const":"error"
-  }
+    "no-var": "error",
+    "prefer-const": "error"
+  },
+  "overrides": [{ "files": ["test/**/*.js"], "parserOptions": { "ecmaVersion": 2018 } }]
 }
