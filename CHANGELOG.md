@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/mongoist/mongoist/compare/v2.1.0...v2.2.0) (2019-11-23)
+
+
+### Features
+
+* **cursor:** support async iteration ([#36](https://github.com/mongoist/mongoist/issues/36)) ([9a826ad](https://github.com/mongoist/mongoist/commit/9a826ad311af52878b009ba896225d8ac1171f26)), closes [#35](https://github.com/mongoist/mongoist/issues/35)
+
 ## [2.1.0](https://github.com/mongoist/mongoist/compare/v2.0.0...v2.1.0) (2019-11-09)
 
 
