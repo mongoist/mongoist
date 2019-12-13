@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.3.0](https://github.com/mongoist/mongoist/compare/v2.2.0...v2.3.0) (2019-12-13)
+
+
+### Features
+
+* **cursor:** support collations ([#39](https://github.com/mongoist/mongoist/issues/39)) ([1f376ed](https://github.com/mongoist/mongoist/commit/1f376ed20d48e21b22701ef226b89c71af7ea471))
+
 ## [2.2.0](https://github.com/mongoist/mongoist/compare/v2.1.0...v2.2.0) (2019-11-23)
 
 
