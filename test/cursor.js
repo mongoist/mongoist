@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const { Writable } = require('stream');
+const semver = require('semver');
 
 const dropMongoDbCollections = require('drop-mongodb-collections');
 const mongoist = require('../');
@@ -23,6 +24,8 @@ describe('cursor', function() {
       name: 'Charmander', type: 'fire', level: 8,
     }, {
       name: 'Lapras', type: 'water', level: 12,
+    }, {
+      name: 'bulbasaur', type: 'amphybian', level: 7,
     }]);
   });
 
@@ -102,7 +105,20 @@ describe('cursor', function() {
       .toArray();
 
     const sortedNames = sortedDocs.map(doc => doc.name);
-    expect(sortedNames).to.deep.equal(['Charmander', 'Lapras', 'Squirtle', 'Starmie']);
+    expect(sortedNames).to.deep.equal(['Charmander', 'Lapras', 'Squirtle', 'Starmie', 'bulbasaur']);
+  });
+
+  it('should sort cursors case-insensitively in MongoDB v3.4 and later', async() => {
+    const buildInfo = await db.runCommand('buildInfo');
+    if (semver.gte(buildInfo.version, '3.4.0')) {
+      const sortedDocs = await db.a.findAsCursor()
+        .collation({locale: 'en'})
+        .sort({name: 1})
+        .toArray();
+
+      const sortedNames = sortedDocs.map(doc => doc.name);
+      expect(sortedNames).to.deep.equal(['bulbasaur', 'Charmander', 'Lapras', 'Squirtle', 'Starmie']);
+    }
   });
 
   it('should rewind a cursor', async() => {
@@ -130,7 +146,7 @@ describe('cursor', function() {
       i++;
     });
 
-    expect(i).to.equal(4);
+    expect(i).to.equal(5);
   });
 
   it('should map a cursor with map', async () => {
@@ -138,18 +154,19 @@ describe('cursor', function() {
       .sort({ name: 1})
       .map((pkm) => pkm.name);
 
-    expect(names).to.deep.equal(['Charmander', 'Lapras', 'Squirtle', 'Starmie']);
+    expect(names).to.deep.equal(['Charmander', 'Lapras', 'Squirtle', 'Starmie', 'bulbasaur']);
   });
 
   it('should pass projections to findAsCursor', async () => {
     const docs = await db.a.findAsCursor({}, { name: true, _id: false })
       .toArray();
 
-    expect(docs).to.have.length(4);
+    expect(docs).to.have.length(5);
     expect(docs).to.deep.include({ name: 'Charmander' });
     expect(docs).to.deep.include({ name: 'Lapras' });
     expect(docs).to.deep.include({ name: 'Squirtle' });
     expect(docs).to.deep.include({ name: 'Starmie' });
+    expect(docs).to.deep.include({ name: 'bulbasaur' });
   });
 
   it('should return null for next if the cursor was closed', async() => {
@@ -197,7 +214,7 @@ describe('cursor', function() {
 
       while ((doc = cursor.read()) !== null) {
 
-        expect(doc.name).to.be.oneOf(['Squirtle', 'Starmie', 'Charmander', 'Lapras']);
+        expect(doc.name).to.be.oneOf(['Squirtle', 'Starmie', 'Charmander', 'Lapras', 'bulbasaur']);
         expect(doc).to.be.a('object');
 
         runs++
@@ -210,7 +227,7 @@ describe('cursor', function() {
 
     return new Promise((resolve) => {
       cursor.on('end', function () {
-        expect(runs).to.equal(4);
+        expect(runs).to.equal(5);
 
         resolve();
       });
@@ -224,7 +241,7 @@ describe('cursor', function() {
       db.a.findAsCursor()
         .pipe(out)
         .on('finish', () => {
-          expect(out._data).to.have.length(4);
+          expect(out._data).to.have.length(5);
 
           resolve();
         });
@@ -276,12 +293,13 @@ describe('cursor', function() {
     for await (const doc of cursor) {
       docs.push(doc);
     }
-    expect(docs).to.have.length(4);
+    expect(docs).to.have.length(5);
     expect(docs.map((doc) => doc.name)).to.have.members([
       'Squirtle',
       'Starmie',
       'Charmander',
       'Lapras',
+      'bulbasaur',
     ]);
   });
 });

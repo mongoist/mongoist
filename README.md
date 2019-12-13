@@ -377,6 +377,12 @@ See https://mongodb.github.io/node-mongodb-native/3.1/api/Cursor.html#addCursorF
 
 See https://docs.mongodb.com/manual/reference/method/cursor.batchSize/
 
+#### `cursor.collation(collationDocument)`
+
+See https://docs.mongodb.com/manual/reference/method/cursor.collation/
+
+Only supported with MongoDB 3.4 or higher.
+
 #### `cursor.count()`
 
 See https://docs.mongodb.com/manual/reference/method/cursor.count/
