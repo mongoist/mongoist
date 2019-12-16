@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.4.0](https://github.com/mongoist/mongoist/compare/v2.3.0...v2.4.0) (2019-12-16)
+
+
+### Features
+
+* **connect:** support promises for `connectionString` ([#39](https://github.com/mongoist/mongoist/issues/41)) ([71b1e61](https://github.com/mongoist/mongoist/commit/71b1e61c0abe51db03457520f7cd7af13176a45c))
+
 ## [2.3.0](https://github.com/mongoist/mongoist/compare/v2.2.0...v2.3.0) (2019-12-13)
 
 
