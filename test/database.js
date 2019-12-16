@@ -209,9 +209,40 @@ describe('database', function() {
   });
 
 
+  it('should allow passing in a Promise<string>', async () => {
+    const db = mongoist(Promise.resolve(connectionString));
+
+    const docs = await db.a.find({});
+
+    expect(docs).to.have.length(4);
+
+    await db.close();
+  });
+
+  it('should normalize a Promise<string> connectionString', async () => {
+    const dbShort = mongoist(Promise.resolve('localhost:27017/test'));
+    const docs = await dbShort.a.find();
+
+    expect(docs).to.have.length(4);
+
+    await dbShort.close();
+  });
+
   it('should allow passing in a mongojs connection', async() => {
     const mongojsDb = mongojs(connectionString);
     const db = mongoist(mongojsDb);
+
+    const docs = await db.a.find({});
+
+    expect(docs).to.have.length(4);
+
+    await mongojsDb.close();
+    await db.close();
+  });
+
+  it('should allow passing in a Promise that resolves to a mongojs connection', async() => {
+    const mongojsDb = mongojs(connectionString);
+    const db = mongoist(Promise.resolve(mongojsDb));
 
     const docs = await db.a.find({});
 

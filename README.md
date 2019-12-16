@@ -44,6 +44,14 @@ not yet opened database connection:
 module.exports = mongoist(connectionString);
 ```
 
+Along these same lines, connection information may not be available synchronously. The connection
+information provided to `mongoist` can be contained in a `Promise`, affording for gathering the
+connection information from arbitrary sources (e.g. `mongo-memory-server`):
+
+```javascript
+module.exports = mongoist(Promise.resolve());
+```
+
 ## Usage
 
 _Please note: Any line in the examples that uses the await keyword should be called inside an async function. If you haven't used async/await yet, you'll want to do some research to help you understand how it works. Or take a look at https://ponyfoo.com/articles/understanding-javascript-async-await for a great read about async/await_
