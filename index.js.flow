@@ -1,0 +1,597 @@
+/**
+ * @flow strict
+ *
+ * Type definitions for mongoist in Flow.
+ */
+
+type WriteConcern = {|
+  w?: number | 'majority' | string | null,
+  wtimeout?: number | null,
+  j?: boolean,
+|};
+
+declare class Timestamp {
+  static MAX_VALUE: Timestamp;
+  static MIN_VALUE: Timestamp;
+  static NEG_ONE: Timestamp;
+  static ONE: Timestamp;
+  static ZERO: Timestamp;
+
+  static fromBits(low: number, high: number): Timestamp;
+  static fromInt(value: number): Timestamp;
+  static fromNumber(value: number): Timestamp;
+  static fromString(value: string, radix?: number): Timestamp;
+
+  constructor(low: number, high: number): Timestamp;
+
+  add(Timestamp): Timestamp;
+  and(Timestamp): Timestamp;
+  compare(Timestamp): number;
+  div(Timestamp): Timestamp;
+  equals(Timestamp): boolean;
+  getHighBits(): number;
+  getLowBits(): number;
+  getLowBitsUnsigned(): number;
+  getNumBitsAbs(): number;
+  greaterThan(Timestamp): boolean;
+  greaterThanOrEqual(Timestamp): boolean;
+  isNegative(): boolean;
+  isOdd(): boolean;
+  isZero(): boolean;
+  lessThan(Timestamp): boolean;
+  lessThanOrEqual(Timestamp): boolean;
+  modulo(Timestamp): Timestamp;
+  multiply(Timestamp): Timestamp;
+  negate(): Timestamp;
+  not(): Timestamp;
+  notEquals(Timestamp): boolean;
+  or(Timestamp): Timestamp;
+  shiftLeft(numBits: number): Timestamp;
+  shiftRight(numBits: number): Timestamp;
+  shiftRightUnsigned(numBits: number): Timestamp;
+  subtract(Timestamp): Timestamp;
+  toInt(): number;
+  toJSON(): string;
+  toNumber(): number;
+  toString(radix?: number): string;
+  xor(Timestamp): Timestamp;
+}
+
+type TransactionOptions = {|
+  readConcern?: mixed,
+  writeConcern?: WriteConcern,
+  readPreference?: mixed,
+|};
+
+// Not actually exported by mongoist, but used structurally in parameter
+// types.
+interface ClientSession {
+  id: mixed;
+
+  abortTransaction(): Promise<mixed>;
+  abortTransaction(callback: (Error | null, reply?: null) => mixed): void;
+  advanceOperationTime(Timestamp): void;
+  commitTransaction(): Promise<mixed>;
+  commitTransaction(callback: (Error | null, reply?: null) => mixed): void;
+  endSession(): void;
+  endSession(callback: (Error | null, reply?: null) => mixed): void;
+  endSession(
+    options: ?{ [string]: mixed, ... },
+    callback: (Error | null, reply?: null) => mixed
+  ): void;
+  equals(ClientSession): boolean;
+  incrementTransactionNumber(): void;
+  inTransaction(): boolean;
+  startTransaction(options?: TransactionOptions): void;
+  withTransaction(
+    fn: (session: ClientSession) => Promise<mixed>,
+    options?: TransactionOptions
+  ): Promise<null | void>;
+}
+
+type BulkExecuteResult = {|
+  ok: 1,
+  writeErrors: mixed[],
+  writeConcernErrors: mixed[],
+  nInserted: number,
+  nUpserted: number,
+  nMatched: number,
+  nModified: number,
+  nRemoved: number,
+  upserted: mixed[],
+|};
+
+type BulkJSONValue = {|
+  nInsertOps: number,
+  nUpdateOps: number,
+  nRemoveOps: number,
+  nBatches: number,
+|};
+
+interface FindSyntax {
+  upsert(): FindSyntax;
+  remove(): void;
+  removeOne(): void;
+  update(update: mixed): void;
+  updateOne(update: mixed): void;
+  replaceOne(update: mixed): void;
+}
+
+interface Bulk {
+  ensureCommand(cmdName: string, bulkCollection: mixed): mixed;
+  find(selector: Query): FindSyntax;
+  insert(doc: { [string]: mixed, ... }): void;
+  execute(): Promise<BulkExecuteResult>;
+  pushCurrentCmd(): void;
+  tojson(): BulkJSONValue;
+}
+
+type BulkOptions = {|
+  ...WriteConcern,
+  ignoreUndefined?: boolean,
+  session?: ClientSession,
+|};
+
+export type ConnectionOptions = {|
+  poolSize?: number,
+  ssl?: boolean,
+  sslValidate?: boolean,
+  sslCA?: (Buffer | string)[],
+  sslCert?: Buffer | string,
+  sslKey?: Buffer | string,
+  sslPass?: Buffer | string,
+  sslCRL?: Buffer,
+  autoReconnect?: boolean,
+  noDelay?: boolean,
+  keepAlive?: number,
+  keepAliveInitialDelay?: number,
+  connectTimeoutMS?: number,
+  family?: 4 | 6 | null,
+  socketTimeoutMS?: number,
+  reconnectTries?: number,
+  reconnectInterval?: number,
+  ha?: boolean,
+  haInterval?: number,
+  replicaSet?: string | null,
+  secondaryAcceptableLatencyMS?: number,
+  acceptableLatencyMS?: number,
+  connectWithNoPrimary?: boolean,
+  authSource?: string | null,
+  ...WriteConcern,
+  forceServerObjectId?: boolean,
+  serializeFunctions?: boolean,
+  ignoreUndefined?: boolean,
+  raw?: boolean,
+  bufferMaxEntries?: number,
+  promoteValues?: boolean,
+  promoteBuffers?: boolean,
+  promoteLongs?: boolean,
+  domainsEnabled?: boolean,
+  bufferMaxEntries?: number,
+  // One of an object-based enum.
+  readPreference?: mixed,
+  // Some sort of vaguely-defined generator for primary keys.
+  pkFactory?: mixed,
+  promiseLibrary?: mixed | null,
+  readConcern?: {|
+    level?: 'local' | 'available' | 'majority' | 'linearizable' | 'snapshot',
+  |},
+  maxStalenessSeconds?: number | null,
+  appname?: string | null,
+  loggerLevel?: string | null,
+  // TODO: is this right?
+  logger?: typeof console | null,
+  checkServerIdentity?: boolean | mixed,
+  validateOptions?: mixed,
+  auth?: {|
+    user?: string,
+    password?: string,
+  |},
+  authMechanism?: 'MDEFAULT' | 'GSSAPI' | 'PLAIN' | 'MONGODB-X509' | 'SCRAM-SHA-1',
+  compression?: mixed,
+  fsync?: boolean,
+  readPreferenceTags?: mixed[],
+  numberOfRetries?: number,
+  auto_reconnect?: boolean,
+  minSize?: number,
+|};
+
+/* eslint-disable no-undef */
+declare opaque type Connection;
+declare opaque type InternalCollection;
+declare opaque type InternalCursor;
+/* eslint-enable no-undef */
+
+type Query = {
+  [string]: mixed,
+  ...,
+};
+
+type CollationParam = {|
+  locale: string,
+  caseLevel?: boolean,
+  caseFirst?: 'upper' | 'lower' | 'off',
+  strength?: 1 | 2 | 3 | 4 | 5,
+  numericOrdering?: boolean,
+  alternate?: 'non-ignorable' | 'shifted',
+  maxVariable?: 'punct' | 'space',
+  backwards?: boolean,
+  normalization?: boolean,
+|};
+
+type TailableOptions =
+  | {|
+      tailable?: false,
+    |}
+  | {|
+      tailable: true,
+      awaitData?: false,
+    |}
+  | {|
+      tailable: true,
+      awaitData: true,
+      maxAwaitTimeMS?: number,
+    |};
+
+type QueryOptions = {|
+  limit?: number,
+  sort?: mixed,
+  projection?: Projection,
+  skip?: number,
+  hint?: mixed,
+  explain?: boolean,
+  snapshot?: boolean,
+  timeout?: boolean,
+  ...TailableOptions,
+  batchSize?: number,
+  returnKey?: boolean,
+  min?: number,
+  max?: number,
+  showDiskLoc?: boolean,
+  comment?: string,
+  raw?: boolean,
+  promoteLongs?: boolean,
+  promoteValues?: boolean,
+  promoteBuffers?: boolean,
+  readPreference?: mixed,
+  partial?: boolean,
+  maxTimeMS?: number,
+  noCursorTimeout?: boolean,
+  collation?: CollationParam,
+  session?: ClientSession,
+|};
+
+type FindAndModifyParams = {|
+  query: Query,
+  sort?: mixed,
+  remove?: boolean,
+  update?: mixed[] | { [string]: mixed, ... },
+  new?: boolean,
+  fields?: Projection,
+  upsert?: boolean,
+  bypassDocumentValidation?: boolean,
+  writeConcern?: WriteConcern,
+  maxTimeMS?: number,
+  findAndModify?: string,
+  collation?: CollationParam,
+  // mutually exclusive with update: mixed[]
+  arrayFilters?: mixed[],
+|};
+
+type BaseUpsertOptions = {|
+  ...WriteConcern,
+  bypassDocumentValidation?: boolean,
+  checkKeys?: boolean,
+  ignoreUndefined?: boolean,
+  serializeFunctions?: boolean,
+  // TODO: merge with WriteConcern
+  session?: ClientSession,
+|};
+
+type UpdateOptions = {|
+  ...BaseUpsertOptions,
+  arrayFilters?: mixed[],
+  collation?: CollationParam,
+  hint?: mixed,
+  upsert?: boolean,
+  multi?: boolean,
+|};
+
+type ReplaceOptions = {|
+  ...BaseUpsertOptions,
+  collation?: CollationParam,
+  hint?: mixed,
+|};
+
+type InsertOptions = {|
+  ...BaseUpsertOptions,
+  forceServerObjectId?: boolean,
+|};
+
+type RemoveOptions =
+  | boolean
+  | {|
+      ...WriteConcern,
+      justOne: boolean,
+      collation?: CollationParam,
+      checkKeys?: boolean,
+      serializeFunctions?: boolean,
+      ignoreUndefined?: boolean,
+      session?: ClientSession,
+    |};
+
+type RenameOptions = {|
+  dropTarget?: boolean,
+  session?: ClientSession,
+|};
+
+type UpdateOrReplaceResult = {|
+  ok: number,
+  n: number,
+  nModified: number,
+|};
+
+// Note that this type differs slightly from the one provided by the MongoDB native driver.
+type DeleteResult = {|
+  // ok === 1 on success
+  ok: number,
+  n: number,
+  deletedCount: number,
+|};
+
+type BaseRunCommandOptions = {|
+  // TODO: create the enum for readPreference.
+  readPreference?: mixed,
+|};
+
+type RunCommandOptions = {|
+  [string]: 1,
+  ...BaseRunCommandOptions,
+|};
+
+interface MongoJSDuck {
+  _getConnection(any): mixed;
+}
+
+type MapParam = string | (() => void);
+type ReduceParam<R> = string | ((key: mixed, values: mixed[]) => R);
+
+// http://mongodb.github.io/node-mongodb-native/3.3/api/Collection.html#mapReduce
+type MapReduceOptions<R> = {|
+  // TODO: create the enum for readPreference.
+  readPreference?: mixed,
+  out?: mixed,
+  query?: Query,
+  sort?: mixed,
+  limit?: number,
+  keeptemp?: boolean,
+  finalize?: string | ((key: mixed, value: R) => mixed),
+  scope?: mixed,
+  jsMode?: boolean,
+  verbose?: boolean,
+  bypassDocumentValidation?: boolean,
+  session?: ClientSession,
+|};
+
+type MapReduceRestParams<R = mixed> =
+  | [ReduceParam<R>]
+  | [ReduceParam<R>, MapReduceOptions<R> | void];
+
+type Index = string | mixed[] | { [string]: mixed, ... };
+type IndexOptions = {|
+  ...WriteConcern,
+  unique?: boolean,
+  sparse?: boolean,
+  background?: boolean,
+  dropDups?: boolean,
+  min?: number,
+  max?: number,
+  v?: number,
+  expireAfterSeconds?: number,
+  name?: string,
+  partialFilterExpression?: { [string]: mixed, ... },
+  collation?: CollationParam,
+  session?: ClientSession,
+|};
+
+type AggregationPipeline = mixed[];
+type AggregationOptions = {|
+  readPreference?: mixed,
+  batchSize?: number,
+  cursor?: mixed,
+  explain?: boolean,
+  allowDiskUse?: boolean,
+  maxTimeMS?: number,
+  maxAwaitTimeMS?: number,
+  bypassDocumentValidation?: boolean,
+  raw?: boolean,
+  promoteLongs?: boolean,
+  promoteValues?: boolean,
+  promoteBuffers?: boolean,
+  collation?: CollationParam,
+  comment?: string,
+  hint?: string | { [string]: mixed, ... },
+  session?: ClientSession,
+|};
+
+type ConstrainedProjection<V> = {
+  [string]: V | ConstrainedProjection<V>,
+  ...,
+};
+
+export type Projection = {
+  ...ConstrainedProjection<0 | false> | ConstrainedProjection<1 | true>,
+  _id?: false | 0 | true | 1,
+  ...
+};
+
+// https://github.com/facebook/flow/issues/2753
+declare class Cursor<Doc> extends stream$Readable {
+  constructor(cursorFactory: () => Promise<InternalCursor>): Cursor<Doc>;
+
+  map<V>(fn: (doc: Doc) => V): Promise<V[]>;
+  forEach(fn: (doc: Doc) => mixed): Promise<void>;
+  count(): Promise<number>;
+  size(): Promise<number>;
+  explain(): Promise<mixed>;
+  destroy(): Promise<mixed>;
+  close(): Promise<mixed>;
+  next(): Promise<Doc | null>;
+  hasNext(): Promise<boolean>;
+  rewind(): Promise<mixed>;
+  toArray(): Promise<Doc[]>;
+  addCursorFlag(flag: string, value: mixed): this;
+  getCursor(): Promise<InternalCursor>;
+
+  @@asyncIterator(): AsyncIterator<Doc>;
+}
+
+declare class Collection {
+  constructor(db: Database_, name: string): Collection;
+
+  connect(): Promise<InternalCollection>;
+  find<Doc>(query: Query, projection?: Projection, options?: QueryOptions): Promise<Doc[]>;
+  findAsCursor<Doc>(
+    query: Query,
+    projection?: Projection,
+    options?: QueryOptions
+  ): Promise<Cursor<Doc>>;
+  findOne<Doc>(query: Query, projection?: Projection, options?: QueryOptions): Promise<Doc>;
+  findAndModify(options: FindAndModifyParams): Promise<mixed | null>;
+  count(query: Query): Promise<number>;
+  distinct<FieldType>(field: string, query: Query): Promise<FieldType[]>;
+  // TODO: can we infer something about the return value from the docOrDocs parameter?
+  // TODO: can we decorate T with an _id field that's compatible with either
+  // ObjectId or string override?
+  // insert(doc: mixed, options?: InsertOptions): Promise<mixed>;
+  // insert(docs: mixed[], options?: InsertOptions): Promise<mixed[]>;
+  insert: typeof Collection.prototype.insertOne & typeof Collection.prototype.insertMany;
+  insertOne<Doc>(doc: Doc, options?: InsertOptions): Promise<{| _id: ObjectID, ...Doc |}>;
+  insertMany(docs: mixed[], options?: InsertOptions): Promise<mixed[]>;
+  // TODO: improve safety by restricting update type.
+  update(query: Query, update: mixed, options?: UpdateOptions): Promise<UpdateOrReplaceResult>;
+  replaceOne(
+    query: Query,
+    replacement: mixed,
+    options?: ReplaceOptions
+  ): Promise<UpdateOrReplaceResult>;
+  // TODO: restrict to some form of ArbitraryBSON.
+  save(doc: mixed, options?: BaseUpsertOptions): Promise<mixed>;
+  remove(query: Query, options?: RemoveOptions): Promise<DeleteResult>;
+  rename(name: string, options?: RenameOptions): Promise<InternalCollection>;
+  // TODO: refine this based on the provided command name.
+  runCommand(command: string, options?: BaseRunCommandOptions): Promise<mixed>;
+  drop(): Promise<mixed>;
+  stats(): Promise<mixed>;
+  mapReduce<R>(map: MapParam, ...params: MapReduceRestParams<R>): Promise<mixed>;
+  dropIndexes(): Promise<mixed>;
+  dropIndex(index: string): Promise<mixed>;
+  createIndex(index: Index, options?: IndexOptions): Promise<mixed>;
+  ensureIndex: typeof Collection.prototype.createIndex;
+  getIndexes(): Promise<mixed>;
+  reIndex(): Promise<mixed>;
+  isCapped(): Promise<boolean>;
+  aggregate(pipeline: AggregationPipeline, options?: AggregationOptions): Promise<mixed>;
+  aggregateAsCursor(pipeline: AggregationPipeline, options?: AggregationOptions): Promise<mixed>;
+  initializeOrderedBulkOp(options?: BulkOptions): Bulk;
+  initializeUnorderedBulkOp(options?: BulkOptions): Bulk;
+}
+
+type MaybePromise<T> = T | Promise<T>;
+
+type CollectionOptions = {
+  capped?: boolean,
+  size?: number,
+  max?: number,
+  storageEngine?: { [string]: mixed, ... },
+  validator?: { [string]: mixed, ... },
+  validationLevel?: 'off' | 'strict' | 'moderate',
+  validationAction?: 'error' | 'warn',
+  indexOptionDefaults?: { [string]: mixed, ... },
+  collation?: CollationParam,
+  writeConcern?: { [string]: mixed, ... },
+};
+
+// https://github.com/facebook/flow/issues/2753
+declare class Database_ extends events$EventEmitter {
+  // Note that this signature is incomplete, and that connectionString can be a mongojs instance
+  // too.
+  constructor(connectionString: MaybePromise<string>, options?: ConnectionOptions): Database_;
+  constructor(database: MaybePromise<Database_ | MongoJSDuck>): Database_;
+
+  connect(): Promise<Connection>;
+  close(force: boolean): Promise<void>;
+  dropDatabase(): Promise<mixed>;
+
+  collection(name: string): Collection;
+  createCollection(name: string, options?: CollectionOptions): Promise<mixed>;
+  getCollectionInfos(): Promise<mixed[]>;
+  getCollectionNames(): Promise<string[]>;
+  listCollections(): Promise<mixed[]>;
+
+  adminCommand(command: string | RunCommandOptions): Promise<mixed>;
+  runCommand(command: string | RunCommandOptions): Promise<mixed>;
+
+  createUser(user: mixed): Promise<mixed>;
+  dropAllUsers(): Promise<mixed>;
+  dropUser(username: string): Promise<mixed>;
+
+  getLastError(): Promise<mixed>;
+  getLastErrorObj(): Promise<mixed>;
+  stats(scale: mixed): Promise<mixed>;
+}
+
+type DatabaseWithProxy = Database_ & { [string]: Collection, ... };
+
+// declare function connect(
+//   connectionString: string,
+//   options?: ConnectionOptions
+// ): DatabaseWithProxy;
+
+// declare type Connect = (connectionString: Database | MongoJSDuck) => DatabaseWithProxy;
+// declare function connect(connectionString: Database_ | MongoJSDuck): DatabaseWithProxy;
+
+declare export class ObjectID {
+  constructor(value?: ?(string | number | ObjectID)): ObjectID;
+
+  generationTime: number;
+
+  static createFromHexString(hexString: string): ObjectID;
+  static createFromTime(time: number): ObjectID;
+  static isValid(id: string | number | ObjectID): boolean;
+
+  equals(ObjectID): boolean;
+  generate(time?: number): Buffer;
+  getTimestamp(): Date;
+  toHexString(): string;
+}
+
+type ConnectFn = {|
+  (connectionParam: MaybePromise<string>, options?: ConnectionOptions): DatabaseWithProxy,
+  (connectionParam: MaybePromise<Database_ | MongoJSDuck>): DatabaseWithProxy,
+
+  default: ConnectFn,
+
+  Database: DatabaseWithProxy,
+  Collection: typeof Collection,
+  Cursor: typeof Cursor,
+  Bulk: Bulk,
+  ObjectId: typeof ObjectID,
+  ObjectID: typeof ObjectID,
+
+  Binary: mixed,
+  Code: mixed,
+  DBRef: mixed,
+  Double: mixed,
+  Long: mixed,
+  NumberLong: mixed,
+  MinKey: mixed,
+  MaxKey: mixed,
+  Symbol: mixed,
+  Timestamp: typeof Timestamp,
+|};
+
+declare export default ConnectFn;
+
+export const ObjectId = ObjectID;
+export type Database = DatabaseWithProxy;
