@@ -4,6 +4,14 @@
  * Type definitions for mongoist in Flow.
  */
 
+type ReadPreference =
+  | 'primary'
+  | 'primaryPreferred'
+  | 'secondary'
+  | 'secondaryPreferred'
+  | 'nearest'
+  | null;
+
 type WriteConcern = {|
   w?: number | 'majority' | string | null,
   wtimeout?: number | null,
@@ -60,7 +68,7 @@ declare class Timestamp {
 type TransactionOptions = {|
   readConcern?: mixed,
   writeConcern?: WriteConcern,
-  readPreference?: mixed,
+  readPreference?: ReadPreference,
 |};
 
 // Not actually exported by mongoist, but used structurally in parameter
@@ -168,8 +176,7 @@ export type ConnectionOptions = {|
   promoteLongs?: boolean,
   domainsEnabled?: boolean,
   bufferMaxEntries?: number,
-  // One of an object-based enum.
-  readPreference?: mixed,
+  readPreference?: ReadPreference,
   // Some sort of vaguely-defined generator for primary keys.
   pkFactory?: mixed,
   promiseLibrary?: mixed | null,
@@ -253,7 +260,7 @@ type QueryOptions = {|
   promoteLongs?: boolean,
   promoteValues?: boolean,
   promoteBuffers?: boolean,
-  readPreference?: mixed,
+  readPreference?: ReadPreference,
   partial?: boolean,
   maxTimeMS?: number,
   noCursorTimeout?: boolean,
@@ -340,8 +347,7 @@ type DeleteResult = {|
 |};
 
 type BaseRunCommandOptions = {|
-  // TODO: create the enum for readPreference.
-  readPreference?: mixed,
+  readPreference?: ReadPreference,
 |};
 
 type RunCommandOptions = {|
@@ -358,9 +364,8 @@ type ReduceParam<R> = string | ((key: mixed, values: mixed[]) => R);
 
 // http://mongodb.github.io/node-mongodb-native/3.3/api/Collection.html#mapReduce
 type MapReduceOptions<R> = {|
-  // TODO: create the enum for readPreference.
-  readPreference?: mixed,
-  out?: mixed,
+  readPreference?: ReadPreference,
+  out: {| inline: 1 |} | {| ['replace' | 'merge' | 'reduce']: 'string' |},
   query?: Query,
   sort?: mixed,
   limit?: number,
@@ -372,10 +377,6 @@ type MapReduceOptions<R> = {|
   bypassDocumentValidation?: boolean,
   session?: ClientSession,
 |};
-
-type MapReduceRestParams<R = mixed> =
-  | [ReduceParam<R>]
-  | [ReduceParam<R>, MapReduceOptions<R> | void];
 
 type Index = string | mixed[] | { [string]: mixed, ... };
 type IndexOptions = {|
@@ -396,7 +397,7 @@ type IndexOptions = {|
 
 type AggregationPipeline = mixed[];
 type AggregationOptions = {|
-  readPreference?: mixed,
+  readPreference?: ReadPreference,
   batchSize?: number,
   cursor?: mixed,
   explain?: boolean,
@@ -413,17 +414,6 @@ type AggregationOptions = {|
   hint?: string | { [string]: mixed, ... },
   session?: ClientSession,
 |};
-
-type ConstrainedProjection<V> = {
-  [string]: V | ConstrainedProjection<V>,
-  ...,
-};
-
-export type Projection = {
-  ...ConstrainedProjection<0 | false> | ConstrainedProjection<1 | true>,
-  _id?: false | 0 | true | 1,
-  ...
-};
 
 // https://github.com/facebook/flow/issues/2753
 declare class Cursor<Doc> extends stream$Readable {
@@ -446,6 +436,58 @@ declare class Cursor<Doc> extends stream$Readable {
   @@asyncIterator(): AsyncIterator<Doc>;
 }
 
+type Expression = mixed;
+
+type ConstrainedProjection<V> = {
+  [string]:
+    | V
+    | {| $meta: 'textScore' |}
+    | {| $slice: number | [number, number] |}
+    | {| $elemMatch: Expression |},
+  ...,
+};
+
+export type Projection = {
+  ...ConstrainedProjection<0 | false> | ConstrainedProjection<1 | true>,
+  _id?: false | 0 | true | 1,
+  ...
+};
+
+type AggregationUpdate = (
+  | {|
+      ['$addFields' | '$set' | '$replaceWith']: { [string]: Expression, ... },
+    |}
+  | {|
+      $project:
+        | { [string]: 0 | false, _id?: Expression | 0 | false | 1 | true, ... }
+        | { [string]: Expression | 1 | true, _id?: Expression | 0 | false | 1 | true, ... },
+    |}
+  | {| $unset: string | string[] |}
+  | {| $replaceRoot: { newRoot: { [string]: Expression, ... } } |}
+)[];
+
+type AtomicUpdate = {
+  [
+    | '$addToSet'
+    | '$bit'
+    | '$currentDate'
+    | '$inc'
+    | '$max'
+    | '$min'
+    | '$mul'
+    | '$pop'
+    | '$pull'
+    | '$pullAll'
+    | '$push'
+    | '$rename'
+    | '$set'
+    | '$setOnInsert'
+    | '$unset']: mixed,
+  ...,
+};
+
+type AddObjectIDField = <Doc>(Doc) => { _id: ObjectID, ...Doc };
+
 declare class Collection {
   constructor(db: Database_, name: string): Collection;
 
@@ -460,30 +502,29 @@ declare class Collection {
   findAndModify(options: FindAndModifyParams): Promise<mixed | null>;
   count(query: Query): Promise<number>;
   distinct<FieldType>(field: string, query: Query): Promise<FieldType[]>;
-  // TODO: can we infer something about the return value from the docOrDocs parameter?
-  // TODO: can we decorate T with an _id field that's compatible with either
-  // ObjectId or string override?
-  // insert(doc: mixed, options?: InsertOptions): Promise<mixed>;
-  // insert(docs: mixed[], options?: InsertOptions): Promise<mixed[]>;
   insert: typeof Collection.prototype.insertOne & typeof Collection.prototype.insertMany;
-  insertOne<Doc>(doc: Doc, options?: InsertOptions): Promise<{| _id: ObjectID, ...Doc |}>;
-  insertMany(docs: mixed[], options?: InsertOptions): Promise<mixed[]>;
+  insertOne<Doc>(doc: Doc, options?: InsertOptions): Promise<$Call<AddObjectIDField, Doc>>;
+  insertMany<Docs>(docs: Docs, options?: InsertOptions): Promise<$TupleMap<Docs, AddObjectIDField>>;
   // TODO: improve safety by restricting update type.
-  update(query: Query, update: mixed, options?: UpdateOptions): Promise<UpdateOrReplaceResult>;
+  update(
+    query: Query,
+    update: AtomicUpdate | AggregationUpdate,
+    options?: UpdateOptions
+  ): Promise<UpdateOrReplaceResult>;
   replaceOne(
     query: Query,
     replacement: mixed,
     options?: ReplaceOptions
   ): Promise<UpdateOrReplaceResult>;
   // TODO: restrict to some form of ArbitraryBSON.
-  save(doc: mixed, options?: BaseUpsertOptions): Promise<mixed>;
+  save<Doc>(doc: Doc, options?: BaseUpsertOptions): Promise<{| _id: ObjectID, ...Doc |}>;
   remove(query: Query, options?: RemoveOptions): Promise<DeleteResult>;
   rename(name: string, options?: RenameOptions): Promise<InternalCollection>;
   // TODO: refine this based on the provided command name.
   runCommand(command: string, options?: BaseRunCommandOptions): Promise<mixed>;
   drop(): Promise<mixed>;
   stats(): Promise<mixed>;
-  mapReduce<R>(map: MapParam, ...params: MapReduceRestParams<R>): Promise<mixed>;
+  mapReduce<R>(map: MapParam, reduce: ReduceParam<R>, options: MapReduceOptions<R>): Promise<mixed>;
   dropIndexes(): Promise<mixed>;
   dropIndex(index: string): Promise<mixed>;
   createIndex(index: Index, options?: IndexOptions): Promise<mixed>;
@@ -499,7 +540,7 @@ declare class Collection {
 
 type MaybePromise<T> = T | Promise<T>;
 
-type CollectionOptions = {
+type CollectionOptions = {|
   capped?: boolean,
   size?: number,
   max?: number,
@@ -510,12 +551,26 @@ type CollectionOptions = {
   indexOptionDefaults?: { [string]: mixed, ... },
   collation?: CollationParam,
   writeConcern?: { [string]: mixed, ... },
-};
+|};
+
+type Stats = {|
+  db: string,
+  collections: number,
+  objects: number,
+  avgObjectSize: number,
+  dataSize: number,
+  storageSize: number,
+  numExtents: number,
+  indexes: number,
+  indexSize: number,
+  scaleFactor?: number,
+  fsUsedSize?: number,
+  fsTotalSize?: number,
+  ok?: number,
+|};
 
 // https://github.com/facebook/flow/issues/2753
 declare class Database_ extends events$EventEmitter {
-  // Note that this signature is incomplete, and that connectionString can be a mongojs instance
-  // too.
   constructor(connectionString: MaybePromise<string>, options?: ConnectionOptions): Database_;
   constructor(database: MaybePromise<Database_ | MongoJSDuck>): Database_;
 
@@ -536,20 +591,12 @@ declare class Database_ extends events$EventEmitter {
   dropAllUsers(): Promise<mixed>;
   dropUser(username: string): Promise<mixed>;
 
-  getLastError(): Promise<mixed>;
-  getLastErrorObj(): Promise<mixed>;
-  stats(scale: mixed): Promise<mixed>;
+  getLastError(): Promise<string | null>;
+  getLastErrorObj(): Promise<{ [string]: mixed, ... }>;
+  stats(scale: mixed): Promise<Stats>;
 }
 
 type DatabaseWithProxy = Database_ & { [string]: Collection, ... };
-
-// declare function connect(
-//   connectionString: string,
-//   options?: ConnectionOptions
-// ): DatabaseWithProxy;
-
-// declare type Connect = (connectionString: Database | MongoJSDuck) => DatabaseWithProxy;
-// declare function connect(connectionString: Database_ | MongoJSDuck): DatabaseWithProxy;
 
 declare export class ObjectID {
   constructor(value?: ?(string | number | ObjectID)): ObjectID;
