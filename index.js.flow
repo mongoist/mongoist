@@ -492,13 +492,13 @@ declare class Collection {
   constructor(db: Database_, name: string): Collection;
 
   connect(): Promise<InternalCollection>;
-  find<Doc>(query: Query, projection?: Projection, options?: QueryOptions): Promise<Doc[]>;
+  find<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Promise<Doc[]>;
   findAsCursor<Doc>(
-    query: Query,
+    query?: Query,
     projection?: Projection,
     options?: QueryOptions
   ): Promise<Cursor<Doc>>;
-  findOne<Doc>(query: Query, projection?: Projection, options?: QueryOptions): Promise<Doc>;
+  findOne<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Promise<Doc>;
   findAndModify(options: FindAndModifyParams): Promise<mixed | null>;
   count(query: Query): Promise<number>;
   distinct<FieldType>(field: string, query: Query): Promise<FieldType[]>;
