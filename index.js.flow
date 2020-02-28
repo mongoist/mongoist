@@ -203,11 +203,9 @@ export type ConnectionOptions = $ReadOnly<{|
   minSize?: number,
 |}>;
 
-/* eslint-disable no-undef */
 declare opaque type Connection;
 declare opaque type InternalCollection;
 declare opaque type InternalCursor;
-/* eslint-enable no-undef */
 
 type Query = {
   +[string]: mixed,

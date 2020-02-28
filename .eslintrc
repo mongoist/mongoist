@@ -15,6 +15,12 @@
   },
   "overrides": [
     { "files": ["test/**/*.js"], "parserOptions": { "ecmaVersion": 2018 } },
-    { "files": ["index.js.flow"], "parser": "babel-eslint", "rules": { "no-unused-vars": "off" } }
+    {
+      "files": ["index.js.flow"],
+      "extends": ["plugin:flowtype/recommended", "prettier/flowtype"],
+      "parser": "babel-eslint",
+      "plugins": ["flowtype"],
+      "rules": { "no-unused-vars": "off" }
+    }
   ]
 }
