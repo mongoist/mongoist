@@ -532,8 +532,8 @@ declare class Collection {
   getIndexes(): Promise<mixed>;
   reIndex(): Promise<mixed>;
   isCapped(): Promise<boolean>;
-  aggregate(pipeline: AggregationPipeline, options?: AggregationOptions): Promise<mixed>;
-  aggregateAsCursor(pipeline: AggregationPipeline, options?: AggregationOptions): Promise<mixed>;
+  aggregate<Doc>(pipeline: AggregationPipeline, options?: AggregationOptions): Promise<Doc[]>;
+  aggregateAsCursor<Doc>(pipeline: AggregationPipeline, options?: AggregationOptions): Cursor<Doc>;
   initializeOrderedBulkOp(options?: BulkOptions): Bulk;
   initializeUnorderedBulkOp(options?: BulkOptions): Bulk;
 }
