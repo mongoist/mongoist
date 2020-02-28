@@ -512,7 +512,7 @@ declare export class Collection {
     projection?: Projection,
     options?: QueryOptions
   ): Cursor<Doc>;
-  findOne<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Promise<Doc>;
+  findOne<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Promise<Doc | null>;
   findAndModify(options: FindAndModifyParams): Promise<mixed | null>;
   count(query: Query): Promise<number>;
   distinct<FieldType>(field: string, query: Query): Promise<FieldType[]>;
