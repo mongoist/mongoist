@@ -13,9 +13,9 @@ type ReadPreference =
   | null;
 
 type WriteConcern = {|
-  w?: number | 'majority' | string | null,
-  wtimeout?: number | null,
-  j?: boolean,
+  +w?: number | 'majority' | string | null,
+  +wtimeout?: number | null,
+  +j?: boolean,
 |};
 
 declare class Timestamp {
@@ -66,9 +66,9 @@ declare class Timestamp {
 }
 
 type TransactionOptions = {|
-  readConcern?: mixed,
-  writeConcern?: WriteConcern,
-  readPreference?: ReadPreference,
+  +readConcern?: mixed,
+  +writeConcern?: WriteConcern,
+  +readPreference?: ReadPreference,
 |};
 
 // Not actually exported by mongoist, but used structurally in parameter
@@ -128,7 +128,7 @@ interface FindSyntax {
 interface Bulk {
   ensureCommand(cmdName: string, bulkCollection: mixed): mixed;
   find(selector: Query): FindSyntax;
-  insert(doc: { [string]: mixed, ... }): void;
+  insert(doc: { +[string]: mixed, ... }): void;
   execute(): Promise<BulkExecuteResult>;
   pushCurrentCmd(): void;
   tojson(): BulkJSONValue;
@@ -136,11 +136,11 @@ interface Bulk {
 
 type BulkOptions = {|
   ...WriteConcern,
-  ignoreUndefined?: boolean,
-  session?: ClientSession,
+  +ignoreUndefined?: boolean,
+  +session?: ClientSession,
 |};
 
-export type ConnectionOptions = {|
+export type ConnectionOptions = $ReadOnly<{|
   poolSize?: number,
   ssl?: boolean,
   sslValidate?: boolean,
@@ -201,7 +201,7 @@ export type ConnectionOptions = {|
   numberOfRetries?: number,
   auto_reconnect?: boolean,
   minSize?: number,
-|};
+|}>;
 
 /* eslint-disable no-undef */
 declare opaque type Connection;
@@ -210,11 +210,11 @@ declare opaque type InternalCursor;
 /* eslint-enable no-undef */
 
 type Query = {
-  [string]: mixed,
+  +[string]: mixed,
   ...,
 };
 
-type CollationParam = {|
+type CollationParam = $ReadOnly<{|
   locale: string,
   caseLevel?: boolean,
   caseFirst?: 'upper' | 'lower' | 'off',
@@ -224,23 +224,23 @@ type CollationParam = {|
   maxVariable?: 'punct' | 'space',
   backwards?: boolean,
   normalization?: boolean,
-|};
+|}>;
 
 type TailableOptions =
   | {|
-      tailable?: false,
+      +tailable?: false,
     |}
   | {|
-      tailable: true,
-      awaitData?: false,
+      +tailable: true,
+      +awaitData?: false,
     |}
   | {|
-      tailable: true,
-      awaitData: true,
-      maxAwaitTimeMS?: number,
+      +tailable: true,
+      +awaitData: true,
+      +maxAwaitTimeMS?: number,
     |};
 
-type QueryOptions = {|
+type QueryOptions = $ReadOnly<{|
   limit?: number,
   sort?: mixed,
   projection?: Projection,
@@ -266,13 +266,13 @@ type QueryOptions = {|
   noCursorTimeout?: boolean,
   collation?: CollationParam,
   session?: ClientSession,
-|};
+|}>;
 
-type FindAndModifyParams = {|
+type FindAndModifyParams = $ReadOnly<{|
   query: Query,
   sort?: mixed,
   remove?: boolean,
-  update?: Update | AggregationUpdate,
+  update?: ReadOnlyUpdate | AggregationUpdate,
   new?: boolean,
   fields?: Projection,
   upsert?: boolean,
@@ -283,9 +283,9 @@ type FindAndModifyParams = {|
   collation?: CollationParam,
   // mutually exclusive with update: mixed[]
   arrayFilters?: mixed[],
-|};
+|}>;
 
-type BaseUpsertOptions = {|
+type BaseUpsertOptions = $ReadOnly<{|
   ...WriteConcern,
   bypassDocumentValidation?: boolean,
   checkKeys?: boolean,
@@ -293,31 +293,31 @@ type BaseUpsertOptions = {|
   serializeFunctions?: boolean,
   // TODO: merge with WriteConcern
   session?: ClientSession,
-|};
+|}>;
 
-type UpdateOptions = {|
+type UpdateOptions = $ReadOnly<{|
   ...BaseUpsertOptions,
   arrayFilters?: mixed[],
   collation?: CollationParam,
   hint?: mixed,
   upsert?: boolean,
   multi?: boolean,
-|};
+|}>;
 
 type ReplaceOptions = {|
   ...BaseUpsertOptions,
-  collation?: CollationParam,
-  hint?: mixed,
+  +collation?: CollationParam,
+  +hint?: mixed,
 |};
 
 type InsertOptions = {|
   ...BaseUpsertOptions,
-  forceServerObjectId?: boolean,
+  +forceServerObjectId?: boolean,
 |};
 
 type RemoveOptions =
   | boolean
-  | {|
+  | $ReadOnly<{|
       ...WriteConcern,
       justOne: boolean,
       collation?: CollationParam,
@@ -325,11 +325,11 @@ type RemoveOptions =
       serializeFunctions?: boolean,
       ignoreUndefined?: boolean,
       session?: ClientSession,
-    |};
+    |}>;
 
 type RenameOptions = {|
-  dropTarget?: boolean,
-  session?: ClientSession,
+  +dropTarget?: boolean,
+  +session?: ClientSession,
 |};
 
 type UpdateOrReplaceResult = {|
@@ -347,11 +347,11 @@ type DeleteResult = {|
 |};
 
 type BaseRunCommandOptions = {|
-  readPreference?: ReadPreference,
+  +readPreference?: ReadPreference,
 |};
 
 type RunCommandOptions = {|
-  [string]: 1,
+  +[string]: 1,
   ...BaseRunCommandOptions,
 |};
 
@@ -363,7 +363,7 @@ type MapParam = string | (() => void);
 type ReduceParam<R> = string | ((key: mixed, values: mixed[]) => R);
 
 // http://mongodb.github.io/node-mongodb-native/3.3/api/Collection.html#mapReduce
-type MapReduceOptions<R> = {|
+type MapReduceOptions<R> = $ReadOnly<{|
   readPreference?: ReadPreference,
   out: {| inline: 1 |} | {| ['replace' | 'merge' | 'reduce']: 'string' |},
   query?: Query,
@@ -376,10 +376,10 @@ type MapReduceOptions<R> = {|
   verbose?: boolean,
   bypassDocumentValidation?: boolean,
   session?: ClientSession,
-|};
+|}>;
 
 type Index = string | mixed[] | { [string]: mixed, ... };
-type IndexOptions = {|
+type IndexOptions = $ReadOnly<{|
   ...WriteConcern,
   unique?: boolean,
   sparse?: boolean,
@@ -393,10 +393,10 @@ type IndexOptions = {|
   partialFilterExpression?: { [string]: mixed, ... },
   collation?: CollationParam,
   session?: ClientSession,
-|};
+|}>;
 
 type AggregationPipeline = mixed[];
-type AggregationOptions = {|
+type AggregationOptions = $ReadOnly<{|
   readPreference?: ReadPreference,
   batchSize?: number,
   cursor?: mixed,
@@ -413,7 +413,7 @@ type AggregationOptions = {|
   comment?: string,
   hint?: string | { [string]: mixed, ... },
   session?: ClientSession,
-|};
+|}>;
 
 // https://github.com/facebook/flow/issues/2753
 declare class Cursor<Doc> extends stream$Readable {
@@ -453,18 +453,18 @@ export type Projection = {
   ...
 };
 
-type AggregationUpdate = (
+type AggregationUpdate = $ReadOnlyArray<
   | {|
-      ['$addFields' | '$set' | '$replaceWith']: { [string]: Expression, ... },
+      +['$addFields' | '$set' | '$replaceWith']: { [string]: Expression, ... },
     |}
   | {|
-      $project:
-        | { [string]: 0 | false, _id?: Expression | 0 | false | 1 | true, ... }
-        | { [string]: Expression | 1 | true, _id?: Expression | 0 | false | 1 | true, ... },
+      +$project:
+        | { +[string]: 0 | false, +_id?: Expression | 0 | false | 1 | true, ... }
+        | { +[string]: Expression | 1 | true, +_id?: Expression | 0 | false | 1 | true, ... },
     |}
-  | {| $unset: string | string[] |}
-  | {| $replaceRoot: { newRoot: { [string]: Expression, ... } } |}
-)[];
+  | {| +$unset: string | string[] |}
+  | {| +$replaceRoot: { +newRoot: { +[string]: Expression, ... } } |}
+>;
 
 export type Update = {|
   $addToSet?: { [string]: mixed, ... },
@@ -483,6 +483,24 @@ export type Update = {|
   $setOnInsert?: { [string]: mixed, ... },
   $unset?: { [string]: mixed, ... },
 |};
+
+type ReadOnlyUpdate = $ReadOnly<{
+  $addToSet?: { +[string]: mixed, ... },
+  $bit?: { +['and' | 'or' | 'xor']: number },
+  $currentDate?: { +[string]: true | { +$type: 'timestamp' | 'date' } },
+  $inc?: { +[string]: number, ... },
+  $max?: { +[string]: mixed, ... },
+  $min?: { +[string]: mixed, ... },
+  $pop?: { +[string]: -1 | 1, ...  },
+  $pull?: { +[string]: mixed, ... },
+  $pullAll?: { +[string]: mixed, ... },
+  $push?: { +[string]: mixed, ... },
+  $rename?: { +[string]: mixed, ... },
+  $set?: { +[string]: mixed, ... },
+  // TODO: forbid this option if upsert is not true.
+  $setOnInsert?: { +[string]: mixed, ... },
+  $unset?: { +[string]: mixed, ... },
+}>;
 
 type AddObjectIDField = <Doc>(Doc) => { _id: ObjectID, ...Doc };
 
@@ -506,7 +524,7 @@ declare class Collection {
   // TODO: improve safety by restricting update type.
   update(
     query: Query,
-    update: Update | AggregationUpdate,
+    update: ReadOnlyUpdate | AggregationUpdate,
     options?: UpdateOptions
   ): Promise<UpdateOrReplaceResult>;
   replaceOne(
@@ -538,18 +556,18 @@ declare class Collection {
 
 type MaybePromise<T> = T | Promise<T>;
 
-type CollectionOptions = {|
+type CollectionOptions = $ReadOnly<{|
   capped?: boolean,
   size?: number,
   max?: number,
-  storageEngine?: { [string]: mixed, ... },
-  validator?: { [string]: mixed, ... },
+  storageEngine?: { +[string]: mixed, ... },
+  validator?: { +[string]: mixed, ... },
   validationLevel?: 'off' | 'strict' | 'moderate',
   validationAction?: 'error' | 'warn',
-  indexOptionDefaults?: { [string]: mixed, ... },
+  indexOptionDefaults?: { +[string]: mixed, ... },
   collation?: CollationParam,
-  writeConcern?: { [string]: mixed, ... },
-|};
+  writeConcern?: { +[string]: mixed, ... },
+|}>;
 
 type Stats = {|
   db: string,
