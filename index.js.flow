@@ -18,7 +18,7 @@ type WriteConcern = {|
   +j?: boolean,
 |};
 
-declare class Timestamp {
+declare export class Timestamp {
   static MAX_VALUE: Timestamp;
   static MIN_VALUE: Timestamp;
   static NEG_ONE: Timestamp;
@@ -125,7 +125,7 @@ interface FindSyntax {
   replaceOne(update: mixed): void;
 }
 
-interface Bulk {
+export interface Bulk {
   ensureCommand(cmdName: string, bulkCollection: mixed): mixed;
   find(selector: Query): FindSyntax;
   insert(doc: { +[string]: mixed, ... }): void;
@@ -416,7 +416,7 @@ type AggregationOptions = $ReadOnly<{|
 |}>;
 
 // https://github.com/facebook/flow/issues/2753
-declare class Cursor<Doc> extends stream$Readable {
+declare export class Cursor<Doc> extends stream$Readable {
   constructor(cursorFactory: () => Promise<InternalCursor>): Cursor<Doc>;
 
   map<V>(fn: (doc: Doc) => V): Promise<V[]>;
@@ -504,7 +504,7 @@ type ReadOnlyUpdate = $ReadOnly<{
 
 type AddObjectIDField = <Doc>(Doc) => { _id: ObjectID, ...Doc };
 
-declare class Collection {
+declare export class Collection {
   constructor(db: Database_, name: string): Collection;
 
   connect(): Promise<InternalCollection>;
@@ -666,3 +666,13 @@ declare export default ConnectFn;
 
 export const ObjectId = ObjectID;
 export type Database = DatabaseWithProxy;
+
+export type Binary = mixed;
+export type Code = mixed;
+export type DBRef = mixed;
+export type Double = mixed;
+export type Long = mixed;
+export type NumberLong = mixed;
+export type MinKey = mixed;
+export type MaxKey = mixed;
+export type Symbol = mixed;
