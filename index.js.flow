@@ -507,11 +507,7 @@ declare export class Collection {
 
   connect(): Promise<InternalCollection>;
   find<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Promise<Doc[]>;
-  findAsCursor<Doc>(
-    query?: Query,
-    projection?: Projection,
-    options?: QueryOptions
-  ): Cursor<Doc>;
+  findAsCursor<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Cursor<Doc>;
   findOne<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Promise<Doc | null>;
   findAndModify<Doc>(options: { ...FindAndModifyParams, upsert: true }): Promise<Doc>;
   findAndModify<Doc>(options: FindAndModifyParams): Promise<Doc | null>;
