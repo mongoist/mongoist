@@ -272,7 +272,7 @@ type FindAndModifyParams = {|
   query: Query,
   sort?: mixed,
   remove?: boolean,
-  update?: mixed[] | { [string]: mixed, ... },
+  update?: Update | AggregationUpdate,
   new?: boolean,
   fields?: Projection,
   upsert?: boolean,
@@ -466,25 +466,23 @@ type AggregationUpdate = (
   | {| $replaceRoot: { newRoot: { [string]: Expression, ... } } |}
 )[];
 
-type AtomicUpdate = {
-  [
-    | '$addToSet'
-    | '$bit'
-    | '$currentDate'
-    | '$inc'
-    | '$max'
-    | '$min'
-    | '$mul'
-    | '$pop'
-    | '$pull'
-    | '$pullAll'
-    | '$push'
-    | '$rename'
-    | '$set'
-    | '$setOnInsert'
-    | '$unset']: mixed,
-  ...,
-};
+export type Update = {|
+  $addToSet?: { [string]: mixed, ... },
+  $bit?: { ['and' | 'or' | 'xor']: number },
+  $currentDate?: { [string]: true | { $type: 'timestamp' | 'date' } },
+  $inc?: { [string]: number, ... },
+  $max?: { [string]: mixed, ... },
+  $min?: { [string]: mixed, ... },
+  $pop?: { [string]: -1 | 1, ...  },
+  $pull?: { [string]: mixed, ... },
+  $pullAll?: { [string]: mixed, ... },
+  $push?: { [string]: mixed, ... },
+  $rename?: { [string]: mixed, ... },
+  $set?: { [string]: mixed, ... },
+  // TODO: forbid this option if upsert is not true.
+  $setOnInsert?: { [string]: mixed, ... },
+  $unset?: { [string]: mixed, ... },
+|};
 
 type AddObjectIDField = <Doc>(Doc) => { _id: ObjectID, ...Doc };
 
@@ -508,7 +506,7 @@ declare class Collection {
   // TODO: improve safety by restricting update type.
   update(
     query: Query,
-    update: AtomicUpdate | AggregationUpdate,
+    update: Update | AggregationUpdate,
     options?: UpdateOptions
   ): Promise<UpdateOrReplaceResult>;
   replaceOne(
