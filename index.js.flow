@@ -380,7 +380,11 @@ type MapReduceOptions<R> = $ReadOnly<{|
   session?: ClientSession,
 |}>;
 
-type Index = string | mixed[] | { [string]: mixed, ... };
+type IndexType = '2d' | '2dsphere' | 'geoHaystack' | 'text' | 'hashed';
+type IndexFieldSpec = -1 | 1 | IndexType;
+type BaseIndex = string | { [string]: IndexFieldSpec };
+type Index = BaseIndex | (BaseIndex | [string, IndexFieldSpec])[];
+
 type IndexOptions = $ReadOnly<{|
   ...WriteConcern,
   unique?: boolean,
@@ -417,23 +421,41 @@ type AggregationOptions = $ReadOnly<{|
   session?: ClientSession,
 |}>;
 
+declare type CursorCountOptions = $ReadOnly<{|
+  skip?: number,
+  limit?: number,
+  maxTimeMS?: number,
+  hint?: string,
+  readPreference?: ReadPreference,
+|}>;
+
 // https://github.com/facebook/flow/issues/2753
 declare export class Cursor<Doc> extends stream$Readable {
   constructor(cursorFactory: () => Promise<InternalCursor>): Cursor<Doc>;
 
-  map<V>(fn: (doc: Doc) => V): Promise<V[]>;
-  forEach(fn: (doc: Doc) => mixed): Promise<void>;
-  count(): Promise<number>;
-  size(): Promise<number>;
-  explain(): Promise<mixed>;
-  destroy(): Promise<mixed>;
-  close(): Promise<mixed>;
-  next(): Promise<Doc | null>;
-  hasNext(): Promise<boolean>;
-  rewind(): Promise<mixed>;
-  toArray(): Promise<Doc[]>;
   addCursorFlag(flag: string, value: mixed): this;
+  batchSize(value: number): this;
+  close(): Promise<mixed>;
+  collation(value: CollationParam): this;
+  count(applySkipLimit: boolean, options: CursorCountOptions): Promise<number>;
+  destroy(): Promise<mixed>;
+  explain(): Promise<mixed>;
+  forEach(fn: (doc: Doc) => mixed): Promise<void>;
   getCursor(): Promise<InternalCursor>;
+  hasNext(): Promise<boolean>;
+  hint(index: Index | { $natural: 1 | -1 }): this;
+  limit(limit: number): this;
+  map<V>(fn: (doc: Doc) => V): Promise<V[]>;
+  max(indexBounds: { [string]: mixed }): this;
+  maxTimeMS(ms: number): this;
+  min(indexBounds: { [string]: mixed }): this;
+  next(): Promise<Doc | null>;
+  rewind(): Promise<mixed>;
+  size(): Promise<number>;
+  skip(offset: number): this;
+  snapshot(...args: mixed[]): this;
+  sort(order: {| +$natural: 1 |} | { +[string]: -1 | 1 | {| +$meta: 'textScore' |}, ... }): this;
+  toArray(): Promise<Doc[]>;
 
   @@asyncIterator(): AsyncIterator<Doc>;
 }
