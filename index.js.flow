@@ -401,7 +401,37 @@ type IndexOptions = $ReadOnly<{|
   session?: ClientSession,
 |}>;
 
-type AggregationPipeline = mixed[];
+type AggregationPipeline = $ReadOnlyArray<
+  | {| +$addFields: mixed |}
+  | {| +$bucket: mixed |}
+  | {| +$bucketAuto: mixed |}
+  | {| +$collStats: mixed |}
+  | {| +$count: mixed |}
+  | {| +$facet: mixed |}
+  | {| +$geoNear: mixed |}
+  | {| +$graphLookup: mixed |}
+  | {| +$group: mixed |}
+  | {| +$indexStats: mixed |}
+  | {| +$limit: mixed |}
+  | {| +$listSessions: mixed |}
+  | {| +$lookup: mixed |}
+  | {| +$match: mixed |}
+  | {| +$merge: mixed |}
+  | {| +$out: mixed |}
+  | {| +$planCacheStats: mixed |}
+  | {| +$project: mixed |}
+  | {| +$redact: mixed |}
+  | {| +$replaceRoot: mixed |}
+  | {| +$replaceWith: mixed |}
+  | {| +$sample: mixed |}
+  | {| +$set: mixed |}
+  | {| +$skip: mixed |}
+  | {| +$sort: mixed |}
+  | {| +$sortByCount: mixed |}
+  | {| +$unset: mixed |}
+  | {| +$unwind: mixed |}
+>;
+
 type AggregationOptions = $ReadOnly<{|
   readPreference?: ReadPreference,
   batchSize?: number,
