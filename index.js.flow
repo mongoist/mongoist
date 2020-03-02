@@ -127,7 +127,7 @@ interface FindSyntax {
 
 export interface Bulk {
   ensureCommand(cmdName: string, bulkCollection: mixed): mixed;
-  find(selector: Query): FindSyntax;
+  find(selector: ReadOnlyQuery): FindSyntax;
   insert(doc: { +[string]: mixed, ... }): void;
   execute(): Promise<BulkExecuteResult>;
   pushCurrentCmd(): void;
@@ -207,10 +207,14 @@ declare opaque type Connection;
 declare opaque type InternalCollection;
 declare opaque type InternalCursor;
 
-type Query = {
-  +[string]: mixed,
+export type Query = {
+  [string]: mixed,
   ...,
 };
+
+// This type is the same as the Query type, and is just used to avoid type errors when the type
+// passed in to the update field/parameter isn't fully compatible when mutated at runtime.
+type ReadOnlyQuery = $ReadOnly<Query>;
 
 type CollationParam = $ReadOnly<{|
   locale: string,
@@ -267,7 +271,7 @@ type QueryOptions = $ReadOnly<{|
 |}>;
 
 type FindAndModifyParams = $ReadOnly<{|
-  query: Query,
+  query: ReadOnlyQuery,
   sort?: mixed,
   remove?: boolean,
   update?: ReadOnlyUpdate | AggregationUpdate,
@@ -364,7 +368,7 @@ type ReduceParam<R> = string | ((key: mixed, values: mixed[]) => R);
 type MapReduceOptions<R> = $ReadOnly<{|
   readPreference?: ReadPreference,
   out: {| inline: 1 |} | {| ['replace' | 'merge' | 'reduce']: 'string' |},
-  query?: Query,
+  query?: ReadOnlyQuery,
   sort?: mixed,
   limit?: number,
   keeptemp?: boolean,
@@ -482,7 +486,9 @@ export type Update = {|
   $unset?: { [string]: mixed, ... },
 |};
 
-type ReadOnlyUpdate = $ReadOnly<{
+// This type is the same as the Update type, and is just used to avoid type errors when the type
+// passed in to the update field/parameter isn't fully compatible when mutated at runtime.
+type ReadOnlyUpdate = $ReadOnly<{|
   $addToSet?: { +[string]: mixed, ... },
   $bit?: { +['and' | 'or' | 'xor']: number },
   $currentDate?: { +[string]: true | { +$type: 'timestamp' | 'date' } },
@@ -498,38 +504,48 @@ type ReadOnlyUpdate = $ReadOnly<{
   // TODO: forbid this option if upsert is not true.
   $setOnInsert?: { +[string]: mixed, ... },
   $unset?: { +[string]: mixed, ... },
-}>;
+|}>;
 
 type AddObjectIDField = <Doc>(Doc) => { _id: ObjectID, ...Doc };
 
 declare export class Collection {
   constructor(db: Database_, name: string): Collection;
 
+  name: string;
+
   connect(): Promise<InternalCollection>;
-  find<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Promise<Doc[]>;
-  findAsCursor<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Cursor<Doc>;
-  findOne<Doc>(query?: Query, projection?: Projection, options?: QueryOptions): Promise<Doc | null>;
+  find<Doc>(query?: ReadOnlyQuery, projection?: Projection, options?: QueryOptions): Promise<Doc[]>;
+  findAsCursor<Doc>(
+    query?: ReadOnlyQuery,
+    projection?: Projection,
+    options?: QueryOptions
+  ): Cursor<Doc>;
+  findOne<Doc>(
+    query?: ReadOnlyQuery,
+    projection?: Projection,
+    options?: QueryOptions
+  ): Promise<Doc | null>;
   findAndModify<Doc>(options: { ...FindAndModifyParams, upsert: true }): Promise<Doc>;
   findAndModify<Doc>(options: FindAndModifyParams): Promise<Doc | null>;
-  count(query: Query): Promise<number>;
-  distinct<FieldType>(field: string, query: Query): Promise<FieldType[]>;
+  count(query: ReadOnlyQuery): Promise<number>;
+  distinct<FieldType>(field: string, query: ReadOnlyQuery): Promise<FieldType[]>;
   insert: typeof Collection.prototype.insertOne & typeof Collection.prototype.insertMany;
   insertOne<Doc>(doc: Doc, options?: InsertOptions): Promise<$Call<AddObjectIDField, Doc>>;
   insertMany<Docs>(docs: Docs, options?: InsertOptions): Promise<$TupleMap<Docs, AddObjectIDField>>;
   // TODO: improve safety by restricting update type.
   update(
-    query: Query,
+    query: ReadOnlyQuery,
     update: ReadOnlyUpdate | AggregationUpdate,
     options?: UpdateOptions
   ): Promise<UpdateOrReplaceResult>;
   replaceOne(
-    query: Query,
+    query: ReadOnlyQuery,
     replacement: mixed,
     options?: ReplaceOptions
   ): Promise<UpdateOrReplaceResult>;
   // TODO: restrict to some form of ArbitraryBSON.
   save<Doc>(doc: Doc, options?: BaseUpsertOptions): Promise<{| _id: ObjectID, ...Doc |}>;
-  remove(query: Query, options?: RemoveOptions): Promise<DeleteResult>;
+  remove(query: ReadOnlyQuery, options?: RemoveOptions): Promise<DeleteResult>;
   rename(name: string, options?: RenameOptions): Promise<InternalCollection>;
   // TODO: refine this based on the provided command name.
   runCommand(command: string, options?: BaseRunCommandOptions): Promise<mixed>;
