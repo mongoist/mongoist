@@ -640,7 +640,8 @@ declare export class ObjectID {
 
   static createFromHexString(hexString: string): ObjectID;
   static createFromTime(time: number): ObjectID;
-  static isValid(id: string | number | ObjectID): boolean;
+  static isValid(id: ObjectID | Buffer | number): true;
+  static isValid(id: string | mixed): boolean;
 
   equals(ObjectID): boolean;
   generate(time?: number): Buffer;
