@@ -13,5 +13,14 @@
     "no-var": "error",
     "prefer-const": "error"
   },
-  "overrides": [{ "files": ["test/**/*.js"], "parserOptions": { "ecmaVersion": 2018 } }]
+  "overrides": [
+    { "files": ["test/**/*.js"], "parserOptions": { "ecmaVersion": 2018 } },
+    {
+      "files": ["index.js.flow"],
+      "extends": ["plugin:flowtype/recommended", "prettier/flowtype"],
+      "parser": "babel-eslint",
+      "plugins": ["flowtype"],
+      "rules": { "no-unused-vars": "off" }
+    }
+  ]
 }
