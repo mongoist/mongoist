@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.0](https://github.com/mongoist/mongoist/compare/v2.4.0...v2.5.0) (2020-03-03)
+
+
+### Features
+
+* add flow types ([#43](https://github.com/mongoist/mongoist/issues/43)) ([37a3c4c](https://github.com/mongoist/mongoist/commit/37a3c4ceb856a02a3689d30405109820a50229b9))
+
 ## [2.4.0](https://github.com/mongoist/mongoist/compare/v2.3.0...v2.4.0) (2019-12-16)
 
 
