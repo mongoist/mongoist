@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.1](https://github.com/mongoist/mongoist/compare/v2.5.0...v2.5.1) (2020-03-06)
+
+
+### Bug Fixes
+
+* correct signature on Database#close ([88b0988](https://github.com/mongoist/mongoist/commit/88b09881e8b81307b1221f87619ebef4c0158f10))
+
 ## [2.5.0](https://github.com/mongoist/mongoist/compare/v2.4.0...v2.5.0) (2020-03-03)
 
 
