@@ -651,10 +651,10 @@ type Stats = {|
 // https://github.com/facebook/flow/issues/2753
 declare class Database_ extends events$EventEmitter {
   constructor(connectionString: MaybePromise<string>, options?: ConnectionOptions): Database_;
-  constructor(database: MaybePromise<Database_ | MongoJSDuck>): Database_;
+  constructor(database: MaybePromise<Database_ | DatabaseWithProxy | MongoJSDuck>): Database_;
 
   connect(): Promise<Connection>;
-  close(force: boolean): Promise<void>;
+  close(force?: boolean): Promise<void>;
   dropDatabase(): Promise<mixed>;
 
   collection(name: string): Collection;
@@ -672,7 +672,7 @@ declare class Database_ extends events$EventEmitter {
 
   getLastError(): Promise<string | null>;
   getLastErrorObj(): Promise<{ [string]: mixed, ... }>;
-  stats(scale: mixed): Promise<Stats>;
+  stats(scale?: mixed): Promise<Stats>;
 }
 
 type DatabaseWithProxy = Database_ & { [string]: Collection, ... };
@@ -703,7 +703,7 @@ declare export class ObjectID {
 
 type ConnectFn = {|
   (connectionParam: MaybePromise<string>, options?: ConnectionOptions): DatabaseWithProxy,
-  (connectionParam: MaybePromise<Database_ | MongoJSDuck>): DatabaseWithProxy,
+  (connectionParam: MaybePromise<Database_ | DatabaseWithProxy | MongoJSDuck>): DatabaseWithProxy,
 
   default: ConnectFn,
 
