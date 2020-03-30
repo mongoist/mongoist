@@ -114,6 +114,12 @@ db.collection('foo').find(...);
 // find everything in mycollection returned as array
 const documents = await db.mycollection.find();
 
+// find everything in mycollection returned as a Cursor (no intermediate Promise)
+const documentsCursor = db.mycollection.findAsCursor();
+
+// take the first document from the cursor
+const document = await documentsCursor.next();
+
 // find everything in mycollection, but sort by name
 const sortedDocuments = await db.mycollection.findAsCursor().sort({name: 1}).toArray();
 
