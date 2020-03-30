@@ -265,7 +265,7 @@ describe('database', function() {
     expect(docs).to.deep.contain({ name: 'Charmander' });
     expect(docs).to.deep.contain({ name: 'Lapras' });
 
-    const cursor = await db.a.findAsCursor({}, { name: true, _id: false });
+    const cursor = db.a.findAsCursor({}, { name: true, _id: false });
 
     const doc = await cursor.next();
 
@@ -300,7 +300,7 @@ describe('database', function() {
     expect(docs).to.deep.contain({ name: 'Charmander' });
     expect(docs).to.deep.contain({ name: 'Lapras' });
 
-    const cursor = await db.a.findAsCursor({}, { name: true, _id: false });
+    const cursor = db.a.findAsCursor({}, { name: true, _id: false });
 
     const doc = await cursor.next();
 
