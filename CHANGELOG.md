@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.2](https://github.com/mongoist/mongoist/compare/v2.5.1...v2.5.2) (2020-04-16)
+
+
+### Bug Fixes
+
+* report `writeErrors` for bulk ops ([0079896](https://github.com/mongoist/mongoist/commit/00798961b3686ca3fb19c2e467dae87c541b02e9))
+
 ### [2.5.1](https://github.com/mongoist/mongoist/compare/v2.5.0...v2.5.1) (2020-03-06)
 
 
