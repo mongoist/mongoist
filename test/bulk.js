@@ -167,4 +167,23 @@ describe('bulk', function() {
     expect(json.nRemoveOps).to.equal(1, 'Should result in nRemoveOps field set to 1');
     expect(json.nBatches).to.equal(3, 'Should result in nBatches field set to 3');
   });
+
+  it('should collate and report writeErrors', async () => {
+    await db.b.createIndex(
+      {
+        name: 1,
+      },
+      {
+        unique: true,
+        background: true,
+      }
+    );
+
+    const bulk = db.b.initializeUnorderedBulkOp();
+    bulk.insert({ name: 'Charmander' });
+    bulk.insert({ name: 'Charmander' });
+    const result = await bulk.execute();
+    expect(result.writeErrors.length).to.equal(1);
+    expect(result.writeErrors[0].errmsg).to.match(/duplicate key error/);
+  });
 });
