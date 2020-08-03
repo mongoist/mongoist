@@ -451,14 +451,6 @@ type AggregationOptions = $ReadOnly<{|
   session?: ClientSession,
 |}>;
 
-declare type CursorCountOptions = $ReadOnly<{|
-  skip?: number,
-  limit?: number,
-  maxTimeMS?: number,
-  hint?: string,
-  readPreference?: ReadPreference,
-|}>;
-
 // https://github.com/facebook/flow/issues/2753
 declare export class Cursor<Doc> extends stream$Readable {
   constructor(cursorFactory: () => Promise<InternalCursor>): Cursor<Doc>;
