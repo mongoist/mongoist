@@ -467,7 +467,7 @@ declare export class Cursor<Doc> extends stream$Readable {
   batchSize(value: number): this;
   close(): Promise<mixed>;
   collation(value: CollationParam): this;
-  count(applySkipLimit: boolean, options: CursorCountOptions): Promise<number>;
+  count(): Promise<number>;
   destroy(): Promise<mixed>;
   explain(): Promise<mixed>;
   forEach(fn: (doc: Doc) => mixed): Promise<void>;
