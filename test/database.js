@@ -59,6 +59,23 @@ describe('database', function() {
     await dbShort.close();
   });
 
+  it('should accept connection with options', async () => {
+    // auth should fail with invalid 'authSource', to make sure options take effect
+    const cannotConnect = mongoist('localhost:27017/test', { 'authSource': 'dummy' });
+    let errorEvent = null;
+    cannotConnect.on('error', (error) => {
+      errorEvent = error;
+    });
+
+    try {
+      await cannotConnect.test.find();
+      await cannotConnect.close();
+    } catch (e) {
+      expect(errorEvent).to.exist;
+      return;
+    }
+  });
+
   it('should create a collection', async() => {
     const collection = await db.createCollection('test123');
 
