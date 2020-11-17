@@ -62,19 +62,13 @@ describe('database', function() {
   it('should accept connection with options', async () => {
     // auth should fail with invalid 'authSource', to make sure options take effect
     const cannotConnect = mongoist('localhost:27017/test', { 'authSource': 'dummy' });
-    let errorEvent = null;
-    cannotConnect.on('error', (error) => {
-      errorEvent = error;
-    });
-
     try {
       await cannotConnect.test.find();
       await cannotConnect.close();
+      expect(false, "the error should occurred before");
     } catch (e) {
       expect(e).to.exist;
       return;
-    } finally {
-      expect(errorEvent).to.exist;
     }
   });
 
