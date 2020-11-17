@@ -71,8 +71,10 @@ describe('database', function() {
       await cannotConnect.test.find();
       await cannotConnect.close();
     } catch (e) {
-      expect(errorEvent).to.exist;
+      expect(e).to.exist;
       return;
+    } finally {
+      expect(errorEvent).to.exist;
     }
   });
 
