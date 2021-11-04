@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "nyc --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register",
-    "test:coveralls": "npm run test && shx cat ./coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js --verbose",
+    "test:coveralls": "npm run test",
     "lint": "eslint . --ext '.js, .js.flow'",
     "ci": "npm run lint && npm run test:coveralls",
     "lint:fix": "npm run lint -- --fix",
