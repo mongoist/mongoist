@@ -4,7 +4,7 @@ A [node.js](http://nodejs.org) module for mongodb built with async/await in mind
 
 Mongoist driver is heavily inspired by mongojs.
 
-[![Build Status](https://travis-ci.org/mongoist/mongoist.svg?branch=master)](https://travis-ci.org/mongoist/mongoist)
+[![Node.js CI](https://github.com/mongoist/mongoist/actions/workflows/node.js.yml/badge.svg)](https://github.com/mongoist/mongoist/actions/workflows/node.js.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mongoist/mongoist/badge.svg?branch=master)](https://coveralls.io/github/mongoist/mongoist?branch=master)
 
 ## Motivation
