@@ -18,7 +18,7 @@
     {
       "files": ["index.js.flow"],
       "extends": ["plugin:flowtype/recommended", "prettier/flowtype"],
-      "parser": "babel-eslint",
+      "parser": "@babel/eslint-parser",
       "plugins": ["flowtype"],
       "rules": { "no-unused-vars": "off" }
     }

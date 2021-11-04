@@ -1,4 +1,4 @@
 {
-  "presets": [["@babel/preset-env", { "targets": { "node": true } }]],
+  "presets": ["@babel/preset-flow", ["@babel/preset-env", { "targets": { "node": true } }]],
   "ignore": ["index.js", "lib/*.js"]
 }
