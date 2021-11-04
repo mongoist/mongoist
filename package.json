@@ -12,8 +12,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "nyc --reporter=text-summary mocha --recursive --require @babel/polyfill --require @babel/register",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": "npm run lint && nyc mocha --recursive --require @babel/polyfill --require @babel/register",
     "lint": "eslint . --ext '.js, .js.flow'",
     "lint:fix": "npm run lint -- --fix",
     "release": "standard-version"
@@ -47,7 +46,6 @@
     "@babel/register": "^7.7.0",
     "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.7",
     "drop-mongodb-collections": "^1.2.5",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.10.0",
