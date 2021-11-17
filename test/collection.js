@@ -132,7 +132,7 @@ describe('collection', function() {
     const docs = await db.a.distinct('name', {type: 'water'});
 
     expect(docs.length).to.equal(3);
-    expect(docs).to.deep.equal([ 'Squirtle', 'Starmie', 'Lapras' ]);
+    expect(docs.sort()).to.deep.equal(['Lapras' , 'Squirtle', 'Starmie']);
   });
 
   it('should update a document', async() => {
