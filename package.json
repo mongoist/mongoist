@@ -56,6 +56,6 @@
     "mocha": "^6.2.1",
     "mongojs": "^3.0.0",
     "nyc": "^14.1.1",
-    "standard-version": "^7.0.0"
+    "standard-version": "^8.0.1"
   }
 }
