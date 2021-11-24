@@ -60,7 +60,7 @@ describe('database', function() {
   });
 
   it('should accept connection with options', async () => {
-    // auth should fail with invalid 'authSource', to make sure options take effect
+    // connect should fail with enable 'ssl', to make sure options take effect
     const cannotConnect = mongoist('localhost:27017/test', { 'ssl': true });
     
     let err;
