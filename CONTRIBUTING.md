@@ -43,3 +43,11 @@ before doing that please read the notes below on debugging and submitting issues
     * :arrow_up: `:arrow_up:` when upgrading dependencies
     * :arrow_down: `:arrow_down:` when downgrading dependencies
     * :shirt: `:shirt:` when removing linter warnings
+
+## Publishing a new version
+
+1. Update <CHANGELOG.md> and commit change.
+2. `npm version <version>`
+3. `npm publish`
+4. `git push`
+5. `git push --tags`
