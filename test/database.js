@@ -60,18 +60,11 @@ describe('database', function() {
   });
 
   it('should accept connection with options', async () => {
-    // connect should fail with enable 'ssl', to make sure options take effect
-    const cannotConnect = mongoist('localhost:27017/test', { 'ssl': true });
+    db = mongoist('localhost:27017', { 'dbName': 'test' });
     
-    let err;
-    try {
-      await cannotConnect.test.find();
-      await cannotConnect.close();
-    } catch (e) {
-      err = e;
-    }
+    const dbName = (await db.connect()).s.namespace.db;
     
-    expect(err).to.exist;
+    expect(dbName).to.equal('test');
   });
 
   it('should create a collection', async() => {
@@ -183,7 +176,7 @@ describe('database', function() {
           roles: ['readWrite']
         });
       } catch(e) {
-        expect(e.code).to.equal(11000);
+        expect(e.code).to.equal(51003);
         return;
       }
 
