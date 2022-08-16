@@ -1,6 +1,6 @@
 {
   "name": "mongoist",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "Mongodb driver inspired by mongojs built with async/await in mind",
   "main": "index.js",
   "files": [
@@ -14,7 +14,7 @@
   "scripts": {
     "test": "nyc --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register",
     "test:coveralls": "npm run test",
-    "lint": "eslint . --ext '.js, .js.flow'",
+    "lint": "eslint . --ext '.js, .js.flow' && flow",
     "ci": "npm run lint && npm run test:coveralls",
     "lint:fix": "npm run lint -- --fix",
     "release": "standard-version"
@@ -53,6 +53,7 @@
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-flowtype": "^4.6.0",
+    "flow-bin": "0.108.0",
     "mocha": "^6.2.1",
     "mongojs": "^3.0.0",
     "nyc": "^14.1.1",

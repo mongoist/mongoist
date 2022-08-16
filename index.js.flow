@@ -460,7 +460,7 @@ declare export class Cursor<Doc> extends stream$Readable {
   close(): Promise<mixed>;
   collation(value: CollationParam): this;
   count(): Promise<number>;
-  destroy(): Promise<mixed>;
+  destroy(): this;
   explain(): Promise<mixed>;
   forEach(fn: (doc: Doc) => mixed): Promise<void>;
   getCursor(): Promise<InternalCursor>;
