@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.5.5](https://github.com/mongoist/mongoist/compare/v2.5.4...v2.5.5) (2020-08-16)
+
+### Bug Fixes
+
+- fix Flow types [PR](https://github.com/mongoist/mongoist/pull/80).
+
 ### [2.5.4](https://github.com/mongoist/mongoist/compare/v2.5.3...v2.5.4) (2020-08-04)
 
 ### Bug Fixes
