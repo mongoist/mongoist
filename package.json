@@ -46,6 +46,8 @@
     "@babel/polyfill": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "babel-eslint": "^10.0.3",
     "chai": "^4.2.0",
     "coveralls": "^3.1.1",
@@ -57,6 +59,6 @@
     "mocha": "^6.2.1",
     "mongojs": "^3.0.0",
     "nyc": "^14.1.1",
-    "standard-version": "^7.0.0"
+    "semantic-release": "^19.0.5"
   }
 }
