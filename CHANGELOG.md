@@ -1,3 +1,10 @@
+## [2.5.6-alpha.1](https://github.com/mongoist/mongoist/compare/v2.5.5...v2.5.6-alpha.1) (2022-10-19)
+
+
+### Bug Fixes
+
+* **(security:** update dependencies to remove security vulnerabilities ([#85](https://github.com/mongoist/mongoist/issues/85)) ([207d831](https://github.com/mongoist/mongoist/commit/207d831e11206b116a68bbaa39cc8936e0973c20))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
