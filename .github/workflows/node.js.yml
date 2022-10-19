@@ -21,13 +21,13 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+        cache: 'npm'
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.6.0        
       with:
         mongodb-version: ${{ matrix.mongodb-version }}      
     - run: npm ci
-    - run: npm --version
-    - run: npm run ci
+    - run: npm run lint && npm run test
     - name: Coveralls Parallel
       uses: coverallsapp/github-action@master
       with:

@@ -13,11 +13,8 @@
   },
   "scripts": {
     "test": "nyc --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register",
-    "test:coveralls": "npm run test",
     "lint": "eslint . --ext '.js, .js.flow' && flow",
-    "ci": "npm run lint && npm run test:coveralls",
     "lint:fix": "npm run lint -- --fix",
-    "release": "standard-version"
   },
   "repository": {
     "type": "git",
