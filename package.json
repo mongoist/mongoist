@@ -14,7 +14,7 @@
   "scripts": {
     "test": "nyc --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register",
     "lint": "eslint . --ext '.js, .js.flow' && flow",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
