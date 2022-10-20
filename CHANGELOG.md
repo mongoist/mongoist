@@ -1,3 +1,10 @@
+## [2.5.6](https://github.com/mongoist/mongoist/compare/v2.5.5...v2.5.6) (2022-10-20)
+
+
+### Bug Fixes
+
+* **security:** update dependencies to remove security vulnerabilities  ([#86](https://github.com/mongoist/mongoist/issues/86)) ([7733149](https://github.com/mongoist/mongoist/commit/77331491f57176446ee3de492dcf63e285c545da)), closes [#85](https://github.com/mongoist/mongoist/issues/85)
+
 ## [2.5.6-alpha.1](https://github.com/mongoist/mongoist/compare/v2.5.5...v2.5.6-alpha.1) (2022-10-19)
 
 
