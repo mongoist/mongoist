@@ -17,7 +17,7 @@
     { "files": ["test/**/*.js"], "parserOptions": { "ecmaVersion": 2018 } },
     {
       "files": ["index.js.flow"],
-      "extends": ["plugin:flowtype/recommended", "prettier/flowtype"],
+      "extends": ["plugin:flowtype/recommended", "prettier"],
       "parser": "@babel/eslint-parser",
       "plugins": ["flowtype"],
       "rules": { "no-unused-vars": "off" }
