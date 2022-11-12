@@ -59,6 +59,21 @@ describe('database', function() {
     await dbShort.close();
   });
 
+  it('should accept connection with options', async () => {
+    // connect should fail with enable 'ssl', to make sure options take effect
+    const cannotConnect = mongoist('localhost:27017/test', { 'ssl': true });
+    
+    let err;
+    try {
+      await cannotConnect.test.find();
+      await cannotConnect.close();
+    } catch (e) {
+      err = e;
+    }
+    
+    expect(err).to.exist;
+  });
+
   it('should create a collection', async() => {
     const collection = await db.createCollection('test123');
 

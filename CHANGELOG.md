@@ -1,15 +1,34 @@
-# Changelog
-
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-
-
-### [2.5.3](https://github.com/mongoist/mongoist/compare/v2.5.2...v2.5.3) (2020-08-04)
+## [2.5.6](https://github.com/mongoist/mongoist/compare/v2.5.5...v2.5.6) (2022-10-20)
 
 
 ### Bug Fixes
 
-* fixes the type definition for `Cursor.count()` so it reflects the implementation.
+* **security:** update dependencies to remove security vulnerabilities  ([#86](https://github.com/mongoist/mongoist/issues/86)) ([7733149](https://github.com/mongoist/mongoist/commit/77331491f57176446ee3de492dcf63e285c545da)), closes [#85](https://github.com/mongoist/mongoist/issues/85)
 
+## [2.5.6-alpha.1](https://github.com/mongoist/mongoist/compare/v2.5.5...v2.5.6-alpha.1) (2022-10-19)
+
+
+### Bug Fixes
+
+* **(security:** update dependencies to remove security vulnerabilities ([#85](https://github.com/mongoist/mongoist/issues/85)) ([207d831](https://github.com/mongoist/mongoist/commit/207d831e11206b116a68bbaa39cc8936e0973c20))
+
+## [2.5.5](https://github.com/mongoist/mongoist/compare/v2.5.4...v2.5.5) (2020-08-16)
+
+### Bug Fixes
+
+- fix Flow types [PR](https://github.com/mongoist/mongoist/pull/80).
+
+### [2.5.4](https://github.com/mongoist/mongoist/compare/v2.5.3...v2.5.4) (2020-08-04)
+
+### Bug Fixes
+
+- fixes bug where connection options weren't passed to the Mongo driver [PR](https://github.com/mongoist/mongoist/pull/72).
+
+### [2.5.3](https://github.com/mongoist/mongoist/compare/v2.5.2...v2.5.3) (2020-08-04)
+
+### Bug Fixes
+
+- fixes the type definition for `Cursor.count()` so it reflects the implementation.
 
 ### [2.5.2](https://github.com/mongoist/mongoist/compare/v2.5.1...v2.5.2) (2020-04-16)
 

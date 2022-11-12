@@ -1,6 +1,6 @@
 {
   "name": "mongoist",
-  "version": "2.5.3",
+  "version": "2.5.6",
   "description": "Mongodb driver inspired by mongojs built with async/await in mind",
   "main": "index.js",
   "files": [
@@ -13,11 +13,8 @@
   },
   "scripts": {
     "test": "nyc --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register",
-    "test:coveralls": "npm run test",
-    "lint": "eslint . --ext '.js, .js.flow'",
-    "ci": "npm run lint && npm run test:coveralls",
-    "lint:fix": "npm run lint -- --fix",
-    "release": "standard-version"
+    "lint": "eslint . --ext '.js, .js.flow' && flow",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
@@ -48,6 +45,8 @@
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-flow": "^7.16.0",
     "@babel/register": "^7.7.0",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "chai": "^4.2.0",
     "coveralls": "^3.1.1",
     "drop-mongodb-collections": "^1.2.5",
@@ -57,6 +56,6 @@
     "mocha": "^6.2.1",
     "mongojs": "^3.0.0",
     "nyc": "^14.1.1",
-    "standard-version": "^7.0.0"
+    "semantic-release": "^19.0.5"
   }
 }
