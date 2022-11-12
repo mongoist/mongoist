@@ -10,7 +10,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
-  steps:
+    steps:
     - uses: actions/checkout@v3
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.6.0
