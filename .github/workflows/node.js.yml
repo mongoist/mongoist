@@ -17,17 +17,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.6.0        
       with:
         mongodb-version: ${{ matrix.mongodb-version }}      
     - run: npm ci
-    - run: npm run lint && npm run test
+    - run: npm run lint
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm run test
     - name: Coveralls Parallel
       uses: coverallsapp/github-action@master
       with:
