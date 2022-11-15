@@ -183,7 +183,8 @@ describe('database', function() {
           roles: ['readWrite']
         });
       } catch(e) {
-        expect(e.code).to.equal(11000);
+        // Duplicate user error.
+        expect(e.code).to.equal(51003);
         return;
       }
 
@@ -207,11 +208,23 @@ describe('database', function() {
   });
 
   it('should get a non existing last error', async () => {
+    const version = await db.version();
+    if (!version.startsWith('4.') || !version.startsWith('5.0')) {
+      expect(true)
+      return;
+    }
     const lastError = await db.getLastError();
+
     expect(lastError).to.not.exist;
   });
 
   it('should get the last error obj with non existing error field', async () => {
+    const version = await db.version();
+    if (!version.startsWith('4.') || !version.startsWith('5.0')) {
+      expect(true)
+      return;
+    }
+
     const lastError = await db.getLastErrorObj();
 
     expect(lastError).to.exist;

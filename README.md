@@ -480,9 +480,13 @@ See https://docs.mongodb.com/manual/reference/method/db.getCollectionInfos/
 
 See https://docs.mongodb.com/manual/reference/method/db.getLastError/
 
+**Deprecation Notice:** Removed in version 5.1: Any code explicitly using getLastError, db.getLastError(), or db.getLastErrorObj() should instead use the CRUD API to issue the write with the desired write concern.
+
 #### `db.getLastErrorObj()`
 
 See https://docs.mongodb.com/manual/reference/method/db.getLastErrorObj/
+
+**Deprecation Notice:** Removed in version 5.1: Any code explicitly using getLastError, db.getLastError(), or db.getLastErrorObj() should instead use the CRUD API to issue the write with the desired write concern.
 
 #### `db.runCommand(command)`
 
@@ -504,6 +508,10 @@ See https://docs.mongodb.com/manual/reference/method/db.close/
 #### `db.dropDatabase()`
 
 See https://docs.mongodb.com/manual/reference/method/db.dropDatabase/
+
+#### `db.version()`
+
+See https://www.mongodb.com/docs/manual/reference/method/db.version/
 
 ### Bulk
 
