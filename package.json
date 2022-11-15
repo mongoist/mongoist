@@ -9,7 +9,7 @@
     "lib"
   ],
   "engines": {
-    "node": ">=6"
+    "node": ">=14"
   },
   "scripts": {
     "test": "nyc --reporter=lcov mocha --recursive --require @babel/polyfill --require @babel/register",
@@ -39,21 +39,22 @@
     "mongodb": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.2",
+    "@babel/core": "^7.20.2",
+    "@babel/eslint-parser": "^7.19.1",
     "@babel/polyfill": "^7.7.0",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/register": "^7.7.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-flow": "^7.18.6",
+    "@babel/register": "^7.18.9",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
-    "babel-eslint": "^10.0.3",
-    "chai": "^4.2.0",
+    "chai": "^4.3.7",
     "coveralls": "^3.1.1",
     "drop-mongodb-collections": "^1.2.5",
-    "eslint": "^6.5.1",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-flowtype": "^4.6.0",
-    "flow-bin": "0.108.0",
-    "mocha": "^6.2.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "flow-bin": "^0.108.0",
+    "mocha": "^10.1.0",
     "mongojs": "^3.0.0",
     "nyc": "^14.1.1",
     "semantic-release": "^19.0.5"
