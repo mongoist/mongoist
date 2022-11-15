@@ -7,6 +7,17 @@ Mongoist driver is heavily inspired by mongojs.
 [![Node.js CI](https://github.com/mongoist/mongoist/actions/workflows/node.js.yml/badge.svg)](https://github.com/mongoist/mongoist/actions/workflows/node.js.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mongoist/mongoist/badge.svg?branch=master)](https://coveralls.io/github/mongoist/mongoist?branch=master)
 
+
+### Requirements
+
+Mongoist works with currently supported stable versions of [`mongodb`](https://www.mongodb.com/support-policy/lifecycles) and [`node`](https://github.com/nodejs/Release).
+
+**Mongodb Version:** 4.2, 4.4, 5.0, 6.0
+
+**Node.js Version:** 14.x, 16.x, 18.x
+
+*Use other versions at your own risk.*
+
 ## Motivation
 
 The official MongoDB driver for Node.js (https://github.com/mongodb/node-mongodb-native) leaves connection management to the user - this means to connect
