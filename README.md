@@ -7,6 +7,17 @@ Mongoist driver is heavily inspired by mongojs.
 [![Node.js CI](https://github.com/mongoist/mongoist/actions/workflows/node.js.yml/badge.svg)](https://github.com/mongoist/mongoist/actions/workflows/node.js.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mongoist/mongoist/badge.svg?branch=master)](https://coveralls.io/github/mongoist/mongoist?branch=master)
 
+
+### Requirements
+
+Mongoist works with currently supported stable versions of [`mongodb`](https://www.mongodb.com/support-policy/lifecycles) and [`node`](https://github.com/nodejs/Release).
+
+**Mongodb Version:** 4.2, 4.4, 5.0, 6.0
+
+**Node.js Version:** 14.x, 16.x, 18.x
+
+*Use other versions at your own risk.*
+
 ## Motivation
 
 The official MongoDB driver for Node.js (https://github.com/mongodb/node-mongodb-native) leaves connection management to the user - this means to connect
@@ -308,12 +319,6 @@ See https://docs.mongodb.org/manual/reference/method/db.collection.findAndModify
 
 See https://docs.mongodb.org/manual/reference/method/db.collection.getIndexes/
 
-#### `db.collection.group(document)`
-
-See https://docs.mongodb.org/manual/reference/method/db.collection.group/
-
-**Deprecation Notice**: Deprecated since version 3.4: Mongodb 3.4 deprecates the db.collection.group() method. Use db.collection.aggregate() with the $group stage or db.collection.mapReduce() instead.
-
 #### `db.collection.insert(docOrDocs, options)`
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.insert/
@@ -350,7 +355,7 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.runCommand/
 
 #### `db.collection.save(doc, [options])`
 
-See https://docs.mongodb.com/manual/reference/method/db.collection.save/
+A wrapper around *update* and *insert* that upserts a document if an `_id` is provided, inserting a new document if there is no `_id`.
 
 #### `db.collection.stats()`
 
@@ -475,9 +480,13 @@ See https://docs.mongodb.com/manual/reference/method/db.getCollectionInfos/
 
 See https://docs.mongodb.com/manual/reference/method/db.getLastError/
 
+**Deprecation Notice:** Removed in version 5.1: Any code explicitly using getLastError, db.getLastError(), or db.getLastErrorObj() should instead use the CRUD API to issue the write with the desired write concern.
+
 #### `db.getLastErrorObj()`
 
 See https://docs.mongodb.com/manual/reference/method/db.getLastErrorObj/
+
+**Deprecation Notice:** Removed in version 5.1: Any code explicitly using getLastError, db.getLastError(), or db.getLastErrorObj() should instead use the CRUD API to issue the write with the desired write concern.
 
 #### `db.runCommand(command)`
 
@@ -499,6 +508,10 @@ See https://docs.mongodb.com/manual/reference/method/db.close/
 #### `db.dropDatabase()`
 
 See https://docs.mongodb.com/manual/reference/method/db.dropDatabase/
+
+#### `db.version()`
+
+See https://www.mongodb.com/docs/manual/reference/method/db.version/
 
 ### Bulk
 
