@@ -319,12 +319,6 @@ See https://docs.mongodb.org/manual/reference/method/db.collection.findAndModify
 
 See https://docs.mongodb.org/manual/reference/method/db.collection.getIndexes/
 
-#### `db.collection.group(document)`
-
-See https://docs.mongodb.org/manual/reference/method/db.collection.group/
-
-**Deprecation Notice**: Deprecated since version 3.4: Mongodb 3.4 deprecates the db.collection.group() method. Use db.collection.aggregate() with the $group stage or db.collection.mapReduce() instead.
-
 #### `db.collection.insert(docOrDocs, options)`
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.insert/
