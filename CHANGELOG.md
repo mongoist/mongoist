@@ -1,3 +1,15 @@
+# [3.0.0-alpha.1](https://github.com/mongoist/mongoist/compare/v2.5.6...v3.0.0-alpha.1) (2022-11-15)
+
+
+* chore(ci)!: update supported mongo versions (#91) ([242a5f4](https://github.com/mongoist/mongoist/commit/242a5f40322b45905102bce7ecf7605bf62f7143)), closes [#91](https://github.com/mongoist/mongoist/issues/91)
+* chore(deps)!: update parser, linters, and node version (#69) ([35f0f7c](https://github.com/mongoist/mongoist/commit/35f0f7cbe25c6c1940e7bb62eead88e5ae5c1e3a)), closes [#69](https://github.com/mongoist/mongoist/issues/69) [#88](https://github.com/mongoist/mongoist/issues/88)
+
+
+### BREAKING CHANGES
+
+* Remove support for mongodb versions < 4.2
+* Remove support for node < 14
+
 ## [2.5.6](https://github.com/mongoist/mongoist/compare/v2.5.5...v2.5.6) (2022-10-20)
 
 
