@@ -7,27 +7,45 @@ on:
     branches: [ master, alpha, beta, main, next, next-major ]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install Dependencies
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run lint
+
   test:
+    needs: lint
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x, 18.x]
         mongodb-version: ['2.6.12', '3.0.15','3.2.16','3.4.7','3.6.2','4.0']
 
     steps:
     - uses: actions/checkout@v3
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.6.0        
+      with:
+        mongodb-version: ${{ matrix.mongodb-version }}
+    - name: Install Dependencies
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+    - run: npm ci
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.6.0        
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}      
-    - run: npm ci
-    - run: npm run lint && npm run test
+    - run: npm run test
     - name: Coveralls Parallel
       uses: coverallsapp/github-action@master
       with:
