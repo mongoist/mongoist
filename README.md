@@ -355,7 +355,7 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.runCommand/
 
 #### `db.collection.save(doc, [options])`
 
-See https://docs.mongodb.com/manual/reference/method/db.collection.save/
+A wrapper around *update* and *insert* that upserts a document if an `_id` is provided, inserting a new document if there is no `_id`.
 
 #### `db.collection.stats()`
 
