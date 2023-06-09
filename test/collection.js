@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const dropMongoDbCollections = require('drop-mongodb-collections');
 const mongoist = require('../');
 
-const connectionString = 'mongodb://localhost:27017/test';
+const connectionString = 'mongodb://localhost:44444/test';
 
 describe('collection', function() {
   this.timeout(10000);
@@ -128,7 +128,7 @@ describe('collection', function() {
     expect(count).to.equal(3);
   });
 
-  it('should count using opts', async() => {
+  it('should count using options', async() => {
     const count = await db.a.count({ type: 'water' }, { limit: 1 });
 
     expect(count).to.equal(1);

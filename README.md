@@ -252,7 +252,7 @@ Returns a cursor instead of an array as `db.collection.aggregate` does.
 
 See https://docs.mongodb.org/manual/reference/method/db.collection.aggregate/
 
-#### `db.collection.count([query])`
+#### `db.collection.count([query], [options])`
 
 See https://docs.mongodb.org/manual/reference/method/db.collection.count/
 
