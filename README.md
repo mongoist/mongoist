@@ -254,6 +254,16 @@ See https://docs.mongodb.org/manual/reference/method/db.collection.aggregate/
 
 #### `db.collection.count([query], [options])`
 
+Supported options:
+
+Field | Type | Description
+-- | -- | --
+limit | integer | Optional. The maximum number of documents to count.
+skip | integer | Optional. The number of documents to skip before counting.
+hint | string or document | Optional. An index name hint or specification for the query.
+maxTimeMS | integer | Optional. The maximum amount of time to allow the query to run.
+collation | document | Optional.
+
 See https://docs.mongodb.org/manual/reference/method/db.collection.count/
 
 #### `db.collection.createIndex(keys, options)`
