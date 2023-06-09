@@ -128,6 +128,12 @@ describe('collection', function() {
     expect(count).to.equal(3);
   });
 
+  it('should count using options', async() => {
+    const count = await db.a.count({ type: 'water' }, { limit: 1 });
+
+    expect(count).to.equal(1);
+  });
+
   it('should query distinct documents', async() => {
     const docs = await db.a.distinct('name', {type: 'water'});
 
