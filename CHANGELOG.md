@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/mongoist/mongoist/compare/v2.5.6...v2.6.0) (2023-06-09)
+
+
+### Features
+
+* **collection:** add opts to count ([#96](https://github.com/mongoist/mongoist/issues/96)) ([c635b92](https://github.com/mongoist/mongoist/commit/c635b92bab6726d21e11a94c2c253a2755b69982))
+
 ## [2.5.6](https://github.com/mongoist/mongoist/compare/v2.5.5...v2.5.6) (2022-10-20)
 
 
