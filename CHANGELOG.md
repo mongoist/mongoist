@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/mongoist/mongoist/compare/v2.6.0...v2.7.0) (2023-07-07)
+
+
+### Features
+
+* **deps:** bump deps to force mongodb@3.7 with mongo 5.0 support ([#97](https://github.com/mongoist/mongoist/issues/97)) ([4b88d54](https://github.com/mongoist/mongoist/commit/4b88d5412e425ba2908cacd0123b3322a80ae7da))
+
 # [2.6.0](https://github.com/mongoist/mongoist/compare/v2.5.6...v2.6.0) (2023-06-09)
 
 
