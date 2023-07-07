@@ -35,8 +35,8 @@
   },
   "homepage": "https://github.com/mongoist/mongoist#readme",
   "dependencies": {
-    "debug": "^4.1.1",
-    "mongodb": "^3.3.2"
+    "debug": "^4.3.4",
+    "mongodb": "^3.7.4"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
