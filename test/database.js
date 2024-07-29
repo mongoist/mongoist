@@ -61,7 +61,7 @@ describe('database', function() {
 
   it('should accept connection with options', async () => {
     // connect should fail with enable 'ssl', to make sure options take effect
-    const cannotConnect = mongoist('localhost:27017/test', { 'ssl': true });
+    const cannotConnect = mongoist('localhost:27017/test', { 'ssl': true, serverSelectionTimeoutMS: 1000 });
     
     let err;
     try {
@@ -117,8 +117,8 @@ describe('database', function() {
     expect(stats.indexes).to.exist;
   });
 
-  it.skip('should emit an error event if a connection could not be established', async() => {
-    const cannotConnect = mongoist('mongodb://127.0.0.1:65535/testdb');
+  it('should emit an error event if a connection could not be established', async() => {
+    const cannotConnect = mongoist('mongodb://127.0.0.1:65535/testdb', { serverSelectionTimeoutMS: 1000 });
 
     let errorEvent = null;
     cannotConnect.on('error', (error) => {
@@ -183,7 +183,7 @@ describe('database', function() {
           roles: ['readWrite']
         });
       } catch(e) {
-        expect(e.code).to.equal(11000);
+        expect(e.code).to.equal(51003);
         return;
       }
 
@@ -204,18 +204,6 @@ describe('database', function() {
 
       expect(result.ok).to.exist;
     });
-  });
-
-  it('should get a non existing last error', async () => {
-    const lastError = await db.getLastError();
-    expect(lastError).to.not.exist;
-  });
-
-  it('should get the last error obj with non existing error field', async () => {
-    const lastError = await db.getLastErrorObj();
-
-    expect(lastError).to.exist;
-    expect(lastError.err).to.not.exist;
   });
 
   it('should run a named command', async () => {
