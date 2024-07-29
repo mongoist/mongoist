@@ -259,8 +259,8 @@ describe('cursor', function() {
     const count = await cursor.count();
     expect(count).to.equal(1);
 
-    expect(cursor.cursor.cmd.limit).to.equal(1);
-    expect(cursor.cursor.cmd.noCursorTimeout).to.equal(true);
+    expect(cursor._options.limit).to.equal(1);
+    expect(cursor._flags.noCursorTimeout).to.equal(true);
   });
 
   it('should emit a close event when closed', async () => {
