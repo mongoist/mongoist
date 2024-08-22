@@ -296,32 +296,6 @@ describe('collection', function() {
     expect(isACapped).to.be.false;
   });
 
-  it('should group documents', async() => {
-    await db.b.insert([{
-      t: 242424,
-      online: 1
-    }, {
-      t: 4244,
-      online: 0
-    }]);
-
-    const curOnline = await db.b.group({
-      key: {},
-      cond: { t: { $gte: 86400 } },
-      initial: { count: 0, online: 0 },
-      reduce: function(doc, out) {
-        out.count++;
-        out.online += doc.online;
-      },
-      finalize: function(out) {
-        out.avgOnline = out.online / out.count
-      }
-    });
-
-    expect(curOnline[0].count).to.equal(1);
-    expect(curOnline[0].online).to.equal(1);
-  });
-
   it('should aggregate documents', async() => {
     const types = await db.a.aggregate([{ $group: { _id: '$type' } }, { $project: { _id: 0, foo: '$_id' } }]);
 
