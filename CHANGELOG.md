@@ -1,3 +1,13 @@
+# [3.0.0](https://github.com/mongoist/mongoist/compare/v2.7.0...v3.0.0) (2024-08-22)
+
+
+* chore(deps)!: update mongodb to 4.8.0 (#101) ([e07e653](https://github.com/mongoist/mongoist/commit/e07e653d67adb787b11d441a971d26b949a6f8c3)), closes [#101](https://github.com/mongoist/mongoist/issues/101)
+
+
+### BREAKING CHANGES
+
+* updated mongodb to 4.8. deprecated functions like group
+
 # [2.7.0](https://github.com/mongoist/mongoist/compare/v2.6.0...v2.7.0) (2023-07-07)
 
 
