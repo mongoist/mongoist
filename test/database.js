@@ -183,7 +183,8 @@ describe('database', function() {
           roles: ['readWrite']
         });
       } catch(e) {
-        expect(e.code).to.equal(51003);
+        // Error codes for duplicate values are different between MongoDB 3.x. (11000) and 4.2.x (51003)
+        expect(e.code).to.be.oneOf([51003, 11000]);
         return;
       }
 
