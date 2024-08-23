@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/mongoist/mongoist/compare/v3.0.0...v3.0.1) (2024-08-23)
+
+
+### Bug Fixes
+
+* test for mongo 3.6.2 and 4.0 ([#104](https://github.com/mongoist/mongoist/issues/104)) ([851f22a](https://github.com/mongoist/mongoist/commit/851f22a678454fa174eda94f120c9274d01ce8aa))
+
 # [3.0.0](https://github.com/mongoist/mongoist/compare/v2.7.0...v3.0.0) (2024-08-22)
 
 
