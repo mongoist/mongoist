@@ -129,8 +129,6 @@ describe('database', function() {
       await cannotConnect.xyz.find();
     } catch (e) {
       expect(errorEvent).to.exist;
-
-      cannotConnect.close();
       return;
     }
 
@@ -336,4 +334,11 @@ describe('database', function() {
     const dbStats = await db.adminCommand({ dbStats: 1 });
     expect(dbStats.db).to.equal('admin');
   })
+
+  it('should handle race conditions correctly', async () => {
+    const connectPromises = [db.connect(), db.connect(), db.connect()];
+    const connections = await Promise.all(connectPromises);
+
+    expect(new Set(connections).size).to.equal(1);
+  });
 });
