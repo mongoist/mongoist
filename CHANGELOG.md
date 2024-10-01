@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/mongoist/mongoist/compare/v3.0.1...v3.0.2) (2024-10-01)
+
+
+### Bug Fixes
+
+* database connect race condition ([#106](https://github.com/mongoist/mongoist/issues/106)) ([197e590](https://github.com/mongoist/mongoist/commit/197e5903a59e03af0edc001982ec3daa2d2e10fb))
+
 ## [3.0.1](https://github.com/mongoist/mongoist/compare/v3.0.0...v3.0.1) (2024-08-23)
 
 
