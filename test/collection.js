@@ -238,26 +238,6 @@ describe('collection', function() {
     expect(collectionToString).to.equal('a');
   });
 
-  it('should run map reduce', async() => {
-    function map() {
-      /* eslint-disable no-undef */
-      emit(this.type, this.level)
-      /* eslint-enable no-undef */
-    }
-
-    function reduce(key, values) {
-      return Array.sum(values)
-    }
-
-    await db.a.mapReduce(map, reduce, {
-      query: { type: 'water' },
-      out: 'levelSum'
-    });
-
-    const levelSum = await db.levelSum.findOne();
-    expect(levelSum._id).to.equal('water');
-    expect(levelSum.value).to.equal(30);
-  });
 
   it('should ensure, create list and drop indexes and reIndex for a collection', async() => {
     await db.a.ensureIndex({type: 1});

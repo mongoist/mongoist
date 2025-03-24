@@ -36,7 +36,7 @@
   "homepage": "https://github.com/mongoist/mongoist#readme",
   "dependencies": {
     "debug": "^4.3.4",
-    "mongodb": "^4.8.0"
+    "mongodb": "^6.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

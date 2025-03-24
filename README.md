@@ -13,28 +13,26 @@ The official MongoDB driver for Node.js (https://github.com/mongodb/node-mongodb
 to a mongodb database this boilerplate code is needed
 
 ```javascript
-const { MongoClient } = require('mongodb');
+const { MongoClient } = require("mongodb");
 
-MongoClient
-  .connect('mongodb://localhost:27017/myproject')
-  .then(connection => {
-
+MongoClient.connect("mongodb://localhost:27017/myproject").then(
+  (connection) => {
     connection.close();
-  });
+  }
+);
 ```
 
 Due to the asynchronous nature of `connect`, a connection that is used everywhere in an application is not that easy to export from a module.
 
 ```javascript
-const { MongoClient } = require('mongodb');
+const { MongoClient } = require("mongodb");
 
-MongoClient
-  .connect('mongodb://localhost:27017/myproject')
-  .then(connection => {
-
+MongoClient.connect("mongodb://localhost:27017/myproject").then(
+  (connection) => {
     // THIS WILL NOT WORK AS EXPECTED!!!
     module.exports = connection;
-  });
+  }
+);
 ```
 
 Mongoist solves this problem by managing the connection internally in a lazy fashion. With mongoist you can create a `db.js` module exporting a
@@ -59,8 +57,8 @@ _Please note: Any line in the examples that uses the await keyword should be cal
 ### Connecting
 
 ```javascript
-const mongoist = require('mongoist');
-const db = mongoist(connectionString, connectionOptions)
+const mongoist = require("mongoist");
+const db = mongoist(connectionString, connectionOptions);
 ```
 
 The `connectionString` and `connectionOptions` are passed to the underlying official mongodb driver.
@@ -81,8 +79,7 @@ async function findDocuments() {
 }
 
 // We need to call the async function this way since top level await keyword is not allowed in JavaScript
-findDocuments().then(() => console.log('Done querying mongodb'));
-
+findDocuments().then(() => console.log("Done querying mongodb"));
 ```
 
 #### Connection Management
@@ -121,23 +118,32 @@ const documentsCursor = db.mycollection.findAsCursor();
 const document = await documentsCursor.next();
 
 // find everything in mycollection, but sort by name
-const sortedDocuments = await db.mycollection.findAsCursor().sort({name: 1}).toArray();
+const sortedDocuments = await db.mycollection
+  .findAsCursor()
+  .sort({ name: 1 })
+  .toArray();
 
 // find a document using a native ObjectId
-const documentById = await db.mycollection.findOne({ _id: mongoist.ObjectId('523209c4561c640000000001') });
+const documentById = await db.mycollection.findOne({
+  _id: mongoist.ObjectId("523209c4561c640000000001"),
+});
 
 // Update all documents named 'mathias' and increment their level
-const resultUpdate = await db.mycollection.update({name: 'mathias'}, {$inc: {level: 1}}, {multi: true});
+const resultUpdate = await db.mycollection.update(
+  { name: "mathias" },
+  { $inc: { level: 1 } },
+  { multi: true }
+);
 
 // find one named 'mathias', tag him as a contributor and return the modified doc
 const resultFindAndModify = await db.mycollection.findAndModify({
-  query: { name: 'mathias' },
-  update: { $set: { tag: 'maintainer' } },
-  new: true
+  query: { name: "mathias" },
+  update: { $set: { tag: "maintainer" } },
+  new: true,
 });
 
 // use the save function to just save a document
-const doc = await db.mycollection.save({created: 'just now'});
+const doc = await db.mycollection.save({ created: "just now" });
 ```
 
 ### Cursor Operations
@@ -149,15 +155,15 @@ provides the operations `findAsCursor` and `aggregateAsCursor` to return a curso
 ## Bulk updates
 
 ```javascript
-var bulk = db.a.initializeOrderedBulkOp()
-bulk.find({type: 'water'}).update({$set: {level: 1}})
-bulk.find({type: 'water'}).update({$inc: {level: 2}})
-bulk.insert({name: 'Spearow', type: 'flying'})
-bulk.insert({name: 'Pidgeotto', type: 'flying'})
-bulk.insert({name: 'Charmeleon', type: 'fire'})
-bulk.find({type: 'flying'}).removeOne()
-bulk.find({type: 'fire'}).remove()
-bulk.find({type: 'water'}).updateOne({$set: {hp: 100}})
+var bulk = db.a.initializeOrderedBulkOp();
+bulk.find({ type: "water" }).update({ $set: { level: 1 } });
+bulk.find({ type: "water" }).update({ $inc: { level: 2 } });
+bulk.insert({ name: "Spearow", type: "flying" });
+bulk.insert({ name: "Pidgeotto", type: "flying" });
+bulk.insert({ name: "Charmeleon", type: "fire" });
+bulk.find({ type: "flying" }).removeOne();
+bulk.find({ type: "fire" }).remove();
+bulk.find({ type: "water" }).updateOne({ $set: { hp: 100 } });
 
 await bulk.execute();
 // done...
@@ -166,17 +172,17 @@ await bulk.execute();
 ### Events
 
 ```js
-const db = mongoist('mongodb://localhost/mydb')
+const db = mongoist("mongodb://localhost/mydb");
 
 // Emitted if no db connection could be established
-db.on('error', function (err) {
-  console.log('database error', err)
+db.on("error", function (err) {
+  console.log("database error", err);
 });
 
 // Emitted if a db connection was established
-db.on('connect', function () {
-  console.log('database connected')
-})
+db.on("connect", function () {
+  console.log("database connected");
+});
 ```
 
 ### Database commands
@@ -184,14 +190,14 @@ db.on('connect', function () {
 With mongoist you can run database commands just like with the mongo shell using `db.runCommand()`
 
 ```js
-const result = await db.runCommand({ping: 1});
-console.log('we\'re up');
+const result = await db.runCommand({ ping: 1 });
+console.log("we're up");
 ```
 
 or `db.collection.runCommand()`
 
 ```js
-const result = await db.things.runCommand('count');
+const result = await db.things.runCommand("count");
 console.log(result);
 ```
 
@@ -199,7 +205,7 @@ Similarly, you can use `db.adminCommand()` to run a command on the `admin` datab
 MongoDB cluster or instance you're connected to:
 
 ```js
-const result = await db.adminCommand({currentOp: 1});
+const result = await db.adminCommand({ currentOp: 1 });
 console.log(result);
 ```
 
@@ -208,7 +214,7 @@ console.log(result);
 Mongoist can connect to a mongo replication set by providing a connection string with multiple hosts
 
 ```js
-const db = mongoist('rs-1.com,rs-2.com,rs-3.com/mydb?slaveOk=true');
+const db = mongoist("rs-1.com,rs-2.com,rs-3.com/mydb?slaveOk=true");
 ```
 
 For more detailed information about replica sets see [the mongo replication docs](http://www.mongodb.org/display/DOCS/Replica+Sets)
@@ -223,16 +229,14 @@ Mongoist exposes the prototypes of `Database`, `Collection`, `Cursor` and `Bulk`
 to provide basic support for mocking, stubbing data access in tests.
 
 ```js
-const mongoist = require('mongoist');
+const mongoist = require("mongoist");
 
 // Override collection find behavior to always return { foo: 'bar' }
-mongoist.Collection.prototype.find = function() {
-  return [
-    { foo: 'bar' }
-  ]
-}
+mongoist.Collection.prototype.find = function () {
+  return [{ foo: "bar" }];
+};
 
-const db = mongoist('test');
+const db = mongoist("test");
 console.log(db.a.find({}));
 
 // Will print out [{ foo: 'bar' }]
@@ -256,13 +260,13 @@ See https://docs.mongodb.org/manual/reference/method/db.collection.aggregate/
 
 Supported options:
 
-Field | Type | Description
--- | -- | --
-limit | integer | Optional. The maximum number of documents to count.
-skip | integer | Optional. The number of documents to skip before counting.
-hint | string or document | Optional. An index name hint or specification for the query.
-maxTimeMS | integer | Optional. The maximum amount of time to allow the query to run.
-collation | document | Optional.
+| Field     | Type               | Description                                                     |
+| --------- | ------------------ | --------------------------------------------------------------- |
+| limit     | integer            | Optional. The maximum number of documents to count.             |
+| skip      | integer            | Optional. The number of documents to skip before counting.      |
+| hint      | string or document | Optional. An index name hint or specification for the query.    |
+| maxTimeMS | integer            | Optional. The maximum amount of time to allow the query to run. |
+| collation | document           | Optional.                                                       |
 
 See https://docs.mongodb.org/manual/reference/method/db.collection.count/
 
@@ -322,7 +326,7 @@ See https://docs.mongodb.org/manual/reference/method/db.collection.getIndexes/
 
 See https://docs.mongodb.org/manual/reference/method/db.collection.group/
 
-**Deprecation Notice**: Deprecated since version 3.4: Mongodb 3.4 deprecates the db.collection.group() method. Use db.collection.aggregate() with the $group stage or db.collection.mapReduce() instead.
+**Deprecation Notice**: Deprecated since version 3.4: Mongodb 3.4 deprecates the db.collection.group() method. Use db.collection.aggregate() with the $group stage instead.
 
 #### `db.collection.insert(docOrDocs, options)`
 
@@ -331,10 +335,6 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.insert/
 #### `db.collection.isCapped()`
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.isCapped/
-
-#### `db.collection.mapReduce(map, reduce, options)`
-
-See https://docs.mongodb.com/manual/reference/method/db.collection.mapReduce/
 
 #### `db.collection.reIndex()`
 
@@ -387,12 +387,14 @@ Get the name of the collection.
 Cursor implements a readable stream. For example, you can pipe a cursor to a writeable stream.
 
 ```javascript
-db.someCollection.findAsCursor()
+db.someCollection
+  .findAsCursor()
   .pipe(writeableStream)
-  .on('finish', () => {
-    console.log('all documents piped to writeableStream');
+  .on("finish", () => {
+    console.log("all documents piped to writeableStream");
   });
 ```
+
 #### `cursor.addCursorFlag(flag, value)`
 
 See https://mongodb.github.io/node-mongodb-native/3.1/api/Cursor.html#addCursorFlag
@@ -492,7 +494,6 @@ See https://docs.mongodb.com/manual/reference/method/db.getLastErrorObj/
 #### `db.runCommand(command)`
 
 See https://docs.mongodb.com/manual/reference/method/db.runCommand/
-
 
 #### `db.adminCommand(command)`
 
