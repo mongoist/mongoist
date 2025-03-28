@@ -342,11 +342,23 @@ See https://docs.mongodb.com/manual/reference/method/db.collection.reIndex/
 
 #### `db.collection.remove(query, [justOne])`
 
+**Deprecation Notice**: Deprecated since version 3.1: Mongodb 3.1 deprecates the db.collection.remove() method. Use db.collection.deleteMany(filter, options).
+
 Equivalent to `db.collection.remove(query, { justOne: true/false })`
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.remove/
 
+#### `db.collection.deleteMany(filter, [options])`
+
+See https://docs.mongodb.com/manual/reference/method/db.collection.deleteMany/
+
+#### `db.collection.deleteOne(filter, [options])`
+
+See https://docs.mongodb.com/manual/reference/method/db.collection.deleteOne/
+
 #### `db.collection.remove(query, [options])`
+
+**Deprecation Notice**: Deprecated since version 3.1: Mongodb 3.1 deprecates the db.collection.remove() method. Use db.collection.deleteMany(filter, options).
 
 See https://docs.mongodb.com/manual/reference/method/db.collection.remove/
 
