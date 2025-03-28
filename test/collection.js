@@ -240,7 +240,7 @@ describe("collection", function () {
 
   it("should delete one", async () => {
     const lastErrorObject = await db.a.deleteOne({ type: "water" });
-    expect(lastErrorObject.n).to.equal(1);
+    expect(lastErrorObject.deletedCount).to.equal(1);
 
     const remainingDocs = await db.a.count({ type: "water" });
     expect(remainingDocs).to.equal(2);
@@ -248,7 +248,7 @@ describe("collection", function () {
 
   it("should delete many", async () => {
     const lastErrorObject = await db.a.deleteMany({ type: "water" });
-    expect(lastErrorObject.n).to.equal(3);
+    expect(lastErrorObject.deletedCount).to.equal(3);
 
     const remainingDocs = await db.a.count({ type: "water" });
     expect(remainingDocs).to.equal(0);

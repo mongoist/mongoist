@@ -1,30 +1,46 @@
-const { expect } = require('chai');
-const dropMongoDbCollections = require('drop-mongodb-collections');
-const mongoist = require('../');
-const mongojs = require('mongojs');
+const { expect } = require("chai");
+const dropMongoDbCollections = require("drop-mongodb-collections");
+const mongoist = require("../");
+const mongojs = require("mongojs");
 
-const connectionString = 'mongodb://localhost:27017/test';
+const connectionString = "mongodb://localhost:27017/test";
 
-describe('database', function() {
+describe("database", function () {
   this.timeout(10000);
 
   let db;
 
   beforeEach(dropMongoDbCollections(connectionString));
-  beforeEach(async() => {
+  beforeEach(async () => {
     db = mongoist(connectionString);
 
-    await db.a.insert([{
-      name: 'Squirtle',type: 'water', level: 10, }, {
-      name: 'Starmie', type: 'water', level: 8, }, {
-      name: 'Charmander', type: 'fire', level: 8,}, {
-      name: 'Lapras', type: 'water', level: 12,}
+    await db.a.insert([
+      {
+        name: "Squirtle",
+        type: "water",
+        level: 10,
+      },
+      {
+        name: "Starmie",
+        type: "water",
+        level: 8,
+      },
+      {
+        name: "Charmander",
+        type: "fire",
+        level: 8,
+      },
+      {
+        name: "Lapras",
+        type: "water",
+        level: 12,
+      },
     ]);
   });
 
   afterEach(() => db.close());
 
-  it('should return a collection if accessing a property that is a valid collection name', async() => {
+  it("should return a collection if accessing a property that is a valid collection name", async () => {
     expect(await db.xyz.count()).to.equal(0);
     expect(await db.features.count()).to.equal(0);
     expect(await db.options.count()).to.equal(0);
@@ -33,8 +49,8 @@ describe('database', function() {
     expect(await db.domain.count()).to.equal(0);
   });
 
-  it('should accept connection strings without mongodb:// protocol specified', async() => {
-    const dbShort = mongoist('localhost:27017/test');
+  it("should accept connection strings without mongodb:// protocol specified", async () => {
+    const dbShort = mongoist("localhost:27017/test");
     const docs = await dbShort.a.find();
 
     expect(docs).to.have.length(4);
@@ -42,16 +58,17 @@ describe('database', function() {
     await dbShort.close();
   });
 
-  it('should accept connection strings with mongodb+srv:// protocol specified', async() => {
-    const dbFromSrvProtocol = mongoist('mongodb+srv://server.example.com/');
+  it("should accept connection strings with mongodb+srv:// protocol specified", async () => {
+    const dbFromSrvProtocol = mongoist("mongodb+srv://server.example.com/");
 
     // Work around access db through a collection
-    expect(dbFromSrvProtocol.x.db.connectionString).to.equal('mongodb+srv://server.example.com/');
-
+    expect(dbFromSrvProtocol.x.db.connectionString).to.equal(
+      "mongodb+srv://server.example.com/"
+    );
   });
 
-  it('should accept connection strings without host and mongodb:// protocol specified', async() => {
-    const dbShort = mongoist('test');
+  it("should accept connection strings without host and mongodb:// protocol specified", async () => {
+    const dbShort = mongoist("test");
     const docs = await dbShort.a.find();
 
     expect(docs).to.have.length(4);
@@ -59,10 +76,13 @@ describe('database', function() {
     await dbShort.close();
   });
 
-  it('should accept connection with options', async () => {
+  it("should accept connection with options", async () => {
     // connect should fail with enable 'ssl', to make sure options take effect
-    const cannotConnect = mongoist('localhost:27017/test', { 'ssl': true, serverSelectionTimeoutMS: 1000 });
-    
+    const cannotConnect = mongoist("localhost:27017/test", {
+      ssl: true,
+      serverSelectionTimeoutMS: 1000,
+    });
+
     let err;
     try {
       await cannotConnect.test.find();
@@ -70,46 +90,48 @@ describe('database', function() {
     } catch (e) {
       err = e;
     }
-    
+
     expect(err).to.exist;
   });
 
-  it('should create a collection', async() => {
-    const collection = await db.createCollection('test123');
+  it("should create a collection", async () => {
+    const collection = await db.createCollection("test123");
 
     expect(collection).to.exist;
 
     try {
-      await db.createCollection('test123');
+      await db.createCollection("test123");
     } catch (e) {
       return;
     }
 
-    throw new Error('Collection with duplicate collection name created a second time and an error was expected!');
+    throw new Error(
+      "Collection with duplicate collection name created a second time and an error was expected!"
+    );
   });
 
-  it('should list collections', async() => {
-    await db.createCollection('test1');
-    await db.createCollection('test2');
+  it("should list collections", async () => {
+    await db.createCollection("test1");
+    await db.createCollection("test2");
 
     const collections = await db.listCollections();
 
     expect(collections).to.have.length(3);
   });
 
-  it('should get collection names', async() => {
-    await db.createCollection('test1');
-    await db.createCollection('test2');
+  it("should get collection names", async () => {
+    await db.createCollection("test1");
+    await db.createCollection("test2");
 
     const collectionNames = await db.getCollectionNames();
 
     expect(collectionNames).to.have.length(3);
-    expect(collectionNames).to.include('test1');
-    expect(collectionNames).to.include('test2');
-    expect(collectionNames).to.include('a');
+    expect(collectionNames).to.include("test1");
+    expect(collectionNames).to.include("test2");
+    expect(collectionNames).to.include("a");
   });
 
-  it('should get db stats', async() => {
+  it("should get db stats", async () => {
     const stats = await db.stats();
 
     expect(stats.ok).to.equal(1);
@@ -117,11 +139,13 @@ describe('database', function() {
     expect(stats.indexes).to.exist;
   });
 
-  it('should emit an error event if a connection could not be established', async() => {
-    const cannotConnect = mongoist('mongodb://127.0.0.1:65535/testdb', { serverSelectionTimeoutMS: 1000 });
+  it("should emit an error event if a connection could not be established", async () => {
+    const cannotConnect = mongoist("mongodb://127.0.0.1:65535/testdb", {
+      serverSelectionTimeoutMS: 1000,
+    });
 
     let errorEvent = null;
-    cannotConnect.on('error', (error) => {
+    cannotConnect.on("error", (error) => {
       errorEvent = error;
     });
 
@@ -132,15 +156,15 @@ describe('database', function() {
       return;
     }
 
-    throw new Error('Expected error to be thrown');
+    throw new Error("Expected error to be thrown");
   });
 
-  it('should emit an event if database connection opened', async() => {
+  it("should emit an event if database connection opened", async () => {
     const db = mongoist(connectionString);
 
     const events = {};
 
-    db.on('connect', () => events.connect = true);
+    db.on("connect", () => (events.connect = true));
 
     await db.xyz.find();
 
@@ -149,69 +173,68 @@ describe('database', function() {
     await db.close();
   });
 
-  describe('users', function() {
+  describe("users", function () {
     beforeEach(async () => await db.dropAllUsers());
 
-    it('should create a user', async() => {
+    it("should create a user", async () => {
       const user = await db.createUser({
-        user: 'mongoist',
-        pwd: 'topsecret',
-        customData: { department: 'area51' },
-        roles: ['readWrite']
+        user: "mongoist",
+        pwd: "topsecret",
+        customData: { department: "area51" },
+        roles: ["readWrite"],
       });
 
       expect(user).to.exist;
     });
 
-    it('should not create duplicate users', async() => {
+    it("should not create duplicate users", async () => {
       const user = await db.createUser({
-        user: 'mongoist',
-        pwd: 'topsecret',
-        customData: { department: 'area51' },
-        roles: ['readWrite']
+        user: "mongoist",
+        pwd: "topsecret",
+        customData: { department: "area51" },
+        roles: ["readWrite"],
       });
 
       expect(user).to.exist;
 
       try {
         await db.createUser({
-          user: 'mongoist',
-          pwd: 'topsecret',
-          customData: { department: 'area51' },
-          roles: ['readWrite']
+          user: "mongoist",
+          pwd: "topsecret",
+          customData: { department: "area51" },
+          roles: ["readWrite"],
         });
-      } catch(e) {
+      } catch (e) {
         // Error codes for duplicate values are different between MongoDB 3.x. (11000) and 4.2.x (51003)
         expect(e.code).to.be.oneOf([51003, 11000]);
         return;
       }
 
-      throw new Error('Duplicate users should not be created');
+      throw new Error("Duplicate users should not be created");
     });
 
-    it('should drop a user', async() => {
+    it("should drop a user", async () => {
       const user = await db.createUser({
-        user: 'mongoist',
-        pwd: 'topsecret',
-        customData: { department: 'area51' },
-        roles: ['readWrite']
+        user: "mongoist",
+        pwd: "topsecret",
+        customData: { department: "area51" },
+        roles: ["readWrite"],
       });
 
       expect(user).to.exist;
 
-      const result = await db.dropUser('mongoist');
+      const result = await db.dropUser("mongoist");
 
       expect(result.ok).to.exist;
     });
   });
 
-  it('should run a named command', async () => {
-    const stats = await db.runCommand('dbStats');
+  it("should run a named command", async () => {
+    const stats = await db.runCommand("dbStats");
     expect(stats.ok).to.equal(1);
   });
 
-
-  it('should allow passing in a Promise<string>', async () => {
+  it("should allow passing in a Promise<string>", async () => {
     const db = mongoist(Promise.resolve(connectionString));
 
     const docs = await db.a.find({});
@@ -221,8 +244,8 @@ describe('database', function() {
     await db.close();
   });
 
-  it('should normalize a Promise<string> connectionString', async () => {
-    const dbShort = mongoist(Promise.resolve('localhost:27017/test'));
+  it("should normalize a Promise<string> connectionString", async () => {
+    const dbShort = mongoist(Promise.resolve("localhost:27017/test"));
     const docs = await dbShort.a.find();
 
     expect(docs).to.have.length(4);
@@ -230,7 +253,7 @@ describe('database', function() {
     await dbShort.close();
   });
 
-  it('should allow passing in a mongojs connection', async() => {
+  it("should allow passing in a mongojs connection", async () => {
     const mongojsDb = mongojs(connectionString);
     const db = mongoist(mongojsDb);
 
@@ -242,7 +265,7 @@ describe('database', function() {
     await db.close();
   });
 
-  it('should allow passing in a Promise that resolves to a mongojs connection', async() => {
+  it("should allow passing in a Promise that resolves to a mongojs connection", async () => {
     const mongojsDb = mongojs(connectionString);
     const db = mongoist(Promise.resolve(mongojsDb));
 
@@ -254,7 +277,7 @@ describe('database', function() {
     await db.close();
   });
 
-  it('should pass projections to mongojs connections using mongodb 2.x driver', async() => {
+  it("should pass projections to mongojs connections using mongodb 2.x driver", async () => {
     const mongojsDb = mongojs(connectionString);
     const db = mongoist(mongojsDb);
 
@@ -262,22 +285,22 @@ describe('database', function() {
 
     expect(docs).to.have.length(4);
 
-    expect(docs).to.deep.contain({ name: 'Squirtle' });
-    expect(docs).to.deep.contain({ name: 'Starmie' });
-    expect(docs).to.deep.contain({ name: 'Charmander' });
-    expect(docs).to.deep.contain({ name: 'Lapras' });
+    expect(docs).to.deep.contain({ name: "Squirtle" });
+    expect(docs).to.deep.contain({ name: "Starmie" });
+    expect(docs).to.deep.contain({ name: "Charmander" });
+    expect(docs).to.deep.contain({ name: "Lapras" });
 
     const cursor = db.a.findAsCursor({}, { name: true, _id: false });
 
     const doc = await cursor.next();
 
-    expect(doc).to.have.keys('name');
+    expect(doc).to.have.keys("name");
 
     await mongojsDb.close();
     await db.close();
   });
 
-  it('should allow passing in a mongoist connection', async() => {
+  it("should allow passing in a mongoist connection", async () => {
     const mongoistDb = mongoist(connectionString);
     const db = mongoist(mongoistDb);
 
@@ -289,7 +312,7 @@ describe('database', function() {
     await db.close();
   });
 
-  it('should pass projections to mongoist connections passing in a mongoist connection', async() => {
+  it("should pass projections to mongoist connections passing in a mongoist connection", async () => {
     const mongoistDb = mongoist(connectionString);
     const db = mongoist(mongoistDb);
 
@@ -297,26 +320,26 @@ describe('database', function() {
 
     expect(docs).to.have.length(4);
 
-    expect(docs).to.deep.contain({ name: 'Squirtle' });
-    expect(docs).to.deep.contain({ name: 'Starmie' });
-    expect(docs).to.deep.contain({ name: 'Charmander' });
-    expect(docs).to.deep.contain({ name: 'Lapras' });
+    expect(docs).to.deep.contain({ name: "Squirtle" });
+    expect(docs).to.deep.contain({ name: "Starmie" });
+    expect(docs).to.deep.contain({ name: "Charmander" });
+    expect(docs).to.deep.contain({ name: "Lapras" });
 
     const cursor = db.a.findAsCursor({}, { name: true, _id: false });
 
     const doc = await cursor.next();
 
-    expect(doc).to.have.keys('name');
+    expect(doc).to.have.keys("name");
 
     await mongoistDb.close();
     await db.close();
   });
 
-  it('should drop a database', async() => {
-    const dbConnectionString = 'mongodb://localhost:27017/test2';
+  it("should drop a database", async () => {
+    const dbConnectionString = "mongodb://localhost:27017/test2";
     const db = mongoist(dbConnectionString);
 
-    await db.b.insert({ name: 'Squirtle',type: 'water', level: 10, });
+    await db.b.insert({ name: "Squirtle", type: "water", level: 10 });
     const docs = await db.b.find({});
     expect(docs).to.have.length(1);
 
@@ -330,12 +353,12 @@ describe('database', function() {
     await db2.close();
   });
 
-  it('should execute admin commands', async() => {
+  it("should execute admin commands", async () => {
     const dbStats = await db.adminCommand({ dbStats: 1 });
-    expect(dbStats.db).to.equal('admin');
-  })
+    expect(dbStats.db).to.equal("admin");
+  });
 
-  it('should handle race conditions correctly', async () => {
+  it("should handle race conditions correctly", async () => {
     const connectPromises = [db.connect(), db.connect(), db.connect()];
     const connections = await Promise.all(connectPromises);
 
