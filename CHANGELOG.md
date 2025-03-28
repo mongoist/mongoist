@@ -1,3 +1,30 @@
+# [4.0.0](https://github.com/mongoist/mongoist/compare/v3.0.2...v4.0.0) (2025-03-28)
+
+
+### Bug Fixes
+
+* release pipeline ([9f25550](https://github.com/mongoist/mongoist/commit/9f25550d7f6995960d00c717b0142e697c6e29cf))
+
+
+### Features
+
+* **deps:** bump mongodb to support mongo v7.0 support ([#107](https://github.com/mongoist/mongoist/issues/107)) ([d36e9ea](https://github.com/mongoist/mongoist/commit/d36e9ea52de78e4e565edbff072f0679e27428e5))
+* **deps:** bump mongodb to support mongo v7.0 support ([#107](https://github.com/mongoist/mongoist/issues/107)) ([32c126f](https://github.com/mongoist/mongoist/commit/32c126fde52751849c1b7e8acd58cb8cdc017ea6))
+
+
+### BREAKING CHANGES
+
+* **deps:** * chore: update node and mongodb versions in ci workflow
+
+* chore: remove mongodb 3.6.2 from ci workflow
+
+* chore: update node version to 16.20.1
+* **deps:** * chore: update node and mongodb versions in ci workflow
+
+* chore: remove mongodb 3.6.2 from ci workflow
+
+* chore: update node version to 16.20.1
+
 ## [3.0.2](https://github.com/mongoist/mongoist/compare/v3.0.1...v3.0.2) (2024-10-01)
 
 
