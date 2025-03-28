@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/mongoist/mongoist/compare/v4.0.0...v4.0.1) (2025-03-28)
+
+
+### Bug Fixes
+
+* update deleteOne and deleteMany assertions in tests ([cf3f9cc](https://github.com/mongoist/mongoist/commit/cf3f9cc79e3ded6e40ed68068fc5e22b55eff6bf))
+
 # [4.0.0](https://github.com/mongoist/mongoist/compare/v3.0.2...v4.0.0) (2025-03-28)
 
 
