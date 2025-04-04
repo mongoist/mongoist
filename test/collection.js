@@ -347,4 +347,20 @@ describe("collection", function () {
     await mockDb.b.insert({ foo: "bar" });
     await mockDb.b.insert({ foo: "baz" });
   });
+
+  it("should support ObjectId without constructor", async () => {
+    const id = mongoist.ObjectId();
+    await db.a.insert({ _id: id });
+    const docs = await db.a.find({ _id: id });
+    expect(docs).to.have.length(1);
+    console.log(typeof docs[0]._id);
+  });
+
+  it("should support ObjectId with constructor", async () => {
+    const id = new mongoist.ObjectId();
+    await db.a.insert({ _id: id });
+    const docs = await db.a.find({ _id: id });
+    expect(docs).to.have.length(1);
+    console.log(typeof docs[0]._id);
+  });
 });
