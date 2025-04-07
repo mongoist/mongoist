@@ -1,3 +1,12 @@
+## [4.0.2](https://github.com/mongoist/mongoist/compare/v4.0.1...v4.0.2) (2025-04-07)
+
+
+### Bug Fixes
+
+* simplify ObjectId constructor and add type check in tests ([33d319c](https://github.com/mongoist/mongoist/commit/33d319c00a7c4d14c2f0a7e21c1293430e07b392))
+* update code style and add support for ObjectId without constructor ([606673d](https://github.com/mongoist/mongoist/commit/606673d7760e4f55be601fdb78cb071914ea9d88))
+* update ObjectId test to use instance check ([ad267c1](https://github.com/mongoist/mongoist/commit/ad267c142677363fbb968d5f279ca0632fbdbc90))
+
 ## [4.0.1](https://github.com/mongoist/mongoist/compare/v4.0.0...v4.0.1) (2025-03-28)
 
 
