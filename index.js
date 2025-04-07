@@ -37,11 +37,10 @@ module.exports = function (connectionString, options) {
 
 // support for ObjectId without constructor
 function ObjectId(...args) {
-  if (!(this instanceof mongodb.ObjectId)) {
-    return new mongodb.ObjectId(...args);
-  }
-  return mongodb.ObjectId.apply(this, args);
+  return new mongodb.ObjectId(...args);
 }
+Object.setPrototypeOf(ObjectId, mongodb.ObjectId);
+ObjectId.prototype = mongodb.ObjectId.prototype;
 
 // expose prototypes
 module.exports.Database = Database;

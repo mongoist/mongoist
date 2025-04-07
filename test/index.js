@@ -48,5 +48,13 @@ describe("database", function () {
       const id = new mongoist.ObjectId(hexString);
       expect(id.toString()).to.equal(hexString);
     });
+
+    it("should have same type as mongo ObjectId", () => {
+      const mongoObjectId = require("mongodb").ObjectId;
+      const mongoistObjectId = mongoist.ObjectId;
+
+      expect(mongoistObjectId).to.equal(mongoObjectId);
+      expect(typeof mongoistObjectId).to.equal(typeof mongoObjectId);
+    });
   });
 });
