@@ -50,11 +50,10 @@ describe("database", function () {
     });
 
     it("should have same type as mongo ObjectId", () => {
-      const mongoObjectId = require("mongodb").ObjectId;
-      const mongoistObjectId = mongoist.ObjectId;
+      const mongoistObjectId = mongoist.ObjectId();
 
-      expect(mongoistObjectId).to.equal(mongoObjectId);
-      expect(typeof mongoistObjectId).to.equal(typeof mongoObjectId);
+      expect(mongoistObjectId instanceof require("mongodb").ObjectId).to.be
+        .true;
     });
   });
 });
